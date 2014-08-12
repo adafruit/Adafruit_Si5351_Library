@@ -271,6 +271,18 @@ typedef enum
   SI5351_MULTISYNTH_DIV_8  = 8
 } si5351MultisynthDiv_t;
 
+typedef enum
+{
+  SI5351_R_DIV_1   = 0,
+  SI5351_R_DIV_2   = 1,
+  SI5351_R_DIV_4   = 2,
+  SI5351_R_DIV_8   = 3,
+  SI5351_R_DIV_16  = 4,
+  SI5351_R_DIV_32  = 5,
+  SI5351_R_DIV_64  = 6,
+  SI5351_R_DIV_128 = 7,
+} si5351RDiv_t;
+
 typedef struct
 {
   bool                initialised;
@@ -295,7 +307,8 @@ class Adafruit_SI5351
   err_t setupMultisynth(uint8_t output, si5351PLL_t pllSource, uint32_t div, uint32_t num, uint32_t denom);
   err_t setupMultisynthInt(uint8_t output, si5351PLL_t pllSource, si5351MultisynthDiv_t div);
   err_t enableOutputs(bool enabled);
-  
+  err_t setupRdiv(uint8_t  output, si5351RDiv_t div);
+
  private:
   si5351Config_t m_si5351Config;
   

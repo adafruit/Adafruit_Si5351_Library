@@ -308,6 +308,26 @@ err_t Adafruit_SI5351::setupMultisynthInt(uint8_t               output,
   return setupMultisynth(output, pllSource, div, 0, 1);
 }
 
+
+err_t Adafruit_SI5351::setupRdiv(uint8_t  output, si5351RDiv_t div) {
+  ASSERT( output < 3,                 ERROR_INVALIDPARAMETER);  /* Channel range */
+  
+  uint8_t Rreg, regval;
+
+  if (output == 0) Rreg = SI5351_REGISTER_44_MULTISYNTH0_PARAMETERS_3;
+  if (output == 1) Rreg = SI5351_REGISTER_52_MULTISYNTH1_PARAMETERS_3;
+  if (output == 2) Rreg = SI5351_REGISTER_60_MULTISYNTH2_PARAMETERS_3;
+
+  read8(Rreg, &regval);
+
+  regval &= 0x0F;
+  uint8_t divider = div;
+  divider &= 0x07;
+  divider <<= 4;
+  regval = divider;
+  return write8(Rreg, regval);
+}
+
 /**************************************************************************/
 /*!
     @brief  Configures the Multisynth divider, which determines the
