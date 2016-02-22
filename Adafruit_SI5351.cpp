@@ -324,7 +324,7 @@ err_t Adafruit_SI5351::setupRdiv(uint8_t  output, si5351RDiv_t div) {
   uint8_t divider = div;
   divider &= 0x07;
   divider <<= 4;
-  regval = divider;
+  regval |= divider;
   return write8(Rreg, regval);
 }
 
