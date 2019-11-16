@@ -438,6 +438,13 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t     output,
   {
     /* Integer mode */
     P1 = 128 * div - 512;
+    
+    /* DIVBY4 */
+    if( div == 4 )
+    {
+      P1 += 0x0C0000;
+    }
+    
     P2 = num;
     P3 = denom;
   }
@@ -467,7 +474,7 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t     output,
   /* Set the MSx config registers */
   ASSERT_STATUS( write8( baseaddr,   (P3 & 0x0000FF00) >> 8));
   ASSERT_STATUS( write8( baseaddr+1, (P3 & 0x000000FF)));
-  ASSERT_STATUS( write8( baseaddr+2, (P1 & 0x00030000) >> 16));	/* ToDo: Add DIVBY4 (>150MHz) and R0 support (<500kHz) later */
+  ASSERT_STATUS( write8( baseaddr+2, (P1 & 0x000F0000) >> 16));
   ASSERT_STATUS( write8( baseaddr+3, (P1 & 0x0000FF00) >> 8));
   ASSERT_STATUS( write8( baseaddr+4, (P1 & 0x000000FF)));
   ASSERT_STATUS( write8( baseaddr+5, ((P3 & 0x000F0000) >> 12) | ((P2 & 0x000F0000) >> 16) ));
