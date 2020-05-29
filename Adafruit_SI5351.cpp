@@ -1,55 +1,59 @@
 /**************************************************************************/
 /*!
-    @file     Adafruit_SI5351.cpp
-    @author   K. Townsend (Adafruit Industries)
-
-    @brief    Driver for the SI5351 160MHz Clock Gen
-
-    @section  REFERENCES
-
-    Si5351A/B/C Datasheet:
-    http://www.silabs.com/Support%20Documents/TechnicalDocs/Si5351.pdf
-
-    Manually Generating an Si5351 Register Map:
-    http://www.silabs.com/Support%20Documents/TechnicalDocs/AN619.pdf
-
-    @section  LICENSE
-
-    Software License Agreement (BSD License)
-
-    Copyright (c) 2014, Adafruit Industries
-    All rights reserved.
-
-    Redistribution and use in source and binary forms, with or without
-    modification, are permitted provided that the following conditions are met:
-    1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
-    2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in the
-    documentation and/or other materials provided with the distribution.
-    3. Neither the name of the copyright holders nor the
-    names of its contributors may be used to endorse or promote products
-    derived from this software without specific prior written permission.
-
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ''AS IS'' AND ANY
-    EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY
-    DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-    (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-    ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ * @file     Adafruit_SI5351.cpp
+ *
+ * @mainpage Adafruit Si5351 Library
+ *
+ * @author   K. Townsend (Adafruit Industries)
+ *
+ * @brief    Driver for the SI5351 160MHz Clock Gen
+ *
+ * @section  REFERENCES
+ *
+ * Si5351A/B/C Datasheet:
+ * http://www.silabs.com/Support%20Documents/TechnicalDocs/Si5351.pdf
+ *
+ * Manually Generating an Si5351 Register Map:
+ * http://www.silabs.com/Support%20Documents/TechnicalDocs/AN619.pdf
+ *
+ * @section license License
+ *
+ * Software License Agreement (BSD License)
+ *
+ * Copyright (c) 2014, Adafruit Industries
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 1. Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holders nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ''AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 /**************************************************************************/
 #if defined(__AVR__)
 #include <avr/pgmspace.h>
 #include <util/delay.h>
 #elif defined(ESP8266) || defined(ESP32)
 #include "pgmspace.h"
-#else 
-#define pgm_read_byte(addr) (*(const unsigned char *)(addr))
+#else
+#define pgm_read_byte(addr)                                                    \
+  (*(const unsigned char *)(addr)) //!< Reads byte from address
 #endif
 #include <stdlib.h>
 
@@ -60,16 +64,15 @@
     Constructor
 */
 /**************************************************************************/
-Adafruit_SI5351::Adafruit_SI5351(void) 
-{  
-  m_si5351Config.initialised     = false;
-  m_si5351Config.crystalFreq     = SI5351_CRYSTAL_FREQ_25MHZ;
-  m_si5351Config.crystalLoad     = SI5351_CRYSTAL_LOAD_10PF;
-  m_si5351Config.crystalPPM      = 30;
+Adafruit_SI5351::Adafruit_SI5351(void) {
+  m_si5351Config.initialised = false;
+  m_si5351Config.crystalFreq = SI5351_CRYSTAL_FREQ_25MHZ;
+  m_si5351Config.crystalLoad = SI5351_CRYSTAL_LOAD_10PF;
+  m_si5351Config.crystalPPM = 30;
   m_si5351Config.plla_configured = false;
-  m_si5351Config.plla_freq       = 0;
+  m_si5351Config.plla_freq = 0;
   m_si5351Config.pllb_configured = false;
-  m_si5351Config.pllb_freq       = 0;
+  m_si5351Config.pllb_freq = 0;
 }
 
 /**************************************************************************/
@@ -78,8 +81,7 @@ Adafruit_SI5351::Adafruit_SI5351(void)
     doing anything else)
 */
 /**************************************************************************/
-err_t Adafruit_SI5351::begin(void) 
-{
+err_t Adafruit_SI5351::begin(void) {
   /* Initialise I2C */
   Wire.begin();
 
@@ -134,8 +136,7 @@ err_t Adafruit_SI5351::begin(void)
     @note   This will overwrite all of the config registers!
 */
 /**************************************************************************/
-err_t Adafruit_SI5351::setClockBuilderData(void)
-{
+err_t Adafruit_SI5351::setClockBuilderData(void) {
   uint16_t i = 0;
 
   /* Make sure we've called init first */
@@ -145,11 +146,10 @@ err_t Adafruit_SI5351::setClockBuilderData(void)
   ASSERT_STATUS(write8(SI5351_REGISTER_3_OUTPUT_ENABLE_CONTROL, 0xFF));
 
   /* Writes configuration data to device using the register map contents
-	 generated by ClockBuilder Desktop (registers 15-92 + 149-170) */
-  for (i=0; i<sizeof(m_si5351_regs_15to92_149to170)/2; i++)
-  {
-    ASSERT_STATUS(write8( m_si5351_regs_15to92_149to170[i][0],
-                          m_si5351_regs_15to92_149to170[i][1] ));
+         generated by ClockBuilder Desktop (registers 15-92 + 149-170) */
+  for (i = 0; i < sizeof(m_si5351_regs_15to92_149to170) / 2; i++) {
+    ASSERT_STATUS(write8(m_si5351_regs_15to92_149to170[i][0],
+                         m_si5351_regs_15to92_149to170[i][1]));
   }
 
   /* Apply soft reset */
@@ -171,8 +171,7 @@ err_t Adafruit_SI5351::setClockBuilderData(void)
   @param  mult  The PLL integer multiplier (must be between 15 and 90)
 */
 /**************************************************************************/
-err_t Adafruit_SI5351::setupPLLInt(si5351PLL_t pll, uint8_t mult)
-{
+err_t Adafruit_SI5351::setupPLLInt(si5351PLL_t pll, uint8_t mult) {
   return setupPLL(pll, mult, 0, 1);
 }
 
@@ -206,21 +205,19 @@ err_t Adafruit_SI5351::setupPLLInt(si5351PLL_t pll, uint8_t mult)
     See: http://www.silabs.com/Support%20Documents/TechnicalDocs/AN619.pdf
 */
 /**************************************************************************/
-err_t Adafruit_SI5351::setupPLL(si5351PLL_t pll,
-                                uint8_t     mult,
-                                uint32_t    num,
-                                uint32_t    denom)
-{
-  uint32_t P1;       /* PLL config register P1 */
-  uint32_t P2;	     /* PLL config register P2 */
-  uint32_t P3;	     /* PLL config register P3 */
+err_t Adafruit_SI5351::setupPLL(si5351PLL_t pll, uint8_t mult, uint32_t num,
+                                uint32_t denom) {
+  uint32_t P1; /* PLL config register P1 */
+  uint32_t P2; /* PLL config register P2 */
+  uint32_t P3; /* PLL config register P3 */
 
   /* Basic validation */
-  ASSERT( m_si5351Config.initialised, ERROR_DEVICENOTINITIALISED );
-  ASSERT( (mult > 14) && (mult < 91), ERROR_INVALIDPARAMETER ); /* mult = 15..90 */
-  ASSERT( denom > 0,                  ERROR_INVALIDPARAMETER ); /* Avoid divide by zero */
-  ASSERT( num <= 0xFFFFF,             ERROR_INVALIDPARAMETER ); /* 20-bit limit */
-  ASSERT( denom <= 0xFFFFF,           ERROR_INVALIDPARAMETER ); /* 20-bit limit */
+  ASSERT(m_si5351Config.initialised, ERROR_DEVICENOTINITIALISED);
+  ASSERT((mult > 14) && (mult < 91),
+         ERROR_INVALIDPARAMETER);                   /* mult = 15..90 */
+  ASSERT(denom > 0, ERROR_INVALIDPARAMETER);        /* Avoid divide by zero */
+  ASSERT(num <= 0xFFFFF, ERROR_INVALIDPARAMETER);   /* 20-bit limit */
+  ASSERT(denom <= 0xFFFFF, ERROR_INVALIDPARAMETER); /* 20-bit limit */
 
   /* Feedback Multisynth Divider Equation
    *
@@ -240,18 +237,17 @@ err_t Adafruit_SI5351::setupPLL(si5351PLL_t pll,
    */
 
   /* Set the main PLL config registers */
-  if (num == 0)
-  {
+  if (num == 0) {
     /* Integer mode */
     P1 = 128 * mult - 512;
     P2 = num;
     P3 = denom;
-  }
-  else
-  {
+  } else {
     /* Fractional mode */
-    P1 = (uint32_t)(128 * mult + floor(128 * ((float)num/(float)denom)) - 512);
-    P2 = (uint32_t)(128 * num - denom * floor(128 * ((float)num/(float)denom)));
+    P1 =
+        (uint32_t)(128 * mult + floor(128 * ((float)num / (float)denom)) - 512);
+    P2 = (uint32_t)(128 * num -
+                    denom * floor(128 * ((float)num / (float)denom)));
     P3 = denom;
   }
 
@@ -259,28 +255,28 @@ err_t Adafruit_SI5351::setupPLL(si5351PLL_t pll,
   uint8_t baseaddr = (pll == SI5351_PLL_A ? 26 : 34);
 
   /* The datasheet is a nightmare of typos and inconsistencies here! */
-  ASSERT_STATUS( write8( baseaddr,   (P3 & 0x0000FF00) >> 8));
-  ASSERT_STATUS( write8( baseaddr+1, (P3 & 0x000000FF)));
-  ASSERT_STATUS( write8( baseaddr+2, (P1 & 0x00030000) >> 16));
-  ASSERT_STATUS( write8( baseaddr+3, (P1 & 0x0000FF00) >> 8));
-  ASSERT_STATUS( write8( baseaddr+4, (P1 & 0x000000FF)));
-  ASSERT_STATUS( write8( baseaddr+5, ((P3 & 0x000F0000) >> 12) | ((P2 & 0x000F0000) >> 16) ));
-  ASSERT_STATUS( write8( baseaddr+6, (P2 & 0x0000FF00) >> 8));
-  ASSERT_STATUS( write8( baseaddr+7, (P2 & 0x000000FF)));
+  ASSERT_STATUS(write8(baseaddr, (P3 & 0x0000FF00) >> 8));
+  ASSERT_STATUS(write8(baseaddr + 1, (P3 & 0x000000FF)));
+  ASSERT_STATUS(write8(baseaddr + 2, (P1 & 0x00030000) >> 16));
+  ASSERT_STATUS(write8(baseaddr + 3, (P1 & 0x0000FF00) >> 8));
+  ASSERT_STATUS(write8(baseaddr + 4, (P1 & 0x000000FF)));
+  ASSERT_STATUS(write8(baseaddr + 5,
+                       ((P3 & 0x000F0000) >> 12) | ((P2 & 0x000F0000) >> 16)));
+  ASSERT_STATUS(write8(baseaddr + 6, (P2 & 0x0000FF00) >> 8));
+  ASSERT_STATUS(write8(baseaddr + 7, (P2 & 0x000000FF)));
 
   /* Reset both PLLs */
-  ASSERT_STATUS( write8(SI5351_REGISTER_177_PLL_RESET, (1<<7) | (1<<5) ));
+  ASSERT_STATUS(write8(SI5351_REGISTER_177_PLL_RESET, (1 << 7) | (1 << 5)));
 
   /* Store the frequency settings for use with the Multisynth helper */
-  if (pll == SI5351_PLL_A)
-  {
-    float fvco = m_si5351Config.crystalFreq * (mult + ( (float)num / (float)denom ));
+  if (pll == SI5351_PLL_A) {
+    float fvco =
+        m_si5351Config.crystalFreq * (mult + ((float)num / (float)denom));
     m_si5351Config.plla_configured = true;
     m_si5351Config.plla_freq = (uint32_t)floor(fvco);
-  }
-  else
-  {
-    float fvco = m_si5351Config.crystalFreq * (mult + ( (float)num / (float)denom ));
+  } else {
+    float fvco =
+        m_si5351Config.crystalFreq * (mult + ((float)num / (float)denom));
     m_si5351Config.pllb_configured = true;
     m_si5351Config.pllb_freq = (uint32_t)floor(fvco);
   }
@@ -303,22 +299,22 @@ err_t Adafruit_SI5351::setupPLL(si5351PLL_t pll,
                       - SI5351_MULTISYNTH_DIV_8
 */
 /**************************************************************************/
-err_t Adafruit_SI5351::setupMultisynthInt(uint8_t               output,
-                                          si5351PLL_t           pllSource,
-                                          si5351MultisynthDiv_t div)
-{
+err_t Adafruit_SI5351::setupMultisynthInt(uint8_t output, si5351PLL_t pllSource,
+                                          si5351MultisynthDiv_t div) {
   return setupMultisynth(output, pllSource, div, 0, 1);
 }
 
+err_t Adafruit_SI5351::setupRdiv(uint8_t output, si5351RDiv_t div) {
+  ASSERT(output < 3, ERROR_INVALIDPARAMETER); /* Channel range */
 
-err_t Adafruit_SI5351::setupRdiv(uint8_t  output, si5351RDiv_t div) {
-  ASSERT( output < 3,                 ERROR_INVALIDPARAMETER);  /* Channel range */
-  
   uint8_t Rreg, regval;
 
-  if (output == 0) Rreg = SI5351_REGISTER_44_MULTISYNTH0_PARAMETERS_3;
-  if (output == 1) Rreg = SI5351_REGISTER_52_MULTISYNTH1_PARAMETERS_3;
-  if (output == 2) Rreg = SI5351_REGISTER_60_MULTISYNTH2_PARAMETERS_3;
+  if (output == 0)
+    Rreg = SI5351_REGISTER_44_MULTISYNTH0_PARAMETERS_3;
+  if (output == 1)
+    Rreg = SI5351_REGISTER_52_MULTISYNTH1_PARAMETERS_3;
+  if (output == 2)
+    Rreg = SI5351_REGISTER_60_MULTISYNTH2_PARAMETERS_3;
 
   read8(Rreg, &regval);
 
@@ -387,32 +383,26 @@ err_t Adafruit_SI5351::setupRdiv(uint8_t  output, si5351RDiv_t div) {
             used, but this isn't currently implemented in the driver.
 */
 /**************************************************************************/
-err_t Adafruit_SI5351::setupMultisynth(uint8_t     output,
-                                       si5351PLL_t pllSource,
-                                       uint32_t    div,
-                                       uint32_t    num,
-                                       uint32_t    denom)
-{
-  uint32_t P1;       /* Multisynth config register P1 */
-  uint32_t P2;	     /* Multisynth config register P2 */
-  uint32_t P3;	     /* Multisynth config register P3 */
+err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
+                                       uint32_t div, uint32_t num,
+                                       uint32_t denom) {
+  uint32_t P1; /* Multisynth config register P1 */
+  uint32_t P2; /* Multisynth config register P2 */
+  uint32_t P3; /* Multisynth config register P3 */
 
   /* Basic validation */
-  ASSERT( m_si5351Config.initialised, ERROR_DEVICENOTINITIALISED);
-  ASSERT( output < 3,                 ERROR_INVALIDPARAMETER);  /* Channel range */
-  ASSERT( div > 3,                    ERROR_INVALIDPARAMETER);  /* Divider integer value */
-  ASSERT( div < 901,                  ERROR_INVALIDPARAMETER);  /* Divider integer value */
-  ASSERT( denom > 0,                  ERROR_INVALIDPARAMETER ); /* Avoid divide by zero */
-  ASSERT( num <= 0xFFFFF,             ERROR_INVALIDPARAMETER ); /* 20-bit limit */
-  ASSERT( denom <= 0xFFFFF,           ERROR_INVALIDPARAMETER ); /* 20-bit limit */
+  ASSERT(m_si5351Config.initialised, ERROR_DEVICENOTINITIALISED);
+  ASSERT(output < 3, ERROR_INVALIDPARAMETER);       /* Channel range */
+  ASSERT(div > 3, ERROR_INVALIDPARAMETER);          /* Divider integer value */
+  ASSERT(div < 901, ERROR_INVALIDPARAMETER);        /* Divider integer value */
+  ASSERT(denom > 0, ERROR_INVALIDPARAMETER);        /* Avoid divide by zero */
+  ASSERT(num <= 0xFFFFF, ERROR_INVALIDPARAMETER);   /* 20-bit limit */
+  ASSERT(denom <= 0xFFFFF, ERROR_INVALIDPARAMETER); /* 20-bit limit */
 
   /* Make sure the requested PLL has been initialised */
-  if (pllSource == SI5351_PLL_A)
-  {
+  if (pllSource == SI5351_PLL_A) {
     ASSERT(m_si5351Config.plla_configured = true, ERROR_INVALIDPARAMETER);
-  }
-  else
-  {
+  } else {
     ASSERT(m_si5351Config.pllb_configured = true, ERROR_INVALIDPARAMETER);
   }
 
@@ -434,61 +424,64 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t     output,
    */
 
   /* Set the main PLL config registers */
-  if (num == 0)
-  {
+  if (num == 0) {
     /* Integer mode */
     P1 = 128 * div - 512;
     P2 = num;
     P3 = denom;
-  }
-  else
-  {
+  } else {
     /* Fractional mode */
-    P1 = (uint32_t)(128 * div + floor(128 * ((float)num/(float)denom)) - 512);
-    P2 = (uint32_t)(128 * num - denom * floor(128 * ((float)num/(float)denom)));
+    P1 = (uint32_t)(128 * div + floor(128 * ((float)num / (float)denom)) - 512);
+    P2 = (uint32_t)(128 * num -
+                    denom * floor(128 * ((float)num / (float)denom)));
     P3 = denom;
   }
 
   /* Get the appropriate starting point for the PLL registers */
   uint8_t baseaddr = 0;
-  switch (output)
-  {
-    case 0:
-      baseaddr = SI5351_REGISTER_42_MULTISYNTH0_PARAMETERS_1;
-      break;
-    case 1:
-      baseaddr = SI5351_REGISTER_50_MULTISYNTH1_PARAMETERS_1;
-      break;
-    case 2:
-      baseaddr = SI5351_REGISTER_58_MULTISYNTH2_PARAMETERS_1;
-      break;
+  switch (output) {
+  case 0:
+    baseaddr = SI5351_REGISTER_42_MULTISYNTH0_PARAMETERS_1;
+    break;
+  case 1:
+    baseaddr = SI5351_REGISTER_50_MULTISYNTH1_PARAMETERS_1;
+    break;
+  case 2:
+    baseaddr = SI5351_REGISTER_58_MULTISYNTH2_PARAMETERS_1;
+    break;
   }
 
   /* Set the MSx config registers */
-  ASSERT_STATUS( write8( baseaddr,   (P3 & 0x0000FF00) >> 8));
-  ASSERT_STATUS( write8( baseaddr+1, (P3 & 0x000000FF)));
-  ASSERT_STATUS( write8( baseaddr+2, (P1 & 0x00030000) >> 16));	/* ToDo: Add DIVBY4 (>150MHz) and R0 support (<500kHz) later */
-  ASSERT_STATUS( write8( baseaddr+3, (P1 & 0x0000FF00) >> 8));
-  ASSERT_STATUS( write8( baseaddr+4, (P1 & 0x000000FF)));
-  ASSERT_STATUS( write8( baseaddr+5, ((P3 & 0x000F0000) >> 12) | ((P2 & 0x000F0000) >> 16) ));
-  ASSERT_STATUS( write8( baseaddr+6, (P2 & 0x0000FF00) >> 8));
-  ASSERT_STATUS( write8( baseaddr+7, (P2 & 0x000000FF)));
+  ASSERT_STATUS(write8(baseaddr, (P3 & 0x0000FF00) >> 8));
+  ASSERT_STATUS(write8(baseaddr + 1, (P3 & 0x000000FF)));
+  ASSERT_STATUS(write8(
+      baseaddr + 2,
+      (P1 & 0x00030000) >>
+          16)); /* ToDo: Add DIVBY4 (>150MHz) and R0 support (<500kHz) later */
+  ASSERT_STATUS(write8(baseaddr + 3, (P1 & 0x0000FF00) >> 8));
+  ASSERT_STATUS(write8(baseaddr + 4, (P1 & 0x000000FF)));
+  ASSERT_STATUS(write8(baseaddr + 5,
+                       ((P3 & 0x000F0000) >> 12) | ((P2 & 0x000F0000) >> 16)));
+  ASSERT_STATUS(write8(baseaddr + 6, (P2 & 0x0000FF00) >> 8));
+  ASSERT_STATUS(write8(baseaddr + 7, (P2 & 0x000000FF)));
 
   /* Configure the clk control and enable the output */
-  uint8_t clkControlReg = 0x0F;                             /* 8mA drive strength, MS0 as CLK0 source, Clock not inverted, powered up */
-  if (pllSource == SI5351_PLL_B) clkControlReg |= (1 << 5); /* Uses PLLB */
-  if (num == 0) clkControlReg |= (1 << 6);                  /* Integer mode */
-  switch (output)
-  {
-    case 0:
-      ASSERT_STATUS(write8(SI5351_REGISTER_16_CLK0_CONTROL, clkControlReg));
-      break;
-    case 1:
-      ASSERT_STATUS(write8(SI5351_REGISTER_17_CLK1_CONTROL, clkControlReg));
-      break;
-    case 2:
-      ASSERT_STATUS(write8(SI5351_REGISTER_18_CLK2_CONTROL, clkControlReg));
-      break;
+  uint8_t clkControlReg = 0x0F; /* 8mA drive strength, MS0 as CLK0 source, Clock
+                                   not inverted, powered up */
+  if (pllSource == SI5351_PLL_B)
+    clkControlReg |= (1 << 5); /* Uses PLLB */
+  if (num == 0)
+    clkControlReg |= (1 << 6); /* Integer mode */
+  switch (output) {
+  case 0:
+    ASSERT_STATUS(write8(SI5351_REGISTER_16_CLK0_CONTROL, clkControlReg));
+    break;
+  case 1:
+    ASSERT_STATUS(write8(SI5351_REGISTER_17_CLK1_CONTROL, clkControlReg));
+    break;
+  case 2:
+    ASSERT_STATUS(write8(SI5351_REGISTER_18_CLK2_CONTROL, clkControlReg));
+    break;
   }
 
   return ERROR_NONE;
@@ -499,13 +492,13 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t     output,
     @brief  Enables or disables all clock outputs
 */
 /**************************************************************************/
-err_t Adafruit_SI5351::enableOutputs(bool enabled)
-{
+err_t Adafruit_SI5351::enableOutputs(bool enabled) {
   /* Make sure we've called init first */
   ASSERT(m_si5351Config.initialised, ERROR_DEVICENOTINITIALISED);
 
   /* Enabled desired outputs (see Register 3) */
-  ASSERT_STATUS(write8(SI5351_REGISTER_3_OUTPUT_ENABLE_CONTROL, enabled ? 0x00: 0xFF));
+  ASSERT_STATUS(
+      write8(SI5351_REGISTER_3_OUTPUT_ENABLE_CONTROL, enabled ? 0x00 : 0xFF));
 
   return ERROR_NONE;
 }
@@ -519,20 +512,19 @@ err_t Adafruit_SI5351::enableOutputs(bool enabled)
     @brief  Writes a register and an 8 bit value over I2C
 */
 /**************************************************************************/
-err_t Adafruit_SI5351::write8 (uint8_t reg, uint8_t value)
-{
+err_t Adafruit_SI5351::write8(uint8_t reg, uint8_t value) {
   Wire.beginTransmission(SI5351_ADDRESS);
-  #if ARDUINO >= 100
+#if ARDUINO >= 100
   Wire.write(reg);
   Wire.write(value & 0xFF);
-  #else
+#else
   Wire.send(reg);
   Wire.send(value & 0xFF);
-  #endif
+#endif
   Wire.endTransmission();
 
-  // ToDo: Check for I2C errors  
-  
+  // ToDo: Check for I2C errors
+
   return ERROR_NONE;
 }
 
@@ -541,25 +533,23 @@ err_t Adafruit_SI5351::write8 (uint8_t reg, uint8_t value)
     @brief  Reads an 8 bit value over I2C
 */
 /**************************************************************************/
-err_t Adafruit_SI5351::read8(uint8_t reg, uint8_t *value)
-{
+err_t Adafruit_SI5351::read8(uint8_t reg, uint8_t *value) {
   Wire.beginTransmission(SI5351_ADDRESS);
-  #if ARDUINO >= 100
+#if ARDUINO >= 100
   Wire.write(reg);
-  #else
+#else
   Wire.send(reg);
-  #endif
+#endif
   Wire.endTransmission();
 
   Wire.requestFrom(SI5351_ADDRESS, 1);
-  #if ARDUINO >= 100
+#if ARDUINO >= 100
   *value = Wire.read();
-  #else
+#else
   *value = Wire.read();
-  #endif
+#endif
 
-  // ToDo: Check for I2C errors  
-  
+  // ToDo: Check for I2C errors
+
   return ERROR_NONE;
 }
-
