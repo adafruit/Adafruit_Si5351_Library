@@ -1,4 +1,4 @@
-Adafruit_Si5351
+# Adafruit_Si5351 [![Build Status](https://github.com/adafruit/Adafruit_Si5351_Library/workflows/Arduino%20Library%20CI/badge.svg)](https://github.com/adafruit/Adafruit_Si5351_Library/actions)[![Documentation](https://github.com/adafruit/ci-arduino/blob/master/assets/doxygen_badge.svg)](http://adafruit.github.io/Adafruit_Si5351_Library/html/index.html)
 ===============
 
 Driver for Adafruit's Si5351 Clockgen Breakout
