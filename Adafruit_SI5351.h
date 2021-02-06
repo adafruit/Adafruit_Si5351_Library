@@ -297,8 +297,8 @@ private:
 
   err_t write8(uint8_t reg, uint8_t value);
   err_t read8(uint8_t reg, uint8_t *value);
-  err_t writeN(uint8_t* data, uint8_t n);
-  
+  err_t writeN(uint8_t *data, uint8_t n);
+
   uint8_t lastRdivValue[3];
 };
 

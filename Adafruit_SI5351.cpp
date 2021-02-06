@@ -73,9 +73,9 @@ Adafruit_SI5351::Adafruit_SI5351(void) {
   m_si5351Config.plla_freq = 0;
   m_si5351Config.pllb_configured = false;
   m_si5351Config.pllb_freq = 0;
-  
-  for(uint8_t i = 0; i < 3; i++) {
-	lastRdivValue[i] = 0;
+
+  for (uint8_t i = 0; i < 3; i++) {
+    lastRdivValue[i] = 0;
   }
 }
 
@@ -436,10 +436,10 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
     P2 = 0;
     P3 = denom;
   } else if (denom == 1) {
-	/* Fractional mode, simplified calculations */
-    P1 = 128 * div + 128*num - 512;
-    P2 = 128*num - 128;
-    P3 = 1;  
+    /* Fractional mode, simplified calculations */
+    P1 = 128 * div + 128 * num - 512;
+    P2 = 128 * num - 128;
+    P3 = 1;
   } else {
     /* Fractional mode */
     P1 = (uint32_t)(128 * div + floor(128 * ((float)num / (float)denom)) - 512);
@@ -473,7 +473,7 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
   sendBuffer[5] = P1 & 0xFF;
   sendBuffer[6] = ((P3 & 0xF0000) >> 12) | ((P2 & 0xF0000) >> 16);
   sendBuffer[7] = (P2 & 0xFF00) >> 8;
-  sendBuffer[8] = P2 & 0xFF ;
+  sendBuffer[8] = P2 & 0xFF;
   ASSERT_STATUS(writeN(sendBuffer, 9));
 
   /* Configure the clk control and enable the output */
@@ -540,15 +540,15 @@ err_t Adafruit_SI5351::write8(uint8_t reg, uint8_t value) {
   return ERROR_NONE;
 }
 
-err_t Adafruit_SI5351::writeN(uint8_t* data, uint8_t n) {
-	Wire.beginTransmission(SI5351_ADDRESS);
-	#if ARDUINO >= 100
-	  Wire.write(data, n);
-	#else
-	  Wire.send(data, n);
-	#endif
-	Wire.endTransmission();
-	return ERROR_NONE;
+err_t Adafruit_SI5351::writeN(uint8_t *data, uint8_t n) {
+  Wire.beginTransmission(SI5351_ADDRESS);
+#if ARDUINO >= 100
+  Wire.write(data, n);
+#else
+  Wire.send(data, n);
+#endif
+  Wire.endTransmission();
+  return ERROR_NONE;
 }
 
 /**************************************************************************/
