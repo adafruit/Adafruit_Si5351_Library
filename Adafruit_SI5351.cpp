@@ -88,7 +88,6 @@ Adafruit_SI5351::Adafruit_SI5351(void) {
 err_t Adafruit_SI5351::begin(void) {
   /* Initialise I2C */
   Wire.begin();
-  Wire.setClock(400000);
 
   /* ToDo: Make sure we're actually connected */
 
