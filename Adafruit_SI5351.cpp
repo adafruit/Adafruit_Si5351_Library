@@ -399,7 +399,7 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
   ASSERT(m_si5351Config.initialised, ERROR_DEVICENOTINITIALISED);
   ASSERT(output < 3, ERROR_INVALIDPARAMETER);       /* Channel range */
   ASSERT(div > 3, ERROR_INVALIDPARAMETER);          /* Divider integer value */
-  ASSERT(div < 901, ERROR_INVALIDPARAMETER);        /* Divider integer value */
+  ASSERT(div < 2049, ERROR_INVALIDPARAMETER);        /* Divider integer value */
   ASSERT(denom > 0, ERROR_INVALIDPARAMETER);        /* Avoid divide by zero */
   ASSERT(num <= 0xFFFFF, ERROR_INVALIDPARAMETER);   /* 20-bit limit */
   ASSERT(denom <= 0xFFFFF, ERROR_INVALIDPARAMETER); /* 20-bit limit */
