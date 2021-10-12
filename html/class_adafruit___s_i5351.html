@@ -76,8 +76,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a028cdf9c63c783d05039f10d111ba8ec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#a028cdf9c63c783d05039f10d111ba8ec">Adafruit_SI5351</a> (void)</td></tr>
 <tr class="memdesc:a028cdf9c63c783d05039f10d111ba8ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">SI5351 object.  <a href="#a028cdf9c63c783d05039f10d111ba8ec">More...</a><br /></td></tr>
 <tr class="separator:a028cdf9c63c783d05039f10d111ba8ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa82576d548ad847bdb27757008f7b046"><td class="memItemLeft" align="right" valign="top"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#aa82576d548ad847bdb27757008f7b046">begin</a> (void)</td></tr>
-<tr class="separator:aa82576d548ad847bdb27757008f7b046"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18ca48ba2e05fbf77250d7b108798d76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#a18ca48ba2e05fbf77250d7b108798d76">begin</a> (TwoWire *theWire=&amp;Wire)</td></tr>
+<tr class="memdesc:a18ca48ba2e05fbf77250d7b108798d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes I2C and configures the breakout (call this function before doing anything else)  <a href="#a18ca48ba2e05fbf77250d7b108798d76">More...</a><br /></td></tr>
+<tr class="separator:a18ca48ba2e05fbf77250d7b108798d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a792d32ecb4db688642ce8b5b8ea793d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#a792d32ecb4db688642ce8b5b8ea793d5">setClockBuilderData</a> (void)</td></tr>
 <tr class="memdesc:a792d32ecb4db688642ce8b5b8ea793d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the Si5351 with config settings generated in ClockBuilder. You can use this function to make sure that your HW is properly configure and that there are no problems with the board itself.  <a href="#a792d32ecb4db688642ce8b5b8ea793d5">More...</a><br /></td></tr>
 <tr class="separator:a792d32ecb4db688642ce8b5b8ea793d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,8 +125,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa82576d548ad847bdb27757008f7b046"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa82576d548ad847bdb27757008f7b046">&#9670;&nbsp;</a></span>begin()</h2>
+<a id="a18ca48ba2e05fbf77250d7b108798d76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18ca48ba2e05fbf77250d7b108798d76">&#9670;&nbsp;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -133,14 +134,21 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a> Adafruit_SI5351::begin </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">TwoWire *&#160;</td>
+          <td class="paramname"><em>theWire</em> = <code>&amp;Wire</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>ERROR_NONE</dd></dl>
+
 <p>Initializes I2C and configures the breakout (call this function before doing anything else) </p>
+<dl class="section return"><dt>Returns</dt><dd>ERROR_NONE</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">theWire</td><td>The I2C (Wire) bus to use. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
