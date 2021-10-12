@@ -410,9 +410,9 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
 
   /* Make sure the requested PLL has been initialised */
   if (pllSource == SI5351_PLL_A) {
-    ASSERT(m_si5351Config.plla_configured = true, ERROR_INVALIDPARAMETER);
+    ASSERT(m_si5351Config.plla_configured, ERROR_INVALIDPARAMETER);
   } else {
-    ASSERT(m_si5351Config.pllb_configured = true, ERROR_INVALIDPARAMETER);
+    ASSERT(m_si5351Config.pllb_configured, ERROR_INVALIDPARAMETER);
   }
 
   /* Output Multisynth Divider Equations
