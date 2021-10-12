@@ -81,8 +81,10 @@ Adafruit_SI5351::Adafruit_SI5351(void) {
 
 /**************************************************************************/
 /*!
-    Initializes I2C and configures the breakout (call this function before
-    doing anything else)
+    @brief  Initializes I2C and configures the breakout (call this function
+   before doing anything else)
+
+    @param  theWire The I2C (Wire) bus to use.
 */
 /**************************************************************************/
 err_t Adafruit_SI5351::begin(TwoWire *theWire) {
