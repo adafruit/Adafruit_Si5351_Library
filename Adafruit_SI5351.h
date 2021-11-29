@@ -282,11 +282,8 @@ public:
                         uint32_t num, uint32_t denom); //!< @return ERROR_NONE
   err_t setupMultisynthInt(uint8_t output, si5351PLL_t pllSource,
                            si5351MultisynthDiv_t div); //!< @return ERROR_NONE
-                                                       /*!
-                                                        * @param enabled Whether output is enabled
-                                                        * @return ERROR_NONE
-                                                        */
-  err_t enableSpreadSpectrum(bool enabled);            //!< @return ERROR_NONE
+
+  err_t enableSpreadSpectrum(bool enabled);
   err_t enableOutputs(bool enabled);
   /*!
    * @param output Enables or disables output

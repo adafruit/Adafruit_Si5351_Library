@@ -508,6 +508,8 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
 /**************************************************************************/
 /*!
     @brief  Enables or disables all clock outputs
+    @param  enabled Whether output is enabled
+    @return ERROR_NONE
 */
 /**************************************************************************/
 err_t Adafruit_SI5351::enableOutputs(bool enabled) {
@@ -524,6 +526,8 @@ err_t Adafruit_SI5351::enableOutputs(bool enabled) {
 /**************************************************************************/
 /*!
     @brief  Enables or disables spread spectrum
+    @param  enabled Whether spread spectrum output is enabled
+    @return ERROR_NONE
 */
 /**************************************************************************/
 err_t Adafruit_SI5351::enableSpreadSpectrum(bool enabled) {
