@@ -286,8 +286,8 @@ public:
                                                         * @param enabled Whether output is enabled
                                                         * @return ERROR_NONE
                                                         */
+  err_t enableSpreadSpectrum(bool enabled);            //!< @return ERROR_NONE
   err_t enableOutputs(bool enabled);
-  err_t enableSpreadSpectrum(bool enabled);
   /*!
    * @param output Enables or disables output
    * @param div Set of output divider values (2^n, n=1..7)
