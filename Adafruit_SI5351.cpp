@@ -112,6 +112,9 @@ err_t Adafruit_SI5351::begin(TwoWire *theWire) {
   ASSERT_STATUS(write8(SI5351_REGISTER_183_CRYSTAL_INTERNAL_LOAD_CAPACITANCE,
                        m_si5351Config.crystalLoad));
 
+  /* Disable spread spectrum output. */
+  enableSpreadSpectrum(false);
+
   /* Set interrupt masks as required (see Register 2 description in AN619).
      By default, ClockBuilder Desktop sets this register to 0x18.
      Note that the least significant nibble must remain 0x8, but the most
@@ -505,6 +508,8 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
 /**************************************************************************/
 /*!
     @brief  Enables or disables all clock outputs
+    @param  enabled Whether output is enabled
+    @return ERROR_NONE
 */
 /**************************************************************************/
 err_t Adafruit_SI5351::enableOutputs(bool enabled) {
@@ -514,6 +519,26 @@ err_t Adafruit_SI5351::enableOutputs(bool enabled) {
   /* Enabled desired outputs (see Register 3) */
   ASSERT_STATUS(
       write8(SI5351_REGISTER_3_OUTPUT_ENABLE_CONTROL, enabled ? 0x00 : 0xFF));
+
+  return ERROR_NONE;
+}
+
+/**************************************************************************/
+/*!
+    @brief  Enables or disables spread spectrum
+    @param  enabled Whether spread spectrum output is enabled
+    @return ERROR_NONE
+*/
+/**************************************************************************/
+err_t Adafruit_SI5351::enableSpreadSpectrum(bool enabled) {
+  uint8_t regval;
+  ASSERT_STATUS(read8(SI5351_REGISTER_149_SPREAD_SPECTRUM_PARAMETERS, &regval));
+  if (enabled) {
+    regval |= 0x80;
+  } else {
+    regval &= ~0x80;
+  }
+  ASSERT_STATUS(write8(SI5351_REGISTER_149_SPREAD_SPECTRUM_PARAMETERS, regval));
 
   return ERROR_NONE;
 }

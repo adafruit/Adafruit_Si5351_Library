@@ -208,6 +208,7 @@ enum {
   SI5351_REGISTER_90_MULTISYNTH6_PARAMETERS = 90,
   SI5351_REGISTER_91_MULTISYNTH7_PARAMETERS = 91,
   SI5351_REGISTER_092_CLOCK_6_7_OUTPUT_DIVIDER = 92,
+  SI5351_REGISTER_149_SPREAD_SPECTRUM_PARAMETERS = 149,
   SI5351_REGISTER_165_CLK0_INITIAL_PHASE_OFFSET = 165,
   SI5351_REGISTER_166_CLK1_INITIAL_PHASE_OFFSET = 166,
   SI5351_REGISTER_167_CLK2_INITIAL_PHASE_OFFSET = 167,
@@ -281,10 +282,8 @@ public:
                         uint32_t num, uint32_t denom); //!< @return ERROR_NONE
   err_t setupMultisynthInt(uint8_t output, si5351PLL_t pllSource,
                            si5351MultisynthDiv_t div); //!< @return ERROR_NONE
-                                                       /*!
-                                                        * @param enabled Whether output is enabled
-                                                        * @return ERROR_NONE
-                                                        */
+
+  err_t enableSpreadSpectrum(bool enabled);
   err_t enableOutputs(bool enabled);
   /*!
    * @param output Enables or disables output
