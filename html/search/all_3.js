@@ -1,6 +1,7 @@
 var searchData=
 [
   ['enableoutputs',['enableOutputs',['../class_adafruit___s_i5351.html#a61b8afa0ac72529f8efbf7d4b2c2b66d',1,'Adafruit_SI5351']]],
+  ['enablespreadspectrum',['enableSpreadSpectrum',['../class_adafruit___s_i5351.html#a814f8b3e363f9cd6d1c9348157c1f5d6',1,'Adafruit_SI5351']]],
   ['err_5ft',['err_t',['../errors_8h.html#a5edd7aad54ac059bf561cf2f92017698',1,'errors.h']]],
   ['error_5faddressoutofrange',['ERROR_ADDRESSOUTOFRANGE',['../errors_8h.html#a5edd7aad54ac059bf561cf2f92017698a55893f21002ced74bf9ea7227e29b0b0',1,'errors.h']]],
   ['error_5fbufferoverflow',['ERROR_BUFFEROVERFLOW',['../errors_8h.html#a5edd7aad54ac059bf561cf2f92017698a5e6e89ee3baacbb69e2dc3f62031fcf2',1,'errors.h']]],
