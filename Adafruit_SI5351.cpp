@@ -401,7 +401,7 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
   uint32_t P1; /* Multisynth config register P1 */
   uint32_t P2; /* Multisynth config register P2 */
   uint32_t P3; /* Multisynth config register P3 */
-
+  uint8_t DIVBY4=0;
   /* Basic validation */
   ASSERT(m_si5351Config.initialised, ERROR_DEVICENOTINITIALISED);
   ASSERT(output < 3, ERROR_INVALIDPARAMETER);       /* Channel range */
@@ -441,6 +441,14 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
     P1 = 128 * div - 512;
     P2 = 0;
     P3 = denom;
+    if ( div == 4 )
+    {
+        DIVBY4 = 0b1100;
+    }
+    else
+    {
+        DIVBY4 = 0b0000;
+    }
   } else if (denom == 1) {
     /* Fractional mode, simplified calculations */
     P1 = 128 * div + 128 * num - 512;
@@ -474,7 +482,7 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
   sendBuffer[0] = baseaddr;
   sendBuffer[1] = (P3 & 0xFF00) >> 8;
   sendBuffer[2] = P3 & 0xFF;
-  sendBuffer[3] = ((P1 & 0x30000) >> 16) | lastRdivValue[output];
+  sendBuffer[3] = ((P1 & 0x30000) >> 16) | lastRdivValue[output] | DIVBY4;
   sendBuffer[4] = (P1 & 0xFF00) >> 8;
   sendBuffer[5] = P1 & 0xFF;
   sendBuffer[6] = ((P3 & 0xF0000) >> 12) | ((P2 & 0xF0000) >> 16);
