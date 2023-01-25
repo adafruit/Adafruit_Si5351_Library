@@ -279,7 +279,7 @@ public:
                  uint32_t denom);                   //!< @return ERROR_NONE
   err_t setupPLLInt(si5351PLL_t pll, uint8_t mult); //!< @return ERROR_NONE
   err_t setupMultisynth(uint8_t output, si5351PLL_t pllSource, uint32_t div,
-                        uint32_t num, uint32_t denom); //!< @return ERROR_NONE
+                        uint32_t num, uint32_t denom, uint8_t phaseOffset); //!< @return ERROR_NONE
   err_t setupMultisynthInt(uint8_t output, si5351PLL_t pllSource,
                            si5351MultisynthDiv_t div); //!< @return ERROR_NONE
 
