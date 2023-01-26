@@ -275,10 +275,7 @@ err_t Adafruit_SI5351::setupPLL(si5351PLL_t pll, uint8_t mult, uint32_t num,
                        ((P3 & 0x000F0000) >> 12) | ((P2 & 0x000F0000) >> 16)));
   ASSERT_STATUS(write8(baseaddr + 6, (P2 & 0x0000FF00) >> 8));
   ASSERT_STATUS(write8(baseaddr + 7, (P2 & 0x000000FF)));
-
-  /* Reset both PLLs */
-  ASSERT_STATUS(write8(SI5351_REGISTER_177_PLL_RESET, (1 << 7) | (1 << 5)));
-
+  
   /* Store the frequency settings for use with the Multisynth helper */
   if (pll == SI5351_PLL_A) {
     float fvco =
@@ -520,7 +517,16 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
     ASSERT_STATUS(write8(SI5351_REGISTER_18_CLK2_CONTROL, clkControlReg));
     break;
   }
-
+  
+  /* Reset PLL */
+  switch (pllSource) {
+  case SI5351_PLL_A:
+    ASSERT_STATUS(write8(SI5351_REGISTER_177_PLL_RESET, (1 << 5)));
+    break;
+  default:
+    ASSERT_STATUS(write8(SI5351_REGISTER_177_PLL_RESET, (1 << 7)));
+  }
+  
   return ERROR_NONE;
 }
 
