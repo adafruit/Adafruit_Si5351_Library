@@ -275,7 +275,7 @@ err_t Adafruit_SI5351::setupPLL(si5351PLL_t pll, uint8_t mult, uint32_t num,
                        ((P3 & 0x000F0000) >> 12) | ((P2 & 0x000F0000) >> 16)));
   ASSERT_STATUS(write8(baseaddr + 6, (P2 & 0x0000FF00) >> 8));
   ASSERT_STATUS(write8(baseaddr + 7, (P2 & 0x000000FF)));
-  
+
   /* Store the frequency settings for use with the Multisynth helper */
   if (pll == SI5351_PLL_A) {
     float fvco =
@@ -381,11 +381,11 @@ err_t Adafruit_SI5351::setupRdiv(uint8_t output, si5351RDiv_t div) {
         or 8..900 in fractional mode (MSx_INT=0).
     b = The fractional numerator (0..1,048,575)
     c = The fractional denominator (1..1,048,575)
-    
+
     The phase delay in seconds applied to the output is:
-    
+
         phaseOffset / (4 * fVCO)
-    
+
     @note   Try to use integers whenever possible to avoid clock jitter
 
     @note   For output frequencies > 150MHz, you must set the divider
@@ -484,20 +484,23 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
   sendBuffer[7] = (P2 & 0xFF00) >> 8;
   sendBuffer[8] = P2 & 0xFF;
   ASSERT_STATUS(writeN(sendBuffer, 9));
-  
+
   /* Set phase offset */
   switch (output) {
   case 0:
-    ASSERT_STATUS(write8(SI5351_REGISTER_165_CLK0_INITIAL_PHASE_OFFSET, phaseOffset));
+    ASSERT_STATUS(
+        write8(SI5351_REGISTER_165_CLK0_INITIAL_PHASE_OFFSET, phaseOffset));
     break;
   case 1:
-    ASSERT_STATUS(write8(SI5351_REGISTER_166_CLK1_INITIAL_PHASE_OFFSET, phaseOffset));
+    ASSERT_STATUS(
+        write8(SI5351_REGISTER_166_CLK1_INITIAL_PHASE_OFFSET, phaseOffset));
     break;
   case 2:
-    ASSERT_STATUS(write8(SI5351_REGISTER_167_CLK2_INITIAL_PHASE_OFFSET, phaseOffset));
+    ASSERT_STATUS(
+        write8(SI5351_REGISTER_167_CLK2_INITIAL_PHASE_OFFSET, phaseOffset));
     break;
   }
-  
+
   /* Configure the clk control and enable the output */
   /* TODO: Check if the clk control byte needs to be updated. */
   uint8_t clkControlReg = 0x0F; /* 8mA drive strength, MS0 as CLK0 source, Clock
@@ -517,7 +520,7 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
     ASSERT_STATUS(write8(SI5351_REGISTER_18_CLK2_CONTROL, clkControlReg));
     break;
   }
-  
+
   /* Reset PLL */
   switch (pllSource) {
   case SI5351_PLL_A:
@@ -526,7 +529,7 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
   default:
     ASSERT_STATUS(write8(SI5351_REGISTER_177_PLL_RESET, (1 << 7)));
   }
-  
+
   return ERROR_NONE;
 }
 

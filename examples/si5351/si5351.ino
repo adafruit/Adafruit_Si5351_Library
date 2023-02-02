@@ -7,17 +7,18 @@ Adafruit_SI5351 clockgen = Adafruit_SI5351();
     Arduino setup function (automatically called at startup)
 */
 /**************************************************************************/
-void setup(void)
-{
+void setup(void) {
   Serial.begin(9600);
-  Serial.println("Si5351 Clockgen Test"); Serial.println("");
+  Serial.println("Si5351 Clockgen Test");
+  Serial.println("");
 
   /* Initialise the sensor */
-  if (clockgen.begin() != ERROR_NONE)
-  {
+  if (clockgen.begin() != ERROR_NONE) {
     /* There was a problem detecting the IC ... check your connections */
-    Serial.print("Ooops, no Si5351 detected ... Check your wiring or I2C ADDR!");
-    while(1);
+    Serial.print(
+        "Ooops, no Si5351 detected ... Check your wiring or I2C ADDR!");
+    while (1)
+      ;
   }
 
   Serial.println("OK!");
@@ -57,6 +58,4 @@ void setup(void)
     should go here)
 */
 /**************************************************************************/
-void loop(void)
-{
-}
+void loop(void) {}
