@@ -36,7 +36,7 @@ void setup(void)
   /* Setup Multisynth 1 to 13.55311MHz (PLLB/45.5) */
   clockgen.setupPLL(SI5351_PLL_B, 24, 2, 3);
   Serial.println("Set Output #1 to 13.553115MHz");
-  clockgen.setupMultisynth(1, SI5351_PLL_B, 45, 1, 2);
+  clockgen.setupMultisynth(1, SI5351_PLL_B, 45, 1, 2, 0);
 
   /* Multisynth 2 is not yet used and won't be enabled, but can be */
   /* Use PLLB @ 616.66667MHz, then divide by 900 -> 685.185 KHz */
@@ -44,7 +44,7 @@ void setup(void)
   /* configured using either PLL in either integer or fractional mode */
 
   Serial.println("Set Output #2 to 10.706 KHz");
-  clockgen.setupMultisynth(2, SI5351_PLL_B, 900, 0, 1);
+  clockgen.setupMultisynth(2, SI5351_PLL_B, 900, 0, 1, 0);
   clockgen.setupRdiv(2, SI5351_R_DIV_64);
 
   /* Enable the clocks */
