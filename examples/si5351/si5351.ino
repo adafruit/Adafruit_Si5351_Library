@@ -7,17 +7,18 @@ Adafruit_SI5351 clockgen = Adafruit_SI5351();
     Arduino setup function (automatically called at startup)
 */
 /**************************************************************************/
-void setup(void)
-{
+void setup(void) {
   Serial.begin(9600);
-  Serial.println("Si5351 Clockgen Test"); Serial.println("");
+  Serial.println("Si5351 Clockgen Test");
+  Serial.println("");
 
   /* Initialise the sensor */
-  if (clockgen.begin() != ERROR_NONE)
-  {
+  if (clockgen.begin() != ERROR_NONE) {
     /* There was a problem detecting the IC ... check your connections */
-    Serial.print("Ooops, no Si5351 detected ... Check your wiring or I2C ADDR!");
-    while(1);
+    Serial.print(
+        "Ooops, no Si5351 detected ... Check your wiring or I2C ADDR!");
+    while (1)
+      ;
   }
 
   Serial.println("OK!");
@@ -36,7 +37,7 @@ void setup(void)
   /* Setup Multisynth 1 to 13.55311MHz (PLLB/45.5) */
   clockgen.setupPLL(SI5351_PLL_B, 24, 2, 3);
   Serial.println("Set Output #1 to 13.553115MHz");
-  clockgen.setupMultisynth(1, SI5351_PLL_B, 45, 1, 2);
+  clockgen.setupMultisynth(1, SI5351_PLL_B, 45, 1, 2, 0);
 
   /* Multisynth 2 is not yet used and won't be enabled, but can be */
   /* Use PLLB @ 616.66667MHz, then divide by 900 -> 685.185 KHz */
@@ -44,7 +45,7 @@ void setup(void)
   /* configured using either PLL in either integer or fractional mode */
 
   Serial.println("Set Output #2 to 10.706 KHz");
-  clockgen.setupMultisynth(2, SI5351_PLL_B, 900, 0, 1);
+  clockgen.setupMultisynth(2, SI5351_PLL_B, 900, 0, 1, 0);
   clockgen.setupRdiv(2, SI5351_R_DIV_64);
 
   /* Enable the clocks */
@@ -57,6 +58,4 @@ void setup(void)
     should go here)
 */
 /**************************************************************************/
-void loop(void)
-{
-}
+void loop(void) {}
