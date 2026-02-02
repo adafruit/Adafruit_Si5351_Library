@@ -410,6 +410,7 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
   ASSERT(denom > 0, ERROR_INVALIDPARAMETER);        /* Avoid divide by zero */
   ASSERT(num <= 0xFFFFF, ERROR_INVALIDPARAMETER);   /* 20-bit limit */
   ASSERT(denom <= 0xFFFFF, ERROR_INVALIDPARAMETER); /* 20-bit limit */
+  ASSERT(((num == 0) || (div == 8)), ERROR_INVALIDPARAMETER); /* Fractional division in an output multisynth is only allowed if the integer part of the divisor is 8 */
 
   /* Make sure the requested PLL has been initialised */
   if (pllSource == SI5351_PLL_A) {
@@ -440,7 +441,7 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
     /* Integer mode */
     P1 = 128 * div - 512;
     P2 = 0;
-    P3 = denom;
+    P3 = 1; /* the denominator doesn't matter for integer division, and it's required to be set to 1 for according to section 4.1.3 of app note AN619 for frequencies above 150 MHz, so just set it to 1 for all integral division. */
   } else if (denom == 1) {
     /* Fractional mode, simplified calculations */
     P1 = 128 * div + 128 * num - 512;
@@ -474,7 +475,7 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
   sendBuffer[0] = baseaddr;
   sendBuffer[1] = (P3 & 0xFF00) >> 8;
   sendBuffer[2] = P3 & 0xFF;
-  sendBuffer[3] = ((P1 & 0x30000) >> 16) | lastRdivValue[output];
+  sendBuffer[3] = ((P1 & 0x30000) >> 16) | lastRdivValue[output] | (div==4?0B1100:0B0000); /* this sets the DIVBY4 bits if needed */
   sendBuffer[4] = (P1 & 0xFF00) >> 8;
   sendBuffer[5] = P1 & 0xFF;
   sendBuffer[6] = ((P3 & 0xF0000) >> 12) | ((P2 & 0xF0000) >> 16);
