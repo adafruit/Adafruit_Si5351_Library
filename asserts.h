@@ -17,11 +17,11 @@
     @endcode
 */
 /**************************************************************************/
-#define ASSERT(condition, returnValue)                                         \
-  do {                                                                         \
-    if (!(condition)) {                                                        \
-      return (returnValue);                                                    \
-    }                                                                          \
+#define ASSERT(condition, returnValue) \
+  do {                                 \
+    if (!(condition)) {                \
+      return (returnValue);            \
+    }                                  \
   } while (0)
 
 /**************************************************************************/
@@ -41,12 +41,12 @@
     @endcode
 */
 /**************************************************************************/
-#define ASSERT_STATUS(sts)                                                     \
-  do {                                                                         \
-    err_t status = (sts);                                                      \
-    if (ERROR_NONE != status) {                                                \
-      return status;                                                           \
-    }                                                                          \
+#define ASSERT_STATUS(sts)      \
+  do {                          \
+    err_t status = (sts);       \
+    if (ERROR_NONE != status) { \
+      return status;            \
+    }                           \
   } while (0)
 
 #endif

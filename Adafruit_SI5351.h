@@ -10,7 +10,7 @@
 #else
 #include <WProgram.h>
 #endif
-//#include <Adafruit_Sensor.h>
+// #include <Adafruit_Sensor.h>
 #include <Adafruit_I2CDevice.h>
 
 #include "asserts.h"
@@ -270,10 +270,10 @@ typedef struct {
  * @brief SI5351 class
  */
 class Adafruit_SI5351 {
-public:
+ public:
   Adafruit_SI5351(void); //!< SI5351 object
 
-  err_t begin(TwoWire *theWire = &Wire); //!< @return ERROR_NONE
+  err_t begin(TwoWire* theWire = &Wire); //!< @return ERROR_NONE
   err_t setClockBuilderData(void);       //!< @return ERROR_NONE
   err_t setupPLL(si5351PLL_t pll, uint8_t mult, uint32_t num,
                  uint32_t denom);                   //!< @return ERROR_NONE
@@ -291,13 +291,13 @@ public:
    */
   err_t setupRdiv(uint8_t output, si5351RDiv_t div); //!< @return ERROR_NONE
 
-private:
+ private:
   si5351Config_t m_si5351Config;
 
-  Adafruit_I2CDevice *i2c_dev = NULL; ///< Pointer to I2C bus interface
+  Adafruit_I2CDevice* i2c_dev = NULL; ///< Pointer to I2C bus interface
   err_t write8(uint8_t reg, uint8_t value);
-  err_t read8(uint8_t reg, uint8_t *value);
-  err_t writeN(uint8_t *data, uint8_t n);
+  err_t read8(uint8_t reg, uint8_t* value);
+  err_t writeN(uint8_t* data, uint8_t n);
 
   uint8_t lastRdivValue[3];
 };

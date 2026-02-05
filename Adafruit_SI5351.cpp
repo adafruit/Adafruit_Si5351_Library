@@ -52,12 +52,11 @@
 #elif defined(ESP8266) || defined(ESP32)
 #include "pgmspace.h"
 #else
-#define pgm_read_byte(addr)                                                    \
-  (*(const unsigned char *)(addr)) //!< Reads byte from address
+#define pgm_read_byte(addr) \
+  (*(const unsigned char*)(addr)) //!< Reads byte from address
 #endif
-#include <stdlib.h>
-
 #include <Adafruit_SI5351.h>
+#include <stdlib.h>
 
 /**************************************************************************/
 /*!
@@ -87,7 +86,7 @@ Adafruit_SI5351::Adafruit_SI5351(void) {
     @param  theWire The I2C (Wire) bus to use.
 */
 /**************************************************************************/
-err_t Adafruit_SI5351::begin(TwoWire *theWire) {
+err_t Adafruit_SI5351::begin(TwoWire* theWire) {
   /* Initialise I2C */
   if (i2c_dev)
     delete i2c_dev;
@@ -457,15 +456,15 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
   /* Get the appropriate starting point for the PLL registers */
   uint8_t baseaddr = 0;
   switch (output) {
-  case 0:
-    baseaddr = SI5351_REGISTER_42_MULTISYNTH0_PARAMETERS_1;
-    break;
-  case 1:
-    baseaddr = SI5351_REGISTER_50_MULTISYNTH1_PARAMETERS_1;
-    break;
-  case 2:
-    baseaddr = SI5351_REGISTER_58_MULTISYNTH2_PARAMETERS_1;
-    break;
+    case 0:
+      baseaddr = SI5351_REGISTER_42_MULTISYNTH0_PARAMETERS_1;
+      break;
+    case 1:
+      baseaddr = SI5351_REGISTER_50_MULTISYNTH1_PARAMETERS_1;
+      break;
+    case 2:
+      baseaddr = SI5351_REGISTER_58_MULTISYNTH2_PARAMETERS_1;
+      break;
   }
 
   /* Set the MSx config registers */
@@ -491,15 +490,15 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
   if (num == 0)
     clkControlReg |= (1 << 6); /* Integer mode */
   switch (output) {
-  case 0:
-    ASSERT_STATUS(write8(SI5351_REGISTER_16_CLK0_CONTROL, clkControlReg));
-    break;
-  case 1:
-    ASSERT_STATUS(write8(SI5351_REGISTER_17_CLK1_CONTROL, clkControlReg));
-    break;
-  case 2:
-    ASSERT_STATUS(write8(SI5351_REGISTER_18_CLK2_CONTROL, clkControlReg));
-    break;
+    case 0:
+      ASSERT_STATUS(write8(SI5351_REGISTER_16_CLK0_CONTROL, clkControlReg));
+      break;
+    case 1:
+      ASSERT_STATUS(write8(SI5351_REGISTER_17_CLK1_CONTROL, clkControlReg));
+      break;
+    case 2:
+      ASSERT_STATUS(write8(SI5351_REGISTER_18_CLK2_CONTROL, clkControlReg));
+      break;
   }
 
   return ERROR_NONE;
@@ -561,7 +560,7 @@ err_t Adafruit_SI5351::write8(uint8_t reg, uint8_t value) {
   }
 }
 
-err_t Adafruit_SI5351::writeN(uint8_t *data, uint8_t n) {
+err_t Adafruit_SI5351::writeN(uint8_t* data, uint8_t n) {
   if (i2c_dev->write(data, n)) {
     return ERROR_NONE;
   } else {
@@ -574,7 +573,7 @@ err_t Adafruit_SI5351::writeN(uint8_t *data, uint8_t n) {
     @brief  Reads an 8 bit value over I2C
 */
 /**************************************************************************/
-err_t Adafruit_SI5351::read8(uint8_t reg, uint8_t *value) {
+err_t Adafruit_SI5351::read8(uint8_t reg, uint8_t* value) {
   if (i2c_dev->write_then_read(&reg, 1, value, 1)) {
     return ERROR_NONE;
   } else {
