@@ -51,6 +51,8 @@
 #include <util/delay.h>
 #elif defined(ESP8266) || defined(ESP32)
 #include "pgmspace.h"
+#elif defined(ARDUINO_ARCH_RP2040) && !defined(__MBED__)
+#include "pgmspace.h"
 #else
 #define pgm_read_byte(addr) \
   (*(const unsigned char*)(addr)) //!< Reads byte from address
