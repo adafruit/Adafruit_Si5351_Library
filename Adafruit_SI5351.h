@@ -282,6 +282,10 @@ class Adafruit_SI5351 {
                         uint32_t num, uint32_t denom); //!< @return ERROR_NONE
   err_t setupMultisynthInt(uint8_t output, si5351PLL_t pllSource,
                            si5351MultisynthDiv_t div); //!< @return ERROR_NONE
+  err_t setupMultisynth6(si5351PLL_t pllSource,
+                         uint8_t div); //!< @return ERROR_NONE
+  err_t setupMultisynth7(si5351PLL_t pllSource,
+                         uint8_t div); //!< @return ERROR_NONE
 
   err_t enableSpreadSpectrum(bool enabled);
   err_t enableOutputs(bool enabled);
@@ -299,7 +303,7 @@ class Adafruit_SI5351 {
   err_t read8(uint8_t reg, uint8_t* value);
   err_t writeN(uint8_t* data, uint8_t n);
 
-  uint8_t lastRdivValue[3];
+  uint8_t lastRdivValue[6];
 };
 
 #endif
