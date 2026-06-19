@@ -56,6 +56,7 @@
 #define pgm_read_byte(addr) \
   (*(const unsigned char*)(addr)) //!< Reads byte from address
 #endif
+#include <Adafruit_BusIO_Register.h>
 #include <Adafruit_SI5351.h>
 #include <stdlib.h>
 
@@ -318,7 +319,7 @@ err_t Adafruit_SI5351::setupMultisynthInt(uint8_t output, si5351PLL_t pllSource,
 err_t Adafruit_SI5351::setupRdiv(uint8_t output, si5351RDiv_t div) {
   ASSERT(output < 3, ERROR_INVALIDPARAMETER); /* Channel range */
 
-  uint8_t Rreg, regval;
+  uint8_t Rreg;
 
   if (output == 0)
     Rreg = SI5351_REGISTER_44_MULTISYNTH0_PARAMETERS_3;
@@ -327,15 +328,17 @@ err_t Adafruit_SI5351::setupRdiv(uint8_t output, si5351RDiv_t div) {
   if (output == 2)
     Rreg = SI5351_REGISTER_60_MULTISYNTH2_PARAMETERS_3;
 
-  read8(Rreg, &regval);
+  /* The R divider is a 3-bit field occupying bits 4..6 of the register. */
+  Adafruit_BusIO_Register rdiv_reg(i2c_dev, Rreg);
+  Adafruit_BusIO_RegisterBits rdiv_bits(&rdiv_reg, 3, 4);
 
-  regval &= 0x0F;
-  uint8_t divider = div;
-  divider &= 0x07;
-  divider <<= 4;
-  regval |= divider;
-  lastRdivValue[output] = divider;
-  return write8(Rreg, regval);
+  uint8_t divider = div & 0x07;
+  if (!rdiv_bits.write(divider))
+    return ERROR_I2C_TRANSACTION;
+
+  /* Cache the shifted value for reuse in setupMultisynth's parameter buffer. */
+  lastRdivValue[output] = divider << 4;
+  return ERROR_NONE;
 }
 
 /**************************************************************************/
@@ -531,14 +534,13 @@ err_t Adafruit_SI5351::enableOutputs(bool enabled) {
 */
 /**************************************************************************/
 err_t Adafruit_SI5351::enableSpreadSpectrum(bool enabled) {
-  uint8_t regval;
-  ASSERT_STATUS(read8(SI5351_REGISTER_149_SPREAD_SPECTRUM_PARAMETERS, &regval));
-  if (enabled) {
-    regval |= 0x80;
-  } else {
-    regval &= ~0x80;
-  }
-  ASSERT_STATUS(write8(SI5351_REGISTER_149_SPREAD_SPECTRUM_PARAMETERS, regval));
+  /* Spread spectrum enable is a single bit (bit 7) of register 149. */
+  Adafruit_BusIO_Register ssc_reg(
+      i2c_dev, SI5351_REGISTER_149_SPREAD_SPECTRUM_PARAMETERS);
+  Adafruit_BusIO_RegisterBits ssc_enable(&ssc_reg, 1, 7);
+
+  if (!ssc_enable.write(enabled ? 1 : 0))
+    return ERROR_I2C_TRANSACTION;
 
   return ERROR_NONE;
 }
