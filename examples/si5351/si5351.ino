@@ -10,6 +10,8 @@ Adafruit_SI5351 clockgen = Adafruit_SI5351();
 void setup(void)
 {
   Serial.begin(9600);
+  while (!Serial)
+    delay(10); // wait for native USB (e.g. RP2040, SAMD)
   Serial.println("Si5351 Clockgen Test"); Serial.println("");
 
   /* Initialise the sensor */
