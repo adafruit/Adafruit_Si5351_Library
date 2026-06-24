@@ -504,6 +504,8 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
      this register). In this mode P1/P2/P3 are forced to 0/0/1 (handled below).
      Without these bits a div==4 config is rejected and the output is silent. */
   if (div == 4) {
+    /* DIVBY4 mode is integer-only; a fractional div==4 is invalid. */
+    ASSERT(num == 0, ERROR_INVALIDPARAMETER);
     sendBuffer[3] |= 0x0C;
   }
   sendBuffer[4] = (P1 & 0xFF00) >> 8;
