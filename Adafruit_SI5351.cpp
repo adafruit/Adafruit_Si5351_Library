@@ -667,6 +667,60 @@ err_t Adafruit_SI5351::enableOutputs(bool enabled) {
 
 /**************************************************************************/
 /*!
+    @brief  Reads the current device status register.
+
+    @param  device_status Pointer to where register 0 value will be stored.
+    @return ERROR_NONE on success, or an I2C/parameter error.
+*/
+/**************************************************************************/
+err_t Adafruit_SI5351::readDeviceStatus(uint8_t* device_status) {
+  ASSERT(device_status != NULL, ERROR_INVALIDPARAMETER);
+  ASSERT_STATUS(read8(SI5351_REGISTER_0_DEVICE_STATUS, device_status));
+  return ERROR_NONE;
+}
+
+/**************************************************************************/
+/*!
+    @brief  Reads the sticky interrupt status register.
+
+    @param  sticky Pointer to where register 1 value will be stored.
+    @return ERROR_NONE on success, or an I2C/parameter error.
+*/
+/**************************************************************************/
+err_t Adafruit_SI5351::readStickyStatus(uint8_t* sticky) {
+  ASSERT(sticky != NULL, ERROR_INVALIDPARAMETER);
+  ASSERT_STATUS(read8(SI5351_REGISTER_1_INTERRUPT_STATUS_STICKY, sticky));
+  return ERROR_NONE;
+}
+
+/**************************************************************************/
+/*!
+    @brief  Clears all sticky interrupt flags.
+
+    @return ERROR_NONE on success, or ERROR_I2C_TRANSACTION on failure.
+*/
+/**************************************************************************/
+err_t Adafruit_SI5351::clearStickyStatus(void) {
+  ASSERT_STATUS(write8(SI5351_REGISTER_1_INTERRUPT_STATUS_STICKY, 0x00));
+  return ERROR_NONE;
+}
+
+/**************************************************************************/
+/*!
+    @brief  Sets the interrupt status mask register.
+
+    @param  mask Register 2 bitmask where 1 masks (disables) an interrupt
+   source.
+    @return ERROR_NONE on success, or ERROR_I2C_TRANSACTION on failure.
+*/
+/**************************************************************************/
+err_t Adafruit_SI5351::setInterruptMask(uint8_t mask) {
+  ASSERT_STATUS(write8(SI5351_REGISTER_2_INTERRUPT_STATUS_MASK, mask));
+  return ERROR_NONE;
+}
+
+/**************************************************************************/
+/*!
     @brief  Enables or disables spread spectrum
     @param  enabled Whether spread spectrum output is enabled
     @return ERROR_NONE

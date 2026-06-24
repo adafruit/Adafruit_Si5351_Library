@@ -219,6 +219,11 @@ enum {
   SI5351_REGISTER_183_CRYSTAL_INTERNAL_LOAD_CAPACITANCE = 183
 };
 
+#define SI5351_STATUS_SYS_INIT (1 << 7)  ///< Device initializing
+#define SI5351_STATUS_LOL_B (1 << 6)     ///< PLL B loss of lock
+#define SI5351_STATUS_LOL_A (1 << 5)     ///< PLL A loss of lock
+#define SI5351_STATUS_LOS_CLKIN (1 << 4) ///< CLKIN loss of signal (Si5351C)
+
 typedef enum {
   SI5351_PLL_A = 0,
   SI5351_PLL_B,
@@ -285,6 +290,12 @@ class Adafruit_SI5351 {
 
   err_t enableSpreadSpectrum(bool enabled);
   err_t enableOutputs(bool enabled);
+  err_t readDeviceStatus(
+      uint8_t* device_status);             //!< Read register 0 status byte
+  err_t readStickyStatus(uint8_t* sticky); //!< Read register 1 sticky byte
+  err_t clearStickyStatus(void);           //!< Clear register 1 sticky flags
+  err_t setInterruptMask(
+      uint8_t mask); //!< Write register 2 interrupt mask byte
   /*!
    * @param output Enables or disables output
    * @param div Set of output divider values (2^n, n=1..7)
