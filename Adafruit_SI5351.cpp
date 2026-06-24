@@ -499,6 +499,13 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
   sendBuffer[1] = (P3 & 0xFF00) >> 8;
   sendBuffer[2] = P3 & 0xFF;
   sendBuffer[3] = ((P1 & 0x30000) >> 16) | lastRdivValue[output];
+  /* AN619 sec 4.1.3: for fout > 150 MHz the MultiSynth must run in DIVBY4
+     mode with a divider of exactly 4. Set MSx_DIVBY4[1:0] = 0b11 (bits 3:2 of
+     this register). In this mode P1/P2/P3 are forced to 0/0/1 (handled below).
+     Without these bits a div==4 config is rejected and the output is silent. */
+  if (div == 4) {
+    sendBuffer[3] |= 0x0C;
+  }
   sendBuffer[4] = (P1 & 0xFF00) >> 8;
   sendBuffer[5] = P1 & 0xFF;
   sendBuffer[6] = ((P3 & 0xF0000) >> 12) | ((P2 & 0xF0000) >> 16);
