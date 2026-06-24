@@ -374,6 +374,98 @@ err_t Adafruit_SI5351::setupRdiv(uint8_t output, si5351RDiv_t div) {
 
 /**************************************************************************/
 /*!
+    @brief  Automatically computes and applies the PLL multiplier,
+            Multisynth divider and R divider needed to generate a desired
+            output frequency on a given channel, then configures the
+            hardware. This is a convenience wrapper over setupPLL(),
+            setupMultisynth() and setupRdiv().
+
+    @param  output  The output channel to use (0..2).
+    @param  pll     The PLL to drive this output, either SI5351_PLL_A or
+                    SI5351_PLL_B. The caller selects the PLL; note that any
+                    other output already sharing this PLL will be retuned.
+    @param  freq    Desired output frequency in Hz (8000 .. 150000000).
+
+    @return ERROR_NONE on success, or ERROR_INVALIDPARAMETER if the
+            requested frequency cannot be synthesised within the
+            hardware limits.
+
+    @section Algorithm
+
+    The output is generated as:
+
+        fOUT = (fXTAL * (M)) / (D * R)
+
+    where fXTAL is the 25 MHz reference, M = a + b/c is the fractional
+    PLL feedback multiplier, D is the (integer) Multisynth divider and
+    R is the output R divider (1..128). To keep output jitter low the
+    fractional part is placed entirely on the PLL while the Multisynth
+    runs in integer mode.
+
+    The solver:
+      1. Applies the R divider (doubling until the pre-R frequency is at
+         least 600 kHz) so low frequencies stay within Multisynth range.
+      2. Chooses the largest even Multisynth divider D that keeps the VCO
+         within its 600..900 MHz lock range.
+      3. Computes the fractional PLL multiplier M to hit the VCO target,
+         using a denominator of 1048575 for maximum resolution.
+
+    @note   Frequencies above 150 MHz require the DIVBY4 path and are not
+            yet supported; they return ERROR_INVALIDPARAMETER.
+
+    @note   The output is left enabled/disabled exactly as it was; call
+            enableOutputs() as needed.
+*/
+/**************************************************************************/
+err_t Adafruit_SI5351::setFrequency(uint8_t output, si5351PLL_t pll,
+                                    uint32_t freq) {
+  ASSERT(m_si5351Config.initialised, ERROR_DEVICENOTINITIALISED);
+  /* Channel range: limited to 0..2 until the 8-channel expansion lands. */
+  ASSERT(output < 3, ERROR_INVALIDPARAMETER);
+  ASSERT(freq >= 8000UL, ERROR_INVALIDPARAMETER);
+  ASSERT(freq <= 150000000UL, ERROR_INVALIDPARAMETER);
+
+  const uint32_t fxtal = m_si5351Config.crystalFreq; /* 25 MHz */
+  const uint32_t vco_min = 600000000UL;
+  const uint32_t vco_max = 900000000UL;
+  const uint32_t ms_min = 600000UL; /* keeps Multisynth divider <= 1800 */
+  const uint32_t denom = 0xFFFFFUL; /* 1048575, max fractional resolution */
+
+  /* Step 1: engage the R divider until the pre-R frequency is in range. */
+  uint32_t f_ms = freq;
+  uint8_t rdiv = 0;
+  while ((f_ms < ms_min) && (rdiv < 7)) {
+    f_ms <<= 1;
+    rdiv++;
+  }
+
+  /* Step 2: largest even Multisynth divider keeping the VCO in band. */
+  uint32_t D = vco_max / f_ms;
+  if (D > 1800UL)
+    D = 1800UL;
+  D &= ~1UL; /* force even for lowest jitter */
+  if (D < 6UL)
+    D = 6UL;
+
+  uint32_t fvco = f_ms * D;
+  ASSERT((fvco >= vco_min) && (fvco <= vco_max), ERROR_INVALIDPARAMETER);
+
+  /* Step 3: fractional PLL multiplier M = mult + num/denom. */
+  uint32_t mult = fvco / fxtal;
+  uint32_t rem = fvco % fxtal;
+  uint32_t num = (uint32_t)(((uint64_t)rem * denom) / fxtal);
+  ASSERT((mult >= 15UL) && (mult <= 90UL), ERROR_INVALIDPARAMETER);
+
+  /* Apply: PLL (fractional) -> Multisynth (integer) -> R divider. */
+  ASSERT_STATUS(setupPLL(pll, (uint8_t)mult, num, denom));
+  ASSERT_STATUS(setupMultisynth(output, pll, D, 0, 1));
+  ASSERT_STATUS(setupRdiv(output, (si5351RDiv_t)rdiv));
+
+  return ERROR_NONE;
+}
+
+/**************************************************************************/
+/*!
     @brief  Configures the Multisynth divider, which determines the
             output clock frequency based on the specified PLL input.
 

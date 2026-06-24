@@ -291,6 +291,16 @@ class Adafruit_SI5351 {
    */
   err_t setupRdiv(uint8_t output, si5351RDiv_t div); //!< @return ERROR_NONE
 
+  /*!
+   * @brief Auto-compute and apply PLL/Multisynth/R-divider for a target
+   *        output frequency.
+   * @param output Channel to configure (0..2).
+   * @param pll    PLL to drive the output (SI5351_PLL_A or SI5351_PLL_B).
+   * @param freq   Desired output frequency in Hz (8000 .. 150000000).
+   * @return ERROR_NONE on success, ERROR_INVALIDPARAMETER if unreachable.
+   */
+  err_t setFrequency(uint8_t output, si5351PLL_t pll, uint32_t freq);
+
  private:
   si5351Config_t m_si5351Config;
 
