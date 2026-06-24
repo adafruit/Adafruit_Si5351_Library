@@ -75,7 +75,7 @@ Adafruit_SI5351::Adafruit_SI5351(void) {
   m_si5351Config.pllb_configured = false;
   m_si5351Config.pllb_freq = 0;
 
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < 6; i++) {
     lastRdivValue[i] = 0;
   }
 }
@@ -298,35 +298,66 @@ err_t Adafruit_SI5351::setupPLL(si5351PLL_t pll, uint8_t mult, uint32_t num,
 
 /**************************************************************************/
 /*!
-    @brief  Configures the Multisynth divider using integer output.
+    @brief  Configures a Multisynth divider in integer mode.
 
-    @param  output    The output channel to use (0..2)
-    @param  pllSource	The PLL input source to use, which must be one of:
+    Outputs 0..5 use the full fractional MultiSynths driven in integer mode
+    (num=0, denom=1). Outputs 6 and 7 are hardware integer-only MultiSynths
+    controlled by a single divider register each (regs 90/91), and are
+    handled separately here.
+
+    @param  output    The output channel to configure (0..7).
+    @param  pllSource The PLL input source to use, which must be one of:
                       - SI5351_PLL_A
                       - SI5351_PLL_B
-    @param  div       The integer divider for the Multisynth output,
-                      which must be one of the following values:
-                      - SI5351_MULTISYNTH_DIV_4
-                      - SI5351_MULTISYNTH_DIV_6
-                      - SI5351_MULTISYNTH_DIV_8
+    @param  div       The integer divider. For CLK0..CLK5 use one of
+                      SI5351_MULTISYNTH_DIV_4/6/8. For CLK6/CLK7 use an
+                      even value in the range 6..254.
+    @return ERROR_NONE on success, otherwise an appropriate error code.
 */
 /**************************************************************************/
 err_t Adafruit_SI5351::setupMultisynthInt(uint8_t output, si5351PLL_t pllSource,
-                                          si5351MultisynthDiv_t div) {
+                                          uint8_t div) {
+  /* CLK6 and CLK7 are integer-only MultiSynths with a single divider
+     register each (regs 90/91), configured separately from CLK0..CLK5. */
+  if ((output == 6) || (output == 7)) {
+    ASSERT(m_si5351Config.initialised, ERROR_DEVICENOTINITIALISED);
+    ASSERT(div >= 6, ERROR_INVALIDPARAMETER);
+    ASSERT(div <= 254, ERROR_INVALIDPARAMETER);
+    ASSERT((div % 2) == 0, ERROR_INVALIDPARAMETER); /* Must be even */
+
+    if (pllSource == SI5351_PLL_A) {
+      ASSERT(m_si5351Config.plla_configured, ERROR_INVALIDPARAMETER);
+    } else {
+      ASSERT(m_si5351Config.pllb_configured, ERROR_INVALIDPARAMETER);
+    }
+
+    uint8_t paramReg = (output == 6)
+                           ? SI5351_REGISTER_90_MULTISYNTH6_PARAMETERS
+                           : SI5351_REGISTER_91_MULTISYNTH7_PARAMETERS;
+    uint8_t ctrlReg = (output == 6) ? SI5351_REGISTER_22_CLK6_CONTROL
+                                    : SI5351_REGISTER_23_CLK7_CONTROL;
+
+    ASSERT_STATUS(write8(paramReg, div));
+
+    uint8_t clkControlReg = 0x0C; /* 8mA drive, not inverted, powered up */
+    if (pllSource == SI5351_PLL_B)
+      clkControlReg |= (1 << 5); /* Uses PLLB */
+    clkControlReg |= (1 << 6);   /* Integer mode (always for MS6/MS7) */
+
+    ASSERT_STATUS(write8(ctrlReg, clkControlReg));
+
+    return ERROR_NONE;
+  }
+
+  /* CLK0..CLK5: integer-mode output via the full fractional Multisynth. */
   return setupMultisynth(output, pllSource, div, 0, 1);
 }
 
 err_t Adafruit_SI5351::setupRdiv(uint8_t output, si5351RDiv_t div) {
-  ASSERT(output < 3, ERROR_INVALIDPARAMETER); /* Channel range */
+  ASSERT(output < 6, ERROR_INVALIDPARAMETER); /* Channel range (CLK0..CLK5) */
 
-  uint8_t Rreg;
-
-  if (output == 0)
-    Rreg = SI5351_REGISTER_44_MULTISYNTH0_PARAMETERS_3;
-  if (output == 1)
-    Rreg = SI5351_REGISTER_52_MULTISYNTH1_PARAMETERS_3;
-  if (output == 2)
-    Rreg = SI5351_REGISTER_60_MULTISYNTH2_PARAMETERS_3;
+  /* MSx_PARAMETERS_3 registers are 8 bytes apart (44, 52, 60, ...). */
+  uint8_t Rreg = SI5351_REGISTER_44_MULTISYNTH0_PARAMETERS_3 + (output * 8);
 
   /* The R divider is a 3-bit field occupying bits 4..6 of the register. */
   Adafruit_BusIO_Register rdiv_reg(i2c_dev, Rreg);
@@ -407,7 +438,7 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
 
   /* Basic validation */
   ASSERT(m_si5351Config.initialised, ERROR_DEVICENOTINITIALISED);
-  ASSERT(output < 3, ERROR_INVALIDPARAMETER);       /* Channel range */
+  ASSERT(output < 6, ERROR_INVALIDPARAMETER);       /* Channel range (CLK0..5)*/
   ASSERT(div > 3, ERROR_INVALIDPARAMETER);          /* Divider integer value */
   ASSERT(div < 2049, ERROR_INVALIDPARAMETER);       /* Divider integer value */
   ASSERT(denom > 0, ERROR_INVALIDPARAMETER);        /* Avoid divide by zero */
@@ -458,18 +489,8 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
   }
 
   /* Get the appropriate starting point for the PLL registers */
-  uint8_t baseaddr = 0;
-  switch (output) {
-    case 0:
-      baseaddr = SI5351_REGISTER_42_MULTISYNTH0_PARAMETERS_1;
-      break;
-    case 1:
-      baseaddr = SI5351_REGISTER_50_MULTISYNTH1_PARAMETERS_1;
-      break;
-    case 2:
-      baseaddr = SI5351_REGISTER_58_MULTISYNTH2_PARAMETERS_1;
-      break;
-  }
+  /* MSx_PARAMETERS_1 registers are 8 bytes apart (42, 50, 58, ...). */
+  uint8_t baseaddr = SI5351_REGISTER_42_MULTISYNTH0_PARAMETERS_1 + (output * 8);
 
   /* Set the MSx config registers */
   /* Burst mode: register address auto-increases */
@@ -493,17 +514,9 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
     clkControlReg |= (1 << 5); /* Uses PLLB */
   if (num == 0)
     clkControlReg |= (1 << 6); /* Integer mode */
-  switch (output) {
-    case 0:
-      ASSERT_STATUS(write8(SI5351_REGISTER_16_CLK0_CONTROL, clkControlReg));
-      break;
-    case 1:
-      ASSERT_STATUS(write8(SI5351_REGISTER_17_CLK1_CONTROL, clkControlReg));
-      break;
-    case 2:
-      ASSERT_STATUS(write8(SI5351_REGISTER_18_CLK2_CONTROL, clkControlReg));
-      break;
-  }
+  /* CLK0..CLK5 control registers are contiguous (16..21). */
+  ASSERT_STATUS(
+      write8(SI5351_REGISTER_16_CLK0_CONTROL + output, clkControlReg));
 
   return ERROR_NONE;
 }
