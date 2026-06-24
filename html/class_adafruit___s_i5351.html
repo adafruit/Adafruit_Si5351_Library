@@ -101,7 +101,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a61b8afa0ac72529f8efbf7d4b2c2b66d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables all clock outputs.  <a href="#a61b8afa0ac72529f8efbf7d4b2c2b66d">More...</a><br /></td></tr>
 <tr class="separator:a61b8afa0ac72529f8efbf7d4b2c2b66d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63b092fb3d8f71d1c0f59716d4948a07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#a63b092fb3d8f71d1c0f59716d4948a07">setupRdiv</a> (uint8_t output, si5351RDiv_t div)</td></tr>
+<tr class="memdesc:a63b092fb3d8f71d1c0f59716d4948a07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the R divider for a given output channel.  <a href="#a63b092fb3d8f71d1c0f59716d4948a07">More...</a><br /></td></tr>
 <tr class="separator:a63b092fb3d8f71d1c0f59716d4948a07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43eaf5845fa56034b4958a0339230a6c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#a43eaf5845fa56034b4958a0339230a6c">setFrequency</a> (uint8_t output, si5351PLL_t pll, uint32_t freq)</td></tr>
+<tr class="memdesc:a43eaf5845fa56034b4958a0339230a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatically computes and applies the PLL multiplier, Multisynth divider and R divider needed to generate a desired output frequency on a given channel, then configures the hardware. This is a convenience wrapper over <a class="el" href="class_adafruit___s_i5351.html#a41a4de34f331294d79fdcc8cc7090916" title="Sets the multiplier for the specified PLL. ">setupPLL()</a>, <a class="el" href="class_adafruit___s_i5351.html#a7a38f8de810f72408156ba68ee3c04c4" title="Configures the Multisynth divider, which determines the output clock frequency based on the specified...">setupMultisynth()</a> and <a class="el" href="class_adafruit___s_i5351.html#a63b092fb3d8f71d1c0f59716d4948a07" title="Configures the R divider for a given output channel. ">setupRdiv()</a>.  <a href="#a43eaf5845fa56034b4958a0339230a6c">More...</a><br /></td></tr>
+<tr class="separator:a43eaf5845fa56034b4958a0339230a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>SI5351 class. </p>
@@ -491,6 +495,8 @@ For frequencies below 500kHz (down to 8kHz) Rx_DIV must be used, but this isn't 
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Configures the R divider for a given output channel. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">output</td><td>Enables or disables output </td></tr>
@@ -498,7 +504,84 @@ For frequencies below 500kHz (down to 8kHz) Rx_DIV must be used, but this isn't 
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>ERROR_NONE </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>ERROR_NONE</dd></dl>
+<p>The R divider provides a final power-of-two division stage (1..128) after the Multisynth, extending the usable output range down to low frequencies. It is a 3-bit field occupying bits 4..6 of the channel's MSx_PARAMETERS_3 register. The shifted value is cached in lastRdivValue[] so <a class="el" href="class_adafruit___s_i5351.html#a7a38f8de810f72408156ba68ee3c04c4" title="Configures the Multisynth divider, which determines the output clock frequency based on the specified...">setupMultisynth()</a> can preserve it when rewriting the same parameter byte.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">output</td><td>The output channel to configure (0..5). </td></tr>
+    <tr><td class="paramname">div</td><td>The R divider value, one of:<ul>
+<li>SI5351_R_DIV_1</li>
+<li>SI5351_R_DIV_2</li>
+<li>SI5351_R_DIV_4</li>
+<li>SI5351_R_DIV_8</li>
+<li>SI5351_R_DIV_16</li>
+<li>SI5351_R_DIV_32</li>
+<li>SI5351_R_DIV_64</li>
+<li>SI5351_R_DIV_128 </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ERROR_NONE on success, ERROR_INVALIDPARAMETER if the channel is out of range, or ERROR_I2C_TRANSACTION on a bus failure. </dd></dl>
+
+</div>
+</div>
+<a id="a43eaf5845fa56034b4958a0339230a6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43eaf5845fa56034b4958a0339230a6c">&#9670;&nbsp;</a></span>setFrequency()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a> Adafruit_SI5351::setFrequency </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">si5351PLL_t&#160;</td>
+          <td class="paramname"><em>pll</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>freq</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Automatically computes and applies the PLL multiplier, Multisynth divider and R divider needed to generate a desired output frequency on a given channel, then configures the hardware. This is a convenience wrapper over <a class="el" href="class_adafruit___s_i5351.html#a41a4de34f331294d79fdcc8cc7090916" title="Sets the multiplier for the specified PLL. ">setupPLL()</a>, <a class="el" href="class_adafruit___s_i5351.html#a7a38f8de810f72408156ba68ee3c04c4" title="Configures the Multisynth divider, which determines the output clock frequency based on the specified...">setupMultisynth()</a> and <a class="el" href="class_adafruit___s_i5351.html#a63b092fb3d8f71d1c0f59716d4948a07" title="Configures the R divider for a given output channel. ">setupRdiv()</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>ERROR_NONE</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">output</td><td>The output channel to use (0..2). </td></tr>
+    <tr><td class="paramname">pll</td><td>The PLL to drive this output, either SI5351_PLL_A or SI5351_PLL_B. The caller selects the PLL; note that any other output already sharing this PLL will be retuned. </td></tr>
+    <tr><td class="paramname">freq</td><td>Desired output frequency in Hz (8000 .. 150000000).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ERROR_NONE on success, or ERROR_INVALIDPARAMETER if the requested frequency cannot be synthesised within the hardware limits.</dd></dl>
+<h1><a class="anchor" id="Algorithm"></a>
+Algorithm</h1>
+<p>The output is generated as: </p><pre class="fragment">fOUT = (fXTAL * (M)) / (D * R)
+</pre><p>where fXTAL is the 25 MHz reference, M = a + b/c is the fractional PLL feedback multiplier, D is the (integer) Multisynth divider and R is the output R divider (1..128). To keep output jitter low the fractional part is placed entirely on the PLL while the Multisynth runs in integer mode.</p>
+<p>The solver:</p><ol type="1">
+<li>Applies the R divider (doubling until the pre-R frequency is at least 600 kHz) so low frequencies stay within Multisynth range.</li>
+<li>Chooses the largest even Multisynth divider D that keeps the VCO within its 600..900 MHz lock range.</li>
+<li>Computes the fractional PLL multiplier M to hit the VCO target, using a denominator of 1048575 for maximum resolution.</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>Frequencies above 150 MHz require the DIVBY4 path and are not yet supported; they return ERROR_INVALIDPARAMETER.</dd>
+<dd>
+The output is left enabled/disabled exactly as it was; call <a class="el" href="class_adafruit___s_i5351.html#a61b8afa0ac72529f8efbf7d4b2c2b66d" title="Enables or disables all clock outputs. ">enableOutputs()</a> as needed. </dd></dl>
 
 </div>
 </div>
