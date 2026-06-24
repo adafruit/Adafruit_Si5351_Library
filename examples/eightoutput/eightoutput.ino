@@ -25,8 +25,7 @@ void setup(void) {
 
   /* Initialise the IC */
   if (clockgen.begin() != ERROR_NONE) {
-    Serial.println(
-        "Ooops, no Si5351 detected ... Check your wiring or I2C ADDR!");
+    Serial.println("Si5351 not found - check wiring/I2C address!");
     while (1)
       delay(10);
   }
@@ -65,11 +64,11 @@ void setup(void) {
   /* ---- Integer-only outputs CLK6 and CLK7 (even divider 6..254) ---- */
   /* CLK6: 900 / 100 = 9 MHz from PLLA */
   Serial.println("Set CLK6 to 9 MHz (900 / 100, integer-only, from PLLA)");
-  clockgen.setupMultisynth6(SI5351_PLL_A, 100);
+  clockgen.setupMultisynthInteger(6, SI5351_PLL_A, 100);
   /* CLK7: 616.667 / 50 = 12.333 MHz from PLLB */
   Serial.println(
       "Set CLK7 to 12.333 MHz (616.667 / 50, integer-only, from PLLB)");
-  clockgen.setupMultisynth7(SI5351_PLL_B, 50);
+  clockgen.setupMultisynthInteger(7, SI5351_PLL_B, 50);
 
   /* Enable all outputs */
   clockgen.enableOutputs(true);

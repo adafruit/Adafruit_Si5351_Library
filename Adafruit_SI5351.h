@@ -282,10 +282,8 @@ class Adafruit_SI5351 {
                         uint32_t num, uint32_t denom); //!< @return ERROR_NONE
   err_t setupMultisynthInt(uint8_t output, si5351PLL_t pllSource,
                            si5351MultisynthDiv_t div); //!< @return ERROR_NONE
-  err_t setupMultisynth6(si5351PLL_t pllSource,
-                         uint8_t div); //!< @return ERROR_NONE
-  err_t setupMultisynth7(si5351PLL_t pllSource,
-                         uint8_t div); //!< @return ERROR_NONE
+  err_t setupMultisynthInteger(uint8_t output, si5351PLL_t pllSource,
+                               uint8_t div); //!< @return ERROR_NONE
 
   err_t enableSpreadSpectrum(bool enabled);
   err_t enableOutputs(bool enabled);

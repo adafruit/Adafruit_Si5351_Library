@@ -337,12 +337,13 @@ err_t Adafruit_SI5351::setupRdiv(uint8_t output, si5351RDiv_t div) {
 
 /**************************************************************************/
 /*!
-    @brief  Configures the integer-only Multisynth divider for CLK6.
+    @brief  Configures the integer-only Multisynth divider for CLK6 or CLK7.
 
     Outputs 6 and 7 on the Si5351 are integer-only MultiSynths controlled
     by a single divider register each (regs 90/91), unlike CLK0..CLK5 which
     use the full 8-byte fractional parameter blocks.
 
+    @param  output    The output channel to configure, either 6 or 7.
     @param  pllSource The PLL input source to use, which must be one of:
                       - SI5351_PLL_A
                       - SI5351_PLL_B
@@ -350,8 +351,11 @@ err_t Adafruit_SI5351::setupRdiv(uint8_t output, si5351RDiv_t div) {
     @return ERROR_NONE on success, otherwise an appropriate error code.
 */
 /**************************************************************************/
-err_t Adafruit_SI5351::setupMultisynth6(si5351PLL_t pllSource, uint8_t div) {
+err_t Adafruit_SI5351::setupMultisynthInteger(uint8_t output,
+                                              si5351PLL_t pllSource,
+                                              uint8_t div) {
   ASSERT(m_si5351Config.initialised, ERROR_DEVICENOTINITIALISED);
+  ASSERT((output == 6) || (output == 7), ERROR_INVALIDPARAMETER);
   ASSERT(div >= 6, ERROR_INVALIDPARAMETER);
   ASSERT(div <= 254, ERROR_INVALIDPARAMETER);
   ASSERT((div % 2) == 0, ERROR_INVALIDPARAMETER); /* Must be even */
@@ -362,49 +366,19 @@ err_t Adafruit_SI5351::setupMultisynth6(si5351PLL_t pllSource, uint8_t div) {
     ASSERT(m_si5351Config.pllb_configured, ERROR_INVALIDPARAMETER);
   }
 
-  ASSERT_STATUS(write8(SI5351_REGISTER_90_MULTISYNTH6_PARAMETERS, div));
+  uint8_t paramReg = (output == 6) ? SI5351_REGISTER_90_MULTISYNTH6_PARAMETERS
+                                   : SI5351_REGISTER_91_MULTISYNTH7_PARAMETERS;
+  uint8_t ctrlReg = (output == 6) ? SI5351_REGISTER_22_CLK6_CONTROL
+                                  : SI5351_REGISTER_23_CLK7_CONTROL;
+
+  ASSERT_STATUS(write8(paramReg, div));
 
   uint8_t clkControlReg = 0x0C; /* 8mA drive, not inverted, powered up */
   if (pllSource == SI5351_PLL_B)
     clkControlReg |= (1 << 5); /* Uses PLLB */
-  clkControlReg |= (1 << 6);   /* Integer mode (always for MS6) */
+  clkControlReg |= (1 << 6);   /* Integer mode (always for MS6/MS7) */
 
-  ASSERT_STATUS(write8(SI5351_REGISTER_22_CLK6_CONTROL, clkControlReg));
-
-  return ERROR_NONE;
-}
-
-/**************************************************************************/
-/*!
-    @brief  Configures the integer-only Multisynth divider for CLK7.
-
-    @param  pllSource The PLL input source to use, which must be one of:
-                      - SI5351_PLL_A
-                      - SI5351_PLL_B
-    @param  div       Even integer divider in the range 6..254.
-    @return ERROR_NONE on success, otherwise an appropriate error code.
-*/
-/**************************************************************************/
-err_t Adafruit_SI5351::setupMultisynth7(si5351PLL_t pllSource, uint8_t div) {
-  ASSERT(m_si5351Config.initialised, ERROR_DEVICENOTINITIALISED);
-  ASSERT(div >= 6, ERROR_INVALIDPARAMETER);
-  ASSERT(div <= 254, ERROR_INVALIDPARAMETER);
-  ASSERT((div % 2) == 0, ERROR_INVALIDPARAMETER); /* Must be even */
-
-  if (pllSource == SI5351_PLL_A) {
-    ASSERT(m_si5351Config.plla_configured, ERROR_INVALIDPARAMETER);
-  } else {
-    ASSERT(m_si5351Config.pllb_configured, ERROR_INVALIDPARAMETER);
-  }
-
-  ASSERT_STATUS(write8(SI5351_REGISTER_91_MULTISYNTH7_PARAMETERS, div));
-
-  uint8_t clkControlReg = 0x0C; /* 8mA drive, not inverted, powered up */
-  if (pllSource == SI5351_PLL_B)
-    clkControlReg |= (1 << 5); /* Uses PLLB */
-  clkControlReg |= (1 << 6);   /* Integer mode (always for MS7) */
-
-  ASSERT_STATUS(write8(SI5351_REGISTER_23_CLK7_CONTROL, clkControlReg));
+  ASSERT_STATUS(write8(ctrlReg, clkControlReg));
 
   return ERROR_NONE;
 }
