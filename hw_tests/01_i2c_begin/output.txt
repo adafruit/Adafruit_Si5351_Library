@@ -1,0 +1,5 @@
+Si5351 01_i2c_begin test
+Found 0x60
+PASS: Si5351 present at 0x60
+PASS: begin() ok
+RESULTS: 2/2 tests passed
