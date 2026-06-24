@@ -1,0 +1,4 @@
+Target: 1000000 Hz
+Measured: 999348 Hz
+PASS: within tolerance
+RESULTS: 1/1
