@@ -291,6 +291,9 @@ class Adafruit_SI5351 {
    */
   err_t setupRdiv(uint8_t output, si5351RDiv_t div); //!< @return ERROR_NONE
 
+  err_t setFrequency(uint8_t output, si5351PLL_t pll,
+                     uint32_t freq); //!< @return ERROR_NONE
+
  private:
   si5351Config_t m_si5351Config;
 

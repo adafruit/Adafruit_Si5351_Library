@@ -353,6 +353,31 @@ err_t Adafruit_SI5351::setupMultisynthInt(uint8_t output, si5351PLL_t pllSource,
   return setupMultisynth(output, pllSource, div, 0, 1);
 }
 
+/**************************************************************************/
+/*!
+    @brief  Configures the R divider for a given output channel.
+
+    The R divider provides a final power-of-two division stage (1..128)
+    after the Multisynth, extending the usable output range down to low
+    frequencies. It is a 3-bit field occupying bits 4..6 of the channel's
+    MSx_PARAMETERS_3 register. The shifted value is cached in
+    lastRdivValue[] so setupMultisynth() can preserve it when rewriting
+    the same parameter byte.
+
+    @param  output  The output channel to configure (0..5).
+    @param  div     The R divider value, one of:
+                    - SI5351_R_DIV_1
+                    - SI5351_R_DIV_2
+                    - SI5351_R_DIV_4
+                    - SI5351_R_DIV_8
+                    - SI5351_R_DIV_16
+                    - SI5351_R_DIV_32
+                    - SI5351_R_DIV_64
+                    - SI5351_R_DIV_128
+    @return ERROR_NONE on success, ERROR_INVALIDPARAMETER if the channel is
+            out of range, or ERROR_I2C_TRANSACTION on a bus failure.
+*/
+/**************************************************************************/
 err_t Adafruit_SI5351::setupRdiv(uint8_t output, si5351RDiv_t div) {
   ASSERT(output < 6, ERROR_INVALIDPARAMETER); /* Channel range (CLK0..CLK5) */
 
@@ -369,6 +394,98 @@ err_t Adafruit_SI5351::setupRdiv(uint8_t output, si5351RDiv_t div) {
 
   /* Cache the shifted value for reuse in setupMultisynth's parameter buffer. */
   lastRdivValue[output] = divider << 4;
+  return ERROR_NONE;
+}
+
+/**************************************************************************/
+/*!
+    @brief  Automatically computes and applies the PLL multiplier,
+            Multisynth divider and R divider needed to generate a desired
+            output frequency on a given channel, then configures the
+            hardware. This is a convenience wrapper over setupPLL(),
+            setupMultisynth() and setupRdiv().
+
+    @param  output  The output channel to use (0..2).
+    @param  pll     The PLL to drive this output, either SI5351_PLL_A or
+                    SI5351_PLL_B. The caller selects the PLL; note that any
+                    other output already sharing this PLL will be retuned.
+    @param  freq    Desired output frequency in Hz (8000 .. 150000000).
+
+    @return ERROR_NONE on success, or ERROR_INVALIDPARAMETER if the
+            requested frequency cannot be synthesised within the
+            hardware limits.
+
+    @section Algorithm
+
+    The output is generated as:
+
+        fOUT = (fXTAL * (M)) / (D * R)
+
+    where fXTAL is the 25 MHz reference, M = a + b/c is the fractional
+    PLL feedback multiplier, D is the (integer) Multisynth divider and
+    R is the output R divider (1..128). To keep output jitter low the
+    fractional part is placed entirely on the PLL while the Multisynth
+    runs in integer mode.
+
+    The solver:
+      1. Applies the R divider (doubling until the pre-R frequency is at
+         least 600 kHz) so low frequencies stay within Multisynth range.
+      2. Chooses the largest even Multisynth divider D that keeps the VCO
+         within its 600..900 MHz lock range.
+      3. Computes the fractional PLL multiplier M to hit the VCO target,
+         using a denominator of 1048575 for maximum resolution.
+
+    @note   Frequencies above 150 MHz require the DIVBY4 path and are not
+            yet supported; they return ERROR_INVALIDPARAMETER.
+
+    @note   The output is left enabled/disabled exactly as it was; call
+            enableOutputs() as needed.
+*/
+/**************************************************************************/
+err_t Adafruit_SI5351::setFrequency(uint8_t output, si5351PLL_t pll,
+                                    uint32_t freq) {
+  ASSERT(m_si5351Config.initialised, ERROR_DEVICENOTINITIALISED);
+  /* Channel range: limited to 0..2 until the 8-channel expansion lands. */
+  ASSERT(output < 3, ERROR_INVALIDPARAMETER);
+  ASSERT(freq >= 8000UL, ERROR_INVALIDPARAMETER);
+  ASSERT(freq <= 150000000UL, ERROR_INVALIDPARAMETER);
+
+  const uint32_t fxtal = m_si5351Config.crystalFreq; /* 25 MHz */
+  const uint32_t vco_min = 600000000UL;
+  const uint32_t vco_max = 900000000UL;
+  const uint32_t ms_min = 600000UL; /* keeps Multisynth divider <= 1800 */
+  const uint32_t denom = 0xFFFFFUL; /* 1048575, max fractional resolution */
+
+  /* Step 1: engage the R divider until the pre-R frequency is in range. */
+  uint32_t f_ms = freq;
+  uint8_t rdiv = 0;
+  while ((f_ms < ms_min) && (rdiv < 7)) {
+    f_ms <<= 1;
+    rdiv++;
+  }
+
+  /* Step 2: largest even Multisynth divider keeping the VCO in band. */
+  uint32_t D = vco_max / f_ms;
+  if (D > 1800UL)
+    D = 1800UL;
+  D &= ~1UL; /* force even for lowest jitter */
+  if (D < 6UL)
+    D = 6UL;
+
+  uint32_t fvco = f_ms * D;
+  ASSERT((fvco >= vco_min) && (fvco <= vco_max), ERROR_INVALIDPARAMETER);
+
+  /* Step 3: fractional PLL multiplier M = mult + num/denom. */
+  uint32_t mult = fvco / fxtal;
+  uint32_t rem = fvco % fxtal;
+  uint32_t num = (uint32_t)(((uint64_t)rem * denom) / fxtal);
+  ASSERT((mult >= 15UL) && (mult <= 90UL), ERROR_INVALIDPARAMETER);
+
+  /* Apply: PLL (fractional) -> Multisynth (integer) -> R divider. */
+  ASSERT_STATUS(setupPLL(pll, (uint8_t)mult, num, denom));
+  ASSERT_STATUS(setupMultisynth(output, pll, D, 0, 1));
+  ASSERT_STATUS(setupRdiv(output, (si5351RDiv_t)rdiv));
+
   return ERROR_NONE;
 }
 
@@ -585,6 +702,21 @@ err_t Adafruit_SI5351::write8(uint8_t reg, uint8_t value) {
   }
 }
 
+/**************************************************************************/
+/*!
+    @brief  Writes a raw buffer of bytes to the device over I2C.
+
+    The first byte of the buffer is the starting register address; the
+    remaining bytes are written sequentially. Used to send the multi-byte
+    PLL and Multisynth parameter blocks in a single transaction.
+
+    @param  data  Pointer to the buffer to send. data[0] is the register
+                  address, followed by n-1 data bytes.
+    @param  n     Total number of bytes to write, including the address.
+    @return ERROR_NONE on success, or ERROR_I2C_TRANSACTION on a bus
+            failure.
+*/
+/**************************************************************************/
 err_t Adafruit_SI5351::writeN(uint8_t* data, uint8_t n) {
   if (i2c_dev->write(data, n)) {
     return ERROR_NONE;
