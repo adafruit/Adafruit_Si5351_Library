@@ -353,6 +353,31 @@ err_t Adafruit_SI5351::setupMultisynthInt(uint8_t output, si5351PLL_t pllSource,
   return setupMultisynth(output, pllSource, div, 0, 1);
 }
 
+/**************************************************************************/
+/*!
+    @brief  Configures the R divider for a given output channel.
+
+    The R divider provides a final power-of-two division stage (1..128)
+    after the Multisynth, extending the usable output range down to low
+    frequencies. It is a 3-bit field occupying bits 4..6 of the channel's
+    MSx_PARAMETERS_3 register. The shifted value is cached in
+    lastRdivValue[] so setupMultisynth() can preserve it when rewriting
+    the same parameter byte.
+
+    @param  output  The output channel to configure (0..5).
+    @param  div     The R divider value, one of:
+                    - SI5351_R_DIV_1
+                    - SI5351_R_DIV_2
+                    - SI5351_R_DIV_4
+                    - SI5351_R_DIV_8
+                    - SI5351_R_DIV_16
+                    - SI5351_R_DIV_32
+                    - SI5351_R_DIV_64
+                    - SI5351_R_DIV_128
+    @return ERROR_NONE on success, ERROR_INVALIDPARAMETER if the channel is
+            out of range, or ERROR_I2C_TRANSACTION on a bus failure.
+*/
+/**************************************************************************/
 err_t Adafruit_SI5351::setupRdiv(uint8_t output, si5351RDiv_t div) {
   ASSERT(output < 6, ERROR_INVALIDPARAMETER); /* Channel range (CLK0..CLK5) */
 
@@ -677,6 +702,21 @@ err_t Adafruit_SI5351::write8(uint8_t reg, uint8_t value) {
   }
 }
 
+/**************************************************************************/
+/*!
+    @brief  Writes a raw buffer of bytes to the device over I2C.
+
+    The first byte of the buffer is the starting register address; the
+    remaining bytes are written sequentially. Used to send the multi-byte
+    PLL and Multisynth parameter blocks in a single transaction.
+
+    @param  data  Pointer to the buffer to send. data[0] is the register
+                  address, followed by n-1 data bytes.
+    @param  n     Total number of bytes to write, including the address.
+    @return ERROR_NONE on success, or ERROR_I2C_TRANSACTION on a bus
+            failure.
+*/
+/**************************************************************************/
 err_t Adafruit_SI5351::writeN(uint8_t* data, uint8_t n) {
   if (i2c_dev->write(data, n)) {
     return ERROR_NONE;
