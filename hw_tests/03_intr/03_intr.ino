@@ -1,65 +1,62 @@
-// 03_intr — SI5351C !INTR hardware interrupt pin test (ESP32 V2 port).
+// 03_intr — INTR pin + LOS_CLKIN sticky-status, ESP32 V2 Feather
 //
-// Verifies the open-drain, active-low INTR pin asserts on loss-of-CLKIN
-// and releases when a valid CLKIN reference is present.
+// Hardware:
+//   INTR  (Si5351) -> GPIO26 (Feather A0) via INPUT_PULLUP (open-drain,
+//   active-low) CLKIN (Si5351) -> GPIO14 (Feather "14"/A6), driven by LEDC I2C
+//   via STEMMA QT (SDA=22, SCL=20), NEOPIXEL_I2C_POWER must be HIGH
 //
-// Board: Adafruit Feather ESP32 V2 (FQBN esp32:esp32:adafruit_feather_esp32_v2)
+// Test:
+//   Phase 1 (no CLKIN): LOS_CLKIN sticky bit must be set, INTR must be LOW
+//   (asserted) Phase 2 (8 MHz CLKIN via LEDC): clear sticky; LOS_CLKIN must
+//   stay clear, INTR HIGH
 //
-// Wiring:
-//   Si5351 SDA   -> Feather SDA   (GPIO22)
-//   Si5351 SCL   -> Feather SCL   (GPIO20)
-//   Si5351 INTR  -> Feather A0    (GPIO26), 4.7k external pullup to 3V3
-//   Si5351 CLKIN -> Feather A6    (GPIO14)  -- LEDC PWM reference
-//   Si5351 VIN   -> 3V3, GND -> GND
-//
-// Mask note (datasheet): a SET mask bit means that interrupt is IGNORED.
-// 0xEF = ignore all except bit 4 (LOS_CLKIN).
+// Note: empirically the Si5351 LOS_CLKIN detector has a freq threshold between
+// 1 and 8 MHz. 100kHz/1MHz LEDC stimuli do NOT clear LOS. 8 MHz does.
 
 #include <Adafruit_SI5351.h>
 #include <Wire.h>
 
-#define INTR_PIN 26  // A0
-#define CLKIN_PIN 14 // A6
+Adafruit_SI5351 clockgen;
 
-Adafruit_SI5351 clockgen = Adafruit_SI5351();
+static const uint8_t CLKIN_PIN = 14;
+static const uint8_t INTR_PIN = 26;
+static const uint8_t INTMASK_REG = 2;
+static const uint8_t STATUS_REG = 0;
+static const uint8_t STICKY_REG = 1;
 
-static void printStatus(const __FlashStringHelper* tag) {
-  uint8_t st = 0;
-  clockgen.readDeviceStatus(&st);
-  int intr = digitalRead(INTR_PIN);
-  Serial.print(tag);
-  Serial.print(F("  INTR="));
-  Serial.print(intr ? F("HIGH") : F("LOW"));
+static uint8_t readReg(uint8_t reg) {
+  Wire.beginTransmission(0x60);
+  Wire.write(reg);
+  Wire.endTransmission(false);
+  Wire.requestFrom((uint8_t)0x60, (uint8_t)1);
+  return Wire.read();
+}
+
+static bool phase(const __FlashStringHelper* label, bool wantLosClkin,
+                  bool wantIntrAsserted) {
+  uint8_t status = readReg(STATUS_REG);
+  uint8_t sticky = readReg(STICKY_REG);
+  bool losClkin = (sticky & 0x10) != 0; // bit 4 sticky LOS_CLKIN
+  bool intrAsserted = (digitalRead(INTR_PIN) == LOW);
+  bool ok = (losClkin == wantLosClkin) && (intrAsserted == wantIntrAsserted);
+  Serial.print(label);
   Serial.print(F("  status=0x"));
-  Serial.print(st, HEX);
-  Serial.print(F("  LOS_CLKIN="));
-  Serial.println((st & SI5351_STATUS_LOS_CLKIN) ? F("1") : F("0"));
-}
-
-static void clkinDriveStatic(int level) {
-  pinMode(CLKIN_PIN, OUTPUT);
-  digitalWrite(CLKIN_PIN, level);
-}
-
-static void clkinLedc(uint32_t freqHz, uint8_t resBits) {
-  bool ok = ledcAttach(CLKIN_PIN, freqHz, resBits);
-  ledcWrite(CLKIN_PIN, 1 << (resBits - 1)); // 50% duty
-  uint32_t actual = ledcReadFreq(CLKIN_PIN);
-  Serial.print(F("  ledcAttach="));
-  Serial.print(ok ? F("OK") : F("FAIL"));
-  Serial.print(F("  freq="));
-  Serial.print(actual);
-  Serial.println(F(" Hz"));
-}
-
-static void clkinLedcDetach() {
-  ledcDetach(CLKIN_PIN);
+  Serial.print(status, HEX);
+  Serial.print(F("  sticky=0x"));
+  Serial.print(sticky, HEX);
+  Serial.print(F("  LOS_CLKIN_sticky="));
+  Serial.print(losClkin);
+  Serial.print(F("  INTR_asserted="));
+  Serial.print(intrAsserted);
+  Serial.print(F("  -> "));
+  Serial.println(ok ? F("PASS") : F("FAIL"));
+  return ok;
 }
 
 void setup() {
   Serial.begin(115200);
   delay(2000);
-  Serial.println(F("03_intr DIAGNOSTIC: INTR + LOS_CLKIN sweep"));
+  Serial.println(F("03_intr: INTR + LOS_CLKIN sticky test (ESP32 V2)"));
 
   pinMode(NEOPIXEL_I2C_POWER, OUTPUT);
   digitalWrite(NEOPIXEL_I2C_POWER, HIGH);
@@ -73,70 +70,51 @@ void setup() {
       delay(10);
     }
   }
-  Serial.println(F("begin() OK"));
 
-  clockgen.setInterruptMask(0xEF);
-  clockgen.clearStickyStatus();
-  delay(50);
+  // Unmask everything (0 = unmasked = drives INTR)
+  Wire.beginTransmission(0x60);
+  Wire.write(INTMASK_REG);
+  Wire.write(0x00);
+  Wire.endTransmission();
 
-  // Baseline: CLKIN pin not driven by us at all
+  uint8_t pass = 0;
+
+  // Phase 1: CLKIN floating, no stimulus
   pinMode(CLKIN_PIN, INPUT);
-  clockgen.clearStickyStatus();
+  Wire.beginTransmission(0x60);
+  Wire.write(STICKY_REG);
+  Wire.write(0x00); // clear all sticky
+  Wire.endTransmission();
   delay(100);
-  printStatus(F("baseline (CLKIN floating)"));
+  if (phase(F("Phase1 (no CLKIN)"), /*wantLosSticky=*/true,
+            /*wantIntrAsserted=*/true)) {
+    pass++;
+  }
 
-  // Drive CLKIN HIGH statically — LOS should stay asserted (no edges)
-  clkinDriveStatic(HIGH);
-  clockgen.clearStickyStatus();
-  delay(100);
-  printStatus(F("static HIGH"));
-
-  // Drive CLKIN LOW statically — LOS should stay asserted
-  clkinDriveStatic(LOW);
-  clockgen.clearStickyStatus();
-  delay(100);
-  printStatus(F("static LOW"));
-
-  // Try 100 kHz LEDC
-  Serial.println(F("--- 100 kHz LEDC ---"));
-  clkinLedc(100000UL, 8);
+  // Phase 2: drive 8 MHz CLKIN via LEDC
+  bool ledcOk =
+      ledcAttach(CLKIN_PIN, 8000000UL, 3); // 8 MHz, 3-bit res (8 steps)
+  ledcWrite(CLKIN_PIN, 4);                 // ~50% duty
   delay(50);
-  clockgen.clearStickyStatus();
+  // Clear sticky AFTER clock is running so LOS_CLKIN can stay clear
+  Wire.beginTransmission(0x60);
+  Wire.write(STICKY_REG);
+  Wire.write(0x00);
+  Wire.endTransmission();
   delay(200);
-  printStatus(F("100 kHz"));
-  clkinLedcDetach();
-  clkinDriveStatic(LOW);
-  delay(50);
+  Serial.print(F("ledcAttach="));
+  Serial.print(ledcOk ? F("OK") : F("FAIL"));
+  Serial.print(F("  ledcReadFreq="));
+  Serial.println(ledcReadFreq(CLKIN_PIN));
+  if (phase(F("Phase2 (8 MHz CLKIN)"), /*wantLosSticky=*/false,
+            /*wantIntrAsserted=*/false)) {
+    pass++;
+  }
+  ledcDetach(CLKIN_PIN);
 
-  // Try 1 MHz LEDC
-  Serial.println(F("--- 1 MHz LEDC ---"));
-  clkinLedc(1000000UL, 5);
-  delay(50);
-  clockgen.clearStickyStatus();
-  delay(200);
-  printStatus(F("1 MHz"));
-  clkinLedcDetach();
-  clkinDriveStatic(LOW);
-  delay(50);
-
-  // Try 8 MHz LEDC (matches Si5351 PLL CLKIN spec)
-  Serial.println(F("--- 8 MHz LEDC ---"));
-  clkinLedc(8000000UL, 3);
-  delay(50);
-  clockgen.clearStickyStatus();
-  delay(200);
-  printStatus(F("8 MHz"));
-  clkinLedcDetach();
-  clkinDriveStatic(LOW);
-  delay(50);
-
-  // Final: back to silence
-  Serial.println(F("--- back to silence ---"));
-  clockgen.clearStickyStatus();
-  delay(100);
-  printStatus(F("silent"));
-
-  Serial.println(F("done."));
+  Serial.print(F("RESULT: "));
+  Serial.print(pass);
+  Serial.println(F("/2"));
 }
 
 void loop() {}
