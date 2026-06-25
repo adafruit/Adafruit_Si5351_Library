@@ -91,14 +91,8 @@ static uint32_t measureFrequencyHz1s() {
 
 void setup() {
   Serial.begin(115200);
-  delay(2000);
 
   Serial.println("Si5351 02_xtal test (ESP32 V2)");
-
-  // Power the I2C rail (Feather V2 STEMMA QT power gate).
-  pinMode(NEOPIXEL_I2C_POWER, OUTPUT);
-  digitalWrite(NEOPIXEL_I2C_POWER, HIGH);
-  delay(10);
 
   if (clockgen.begin() != ERROR_NONE) {
     Serial.println("FAIL: begin() error");
