@@ -228,11 +228,9 @@ err_t Adafruit_SI5351::setupPLLInt(si5351PLL_t pll, uint8_t mult) {
     @return ERROR_NONE on success, or ERROR_I2C_TRANSACTION on a bus failure.
 */
 /**************************************************************************/
-err_t Adafruit_SI5351::setupPLLSource(si5351PLL_t pll,
-                                     si5351PLLSource_t source,
-                                     si5351ClkinDiv_t clkinDiv) {
-  Adafruit_BusIO_Register src_reg(i2c_dev,
-                                  SI5351_REGISTER_15_PLL_INPUT_SOURCE);
+err_t Adafruit_SI5351::setupPLLSource(si5351PLL_t pll, si5351PLLSource_t source,
+                                      si5351ClkinDiv_t clkinDiv) {
+  Adafruit_BusIO_Register src_reg(i2c_dev, SI5351_REGISTER_15_PLL_INPUT_SOURCE);
 
   /* PLLA_SRC = bit 2, PLLB_SRC = bit 3.  Each is a 1-bit field. */
   uint8_t srcBit = (pll == SI5351_PLL_A) ? 2 : 3;

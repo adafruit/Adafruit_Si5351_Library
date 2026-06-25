@@ -295,9 +295,9 @@ class Adafruit_SI5351 {
   err_t setupPLL(si5351PLL_t pll, uint8_t mult, uint32_t num,
                  uint32_t denom);                   //!< @return ERROR_NONE
   err_t setupPLLInt(si5351PLL_t pll, uint8_t mult); //!< @return ERROR_NONE
-  err_t setupPLLSource(si5351PLL_t pll, si5351PLLSource_t source,
-                       si5351ClkinDiv_t clkinDiv =
-                           SI5351_CLKIN_DIV_1); //!< @return ERROR_NONE
+  err_t setupPLLSource(
+      si5351PLL_t pll, si5351PLLSource_t source,
+      si5351ClkinDiv_t clkinDiv = SI5351_CLKIN_DIV_1); //!< @return ERROR_NONE
   err_t setupMultisynth(uint8_t output, si5351PLL_t pllSource, uint32_t div,
                         uint32_t num, uint32_t denom); //!< @return ERROR_NONE
   err_t setupMultisynthInt(uint8_t output, si5351PLL_t pllSource,
