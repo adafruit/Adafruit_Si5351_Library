@@ -25,9 +25,6 @@ void setup() {
   bool foundSi5351 = false;
 
   Serial.begin(115200);
-  // Feather V2 uses a CP2102 UART bridge, so Serial is always ready; small
-  // delay just lets the host open the port before we start printing.
-  delay(2000);
 
   Serial.println("Si5351 01_i2c_begin test (ESP32 V2)");
 
@@ -65,4 +62,6 @@ void setup() {
   Serial.println("/2 tests passed");
 }
 
-void loop() { delay(1000); }
+void loop() {
+  delay(1000);
+}
