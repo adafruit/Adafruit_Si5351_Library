@@ -1,98 +1,142 @@
-// 03_intr — SI5351C !INTR hardware interrupt pin test
+// 03_intr — SI5351C !INTR hardware interrupt pin test (ESP32 V2 port).
 //
 // Verifies the open-drain, active-low INTR pin asserts on loss-of-CLKIN
 // and releases when a valid CLKIN reference is present.
 //
-// Wiring:
-//   INTR pad  -> Metro D2 (INT0), 4.7k pullup to 3V3 (open-drain, active LOW)
-//   CLKIN pad -> Metro D9 (OC1A)  — Metro generates the external reference
-//   SDA/SCL   -> A4/A5
-//   GND       -> GND
+// Board: Adafruit Feather ESP32 V2 (FQBN esp32:esp32:adafruit_feather_esp32_v2)
 //
-// Mask note (datasheet): a SET mask bit = that interrupt is IGNORED. We must
-// mask every source EXCEPT LOS_CLKIN, else an unused-PLL fault (e.g. LOL_B)
-// holds INTR low regardless of CLKIN. Mask value 0xEF = ignore all but bit4.
+// Wiring:
+//   Si5351 SDA   -> Feather SDA   (GPIO22)
+//   Si5351 SCL   -> Feather SCL   (GPIO20)
+//   Si5351 INTR  -> Feather A0    (GPIO26), 4.7k external pullup to 3V3
+//   Si5351 CLKIN -> Feather A6    (GPIO14)  -- LEDC PWM reference
+//   Si5351 VIN   -> 3V3, GND -> GND
+//
+// Mask note (datasheet): a SET mask bit means that interrupt is IGNORED.
+// 0xEF = ignore all except bit 4 (LOS_CLKIN).
 
 #include <Adafruit_SI5351.h>
+#include <Wire.h>
 
-#define INTR_PIN 2
-#define CLKIN_PIN 9 // OC1A
+#define INTR_PIN 26  // A0
+#define CLKIN_PIN 14 // A6
 
 Adafruit_SI5351 clockgen = Adafruit_SI5351();
 
-// Drive ~4 MHz on D9 (OC1A) via Timer1 hardware toggle as a CLKIN reference.
-static void clkinStart() {
-  pinMode(CLKIN_PIN, OUTPUT);
-  TCCR1A = _BV(COM1A0);            // toggle OC1A on compare match
-  TCCR1B = _BV(WGM12) | _BV(CS10); // CTC, no prescale
-  OCR1A = 1;                       // toggle every 2 cycles -> 16MHz/4 = 4MHz
+static void printStatus(const __FlashStringHelper* tag) {
+  uint8_t st = 0;
+  clockgen.readDeviceStatus(&st);
+  int intr = digitalRead(INTR_PIN);
+  Serial.print(tag);
+  Serial.print(F("  INTR="));
+  Serial.print(intr ? F("HIGH") : F("LOW"));
+  Serial.print(F("  status=0x"));
+  Serial.print(st, HEX);
+  Serial.print(F("  LOS_CLKIN="));
+  Serial.println((st & SI5351_STATUS_LOS_CLKIN) ? F("1") : F("0"));
 }
 
-static void clkinStop() {
-  TCCR1A = 0;
-  TCCR1B = 0;
+static void clkinDriveStatic(int level) {
   pinMode(CLKIN_PIN, OUTPUT);
-  digitalWrite(CLKIN_PIN, LOW); // hold low, not floating
+  digitalWrite(CLKIN_PIN, level);
+}
+
+static void clkinLedc(uint32_t freqHz, uint8_t resBits) {
+  bool ok = ledcAttach(CLKIN_PIN, freqHz, resBits);
+  ledcWrite(CLKIN_PIN, 1 << (resBits - 1)); // 50% duty
+  uint32_t actual = ledcReadFreq(CLKIN_PIN);
+  Serial.print(F("  ledcAttach="));
+  Serial.print(ok ? F("OK") : F("FAIL"));
+  Serial.print(F("  freq="));
+  Serial.print(actual);
+  Serial.println(F(" Hz"));
+}
+
+static void clkinLedcDetach() {
+  ledcDetach(CLKIN_PIN);
 }
 
 void setup() {
   Serial.begin(115200);
-  Serial.println(F("03_intr: INTR hardware interrupt test"));
+  delay(2000);
+  Serial.println(F("03_intr DIAGNOSTIC: INTR + LOS_CLKIN sweep"));
 
-  pinMode(INTR_PIN, INPUT_PULLUP); // external 4.7k also present
+  pinMode(NEOPIXEL_I2C_POWER, OUTPUT);
+  digitalWrite(NEOPIXEL_I2C_POWER, HIGH);
+  delay(10);
+
+  pinMode(INTR_PIN, INPUT_PULLUP);
 
   if (clockgen.begin() != ERROR_NONE) {
     Serial.println(F("FAIL: begin() — no Si5351"));
-    Serial.println(F("RESULTS: 0/1"));
-    while (1)
+    while (1) {
       delay(10);
+    }
   }
   Serial.println(F("begin() OK"));
 
-  // Enable only the LOS_CLKIN interrupt (ignore all others).
   clockgen.setInterruptMask(0xEF);
   clockgen.clearStickyStatus();
+  delay(50);
 
-  int pass = 0, total = 2;
+  // Baseline: CLKIN pin not driven by us at all
+  pinMode(CLKIN_PIN, INPUT);
+  clockgen.clearStickyStatus();
+  delay(100);
+  printStatus(F("baseline (CLKIN floating)"));
 
-  // Phase 1: valid CLKIN present -> no fault -> INTR should be HIGH.
-  Serial.println(F("Enabling CLKIN reference on D9..."));
-  clkinStart();
+  // Drive CLKIN HIGH statically — LOS should stay asserted (no edges)
+  clkinDriveStatic(HIGH);
+  clockgen.clearStickyStatus();
+  delay(100);
+  printStatus(F("static HIGH"));
+
+  // Drive CLKIN LOW statically — LOS should stay asserted
+  clkinDriveStatic(LOW);
+  clockgen.clearStickyStatus();
+  delay(100);
+  printStatus(F("static LOW"));
+
+  // Try 100 kHz LEDC
+  Serial.println(F("--- 100 kHz LEDC ---"));
+  clkinLedc(100000UL, 8);
   delay(50);
   clockgen.clearStickyStatus();
+  delay(200);
+  printStatus(F("100 kHz"));
+  clkinLedcDetach();
+  clkinDriveStatic(LOW);
   delay(50);
-  int withClkin = digitalRead(INTR_PIN);
-  Serial.print(F("With CLKIN: INTR = "));
-  Serial.println(withClkin ? F("HIGH") : F("LOW"));
-  if (withClkin == HIGH) {
-    pass++;
-  } else {
-    Serial.println(F("  expected HIGH (no fault)"));
-  }
 
-  // Phase 2: stop CLKIN -> LOS_CLKIN fault -> INTR should be LOW.
-  Serial.println(F("Stopping CLKIN..."));
-  clkinStop();
+  // Try 1 MHz LEDC
+  Serial.println(F("--- 1 MHz LEDC ---"));
+  clkinLedc(1000000UL, 5);
   delay(50);
   clockgen.clearStickyStatus();
+  delay(200);
+  printStatus(F("1 MHz"));
+  clkinLedcDetach();
+  clkinDriveStatic(LOW);
   delay(50);
-  int noClkin = digitalRead(INTR_PIN);
-  Serial.print(F("No CLKIN: INTR = "));
-  Serial.println(noClkin ? F("HIGH") : F("LOW"));
-  uint8_t st = 0;
-  clockgen.readDeviceStatus(&st);
-  Serial.print(F("status reg = 0x"));
-  Serial.println(st, HEX);
-  if (noClkin == LOW && (st & SI5351_STATUS_LOS_CLKIN)) {
-    pass++;
-  } else {
-    Serial.println(F("  expected LOW + LOS_CLKIN set"));
-  }
 
-  Serial.print(F("RESULTS: "));
-  Serial.print(pass);
-  Serial.print(F("/"));
-  Serial.println(total);
+  // Try 8 MHz LEDC (matches Si5351 PLL CLKIN spec)
+  Serial.println(F("--- 8 MHz LEDC ---"));
+  clkinLedc(8000000UL, 3);
+  delay(50);
+  clockgen.clearStickyStatus();
+  delay(200);
+  printStatus(F("8 MHz"));
+  clkinLedcDetach();
+  clkinDriveStatic(LOW);
+  delay(50);
+
+  // Final: back to silence
+  Serial.println(F("--- back to silence ---"));
+  clockgen.clearStickyStatus();
+  delay(100);
+  printStatus(F("silent"));
+
+  Serial.println(F("done."));
 }
 
 void loop() {}
