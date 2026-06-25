@@ -189,6 +189,69 @@ err_t Adafruit_SI5351::setupPLLInt(si5351PLL_t pll, uint8_t mult) {
 
 /**************************************************************************/
 /*!
+    @brief  Selects the reference source (XTAL or CLKIN) for the specified PLL,
+            and optionally sets the CLKIN pre-divider.
+
+    @param  pll       The PLL whose reference source is being configured:
+                      - SI5351_PLL_A
+                      - SI5351_PLL_B
+    @param  source    Reference source for this PLL:
+                      - SI5351_PLL_SOURCE_XTAL  (use the on-board crystal)
+                      - SI5351_PLL_SOURCE_CLKIN (use the external CLKIN pin)
+    @param  clkinDiv  CLKIN pre-divider (reg 15, bits [7:6]). The CLKIN input
+                      to the PLLs must be in the 10..40 MHz range; pick a
+                      divider that brings your CLKIN signal into that window.
+                      Only written when @p source == SI5351_PLL_SOURCE_CLKIN,
+                      so that switching one PLL back to XTAL does not clobber
+                      the divider used by the other PLL.
+                      - SI5351_CLKIN_DIV_1 (default)
+                      - SI5351_CLKIN_DIV_2
+                      - SI5351_CLKIN_DIV_4
+                      - SI5351_CLKIN_DIV_8
+
+    @section Register Map (AN619)
+
+    Register 15 -- PLL Input Source
+
+       Bit  | Field
+      ------+-----------------------------------
+       7:6  | CLKIN_DIV[1:0]
+       5:4  | (reserved)
+        3   | PLLB_SRC  (0 = XTAL, 1 = CLKIN)
+        2   | PLLA_SRC  (0 = XTAL, 1 = CLKIN)
+       1:0  | (reserved)
+
+    Both PLLA_SRC and PLLB_SRC are single-bit fields, so we use
+    Adafruit_BusIO_RegisterBits to read-modify-write only the affected
+    bit and leave the other PLL's source (and the reserved bits) intact.
+
+    @return ERROR_NONE on success, or ERROR_I2C_TRANSACTION on a bus failure.
+*/
+/**************************************************************************/
+err_t Adafruit_SI5351::setupPLLSource(si5351PLL_t pll, si5351PLLSource_t source,
+                                      si5351ClkinDiv_t clkinDiv) {
+  Adafruit_BusIO_Register src_reg(i2c_dev, SI5351_REGISTER_15_PLL_INPUT_SOURCE);
+
+  /* PLLA_SRC = bit 2, PLLB_SRC = bit 3.  Each is a 1-bit field. */
+  uint8_t srcBit = (pll == SI5351_PLL_A) ? 2 : 3;
+  Adafruit_BusIO_RegisterBits pll_src_bit(&src_reg, 1, srcBit);
+  if (!pll_src_bit.write(source & 0x01))
+    return ERROR_I2C_TRANSACTION;
+
+  /* CLKIN_DIV (bits [7:6]) is shared by both PLLs. Only program it when
+     this PLL is actually being switched to CLKIN, so that flipping one PLL
+     back to XTAL doesn't stomp the divider the other PLL is still using. */
+  if (source == SI5351_PLL_SOURCE_CLKIN) {
+    Adafruit_BusIO_RegisterBits clkin_div_bits(&src_reg, 2, 6);
+    if (!clkin_div_bits.write(clkinDiv & 0x03))
+      return ERROR_I2C_TRANSACTION;
+  }
+
+  return ERROR_NONE;
+}
+
+/**************************************************************************/
+/*!
     @brief  Sets the multiplier for the specified PLL
 
     @param  pll   The PLL to configure, which must be one of the following:

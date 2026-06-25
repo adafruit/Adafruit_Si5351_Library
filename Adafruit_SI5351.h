@@ -230,6 +230,18 @@ typedef enum {
 } si5351PLL_t;
 
 typedef enum {
+  SI5351_PLL_SOURCE_XTAL = 0,  ///< PLL source = crystal (reg 15 bit = 0)
+  SI5351_PLL_SOURCE_CLKIN = 1, ///< PLL source = CLKIN  (reg 15 bit = 1)
+} si5351PLLSource_t;
+
+typedef enum {
+  SI5351_CLKIN_DIV_1 = 0, ///< CLKIN /1  (reg 15 bits [7:6] = 00)
+  SI5351_CLKIN_DIV_2 = 1, ///< CLKIN /2  (reg 15 bits [7:6] = 01)
+  SI5351_CLKIN_DIV_4 = 2, ///< CLKIN /4  (reg 15 bits [7:6] = 10)
+  SI5351_CLKIN_DIV_8 = 3, ///< CLKIN /8  (reg 15 bits [7:6] = 11)
+} si5351ClkinDiv_t;
+
+typedef enum {
   SI5351_CRYSTAL_LOAD_6PF = (1 << 6),
   SI5351_CRYSTAL_LOAD_8PF = (2 << 6),
   SI5351_CRYSTAL_LOAD_10PF = (3 << 6)
@@ -283,6 +295,9 @@ class Adafruit_SI5351 {
   err_t setupPLL(si5351PLL_t pll, uint8_t mult, uint32_t num,
                  uint32_t denom);                   //!< @return ERROR_NONE
   err_t setupPLLInt(si5351PLL_t pll, uint8_t mult); //!< @return ERROR_NONE
+  err_t setupPLLSource(
+      si5351PLL_t pll, si5351PLLSource_t source,
+      si5351ClkinDiv_t clkinDiv = SI5351_CLKIN_DIV_1); //!< @return ERROR_NONE
   err_t setupMultisynth(uint8_t output, si5351PLL_t pllSource, uint32_t div,
                         uint32_t num, uint32_t denom); //!< @return ERROR_NONE
   err_t setupMultisynthInt(uint8_t output, si5351PLL_t pllSource,
