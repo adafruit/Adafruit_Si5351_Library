@@ -9,12 +9,15 @@
 // Timer2 generates CLKIN on D11 in CTC mode (OC2A toggle).
 // Timer0 stays free for millis()/delay().
 //
-// Plan: drive CLKIN at 4 MHz, lock PLL_A at 800 MHz off CLKIN
-// (multiplier 200), set CLK0 = PLL_A / 800 = 1.000 MHz, count
-// CLK0 edges on T1 for 1.000 s, assert within +/- 1%.
-// Then drop CLKIN to 2 MHz -- PLL_A reprograms to mult 400
-// (still 800 MHz), CLK0 stays 1 MHz. Counts must match.
-// If both phases hit ~1.000 MHz CLKIN selection is real.
+// Plan: drive CLKIN at 8 MHz (Timer2 OC2A max with prescaler=1),
+// lock PLL_A at 800 MHz off CLKIN (multiplier 100), set
+// CLK0 = PLL_A / 800 = 1.000 MHz, count CLK0 edges on T1 over a
+// 100 ms gate, assert within +/- 1%.
+// Then drop CLKIN to 4 MHz -- PLL_A reprograms to mult 200 (still
+// 800 MHz), CLK0 stays 1 MHz. If both phases hit ~1 MHz CLKIN
+// selection is real. If phase 1 passes and phase 2 fails, the
+// chip's CLKIN lock floor sits between 4 and 8 MHz (datasheet
+// says 10 MHz min, we're probing margin).
 
 #include <Adafruit_SI5351.h>
 
@@ -30,7 +33,7 @@ static void clkin_start(uint8_t ocr2a) {
   OCR2A = ocr2a;
   // CTC mode (WGM21=1), toggle OC2A on compare match (COM2A0=1)
   TCCR2A = _BV(WGM21) | _BV(COM2A0);
-  TCCR2B = _BV(CS20); // prescaler = 1
+  TCCR2B = _BV(CS20);  // prescaler = 1
 }
 
 // --- Timer1 as external counter on T1 (D5) --------------------------------
@@ -89,9 +92,9 @@ void setup(void) {
 }
 
 void loop(void) {
-  // ---- Phase 1: CLKIN = 4 MHz, target CLK0 = 1 MHz ----
-  Serial.println(F("\n-- Phase 1: CLKIN=4MHz, mult=200, CLK0=1MHz --"));
-  clkin_start(1); // 4.000 MHz on D11
+  // ---- Phase 1: CLKIN = 8 MHz, target CLK0 = 1 MHz ----
+  Serial.println(F("\n-- Phase 1: CLKIN=8MHz, mult=100, CLK0=1MHz --"));
+  clkin_start(0);  // 8.000 MHz on D11 (F_CPU/2)
   delay(5);
 
   if (clockgen.setupPLLSource(SI5351_PLL_A, SI5351_PLL_SOURCE_CLKIN,
@@ -100,24 +103,24 @@ void loop(void) {
     while (1) {
     }
   }
-  // PLL_A = CLKIN * 200 = 800 MHz
-  clockgen.setupPLL(SI5351_PLL_A, 200, 0, 1);
+  // PLL_A = CLKIN * 100 = 800 MHz
+  clockgen.setupPLL(SI5351_PLL_A, 100, 0, 1);
   // MS0 divider = 800 -> CLK0 = 1.000 MHz
   clockgen.setupMultisynth(0, SI5351_PLL_A, 800, 0, 1);
   clockgen.enableOutputs(true);
 
-  delay(50);                           // let PLL lock + outputs settle
-  uint32_t hz1 = measure_clk0_hz(100); // 100 ms gate -> ~100k counts
+  delay(50);                            // let PLL lock + outputs settle
+  uint32_t hz1 = measure_clk0_hz(100);  // 100 ms gate -> ~100k counts
   Serial.print(F("CLK0 measured: "));
   Serial.print(hz1);
   Serial.println(F(" Hz (want 1000000)"));
   bool ok1 = within_pct(hz1, 1000000UL, 1);
   Serial.println(ok1 ? F("PHASE 1 PASS") : F("PHASE 1 FAIL"));
 
-  // ---- Phase 2: CLKIN = 2 MHz, target CLK0 = 1 MHz (mult=400) ----
-  Serial.println(F("\n-- Phase 2: CLKIN=2MHz, mult=400, CLK0=1MHz --"));
+  // ---- Phase 2: CLKIN = 4 MHz, target CLK0 = 1 MHz (mult=200) ----
+  Serial.println(F("\n-- Phase 2: CLKIN=4MHz, mult=200, CLK0=1MHz --"));
   clockgen.enableOutputs(false);
-  clkin_start(3); // 2.000 MHz on D11
+  clkin_start(1);  // 4.000 MHz on D11
   delay(5);
 
   if (clockgen.setupPLLSource(SI5351_PLL_A, SI5351_PLL_SOURCE_CLKIN,
@@ -126,7 +129,7 @@ void loop(void) {
     while (1) {
     }
   }
-  clockgen.setupPLL(SI5351_PLL_A, 400, 0, 1); // 2 MHz * 400 = 800 MHz
+  clockgen.setupPLL(SI5351_PLL_A, 200, 0, 1);  // 4 MHz * 200 = 800 MHz
   clockgen.setupMultisynth(0, SI5351_PLL_A, 800, 0, 1);
   clockgen.enableOutputs(true);
 
