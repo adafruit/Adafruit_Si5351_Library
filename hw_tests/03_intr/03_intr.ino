@@ -3,7 +3,7 @@
 // Hardware:
 //   INTR  (Si5351) -> GPIO26 (Feather A0) via INPUT_PULLUP (open-drain,
 //   active-low) CLKIN (Si5351) -> GPIO14 (Feather "14"/A6), driven by LEDC I2C
-//   via STEMMA QT (SDA=22, SCL=20), NEOPIXEL_I2C_POWER must be HIGH
+//   via STEMMA QT (SDA=22, SCL=20)
 //
 // Test:
 //   Phase 1 (no CLKIN): LOS_CLKIN sticky bit must be set, INTR must be LOW
@@ -14,29 +14,20 @@
 // 1 and 8 MHz. 100kHz/1MHz LEDC stimuli do NOT clear LOS. 8 MHz does.
 
 #include <Adafruit_SI5351.h>
-#include <Wire.h>
 
 Adafruit_SI5351 clockgen;
 
 static const uint8_t CLKIN_PIN = 14;
 static const uint8_t INTR_PIN = 26;
-static const uint8_t INTMASK_REG = 2;
-static const uint8_t STATUS_REG = 0;
-static const uint8_t STICKY_REG = 1;
-
-static uint8_t readReg(uint8_t reg) {
-  Wire.beginTransmission(0x60);
-  Wire.write(reg);
-  Wire.endTransmission(false);
-  Wire.requestFrom((uint8_t)0x60, (uint8_t)1);
-  return Wire.read();
-}
+static const uint8_t LOS_CLKIN_BIT = 0x10; // reg 1 bit 4
 
 static bool phase(const __FlashStringHelper* label, bool wantLosClkin,
                   bool wantIntrAsserted) {
-  uint8_t status = readReg(STATUS_REG);
-  uint8_t sticky = readReg(STICKY_REG);
-  bool losClkin = (sticky & 0x10) != 0; // bit 4 sticky LOS_CLKIN
+  uint8_t status = 0;
+  uint8_t sticky = 0;
+  clockgen.readDeviceStatus(&status);
+  clockgen.readStickyStatus(&sticky);
+  bool losClkin = (sticky & LOS_CLKIN_BIT) != 0;
   bool intrAsserted = (digitalRead(INTR_PIN) == LOW);
   bool ok = (losClkin == wantLosClkin) && (intrAsserted == wantIntrAsserted);
   Serial.print(label);
@@ -55,12 +46,7 @@ static bool phase(const __FlashStringHelper* label, bool wantLosClkin,
 
 void setup() {
   Serial.begin(115200);
-  delay(2000);
   Serial.println(F("03_intr: INTR + LOS_CLKIN sticky test (ESP32 V2)"));
-
-  pinMode(NEOPIXEL_I2C_POWER, OUTPUT);
-  digitalWrite(NEOPIXEL_I2C_POWER, HIGH);
-  delay(10);
 
   pinMode(INTR_PIN, INPUT_PULLUP);
 
@@ -71,20 +57,14 @@ void setup() {
     }
   }
 
-  // Unmask everything (0 = unmasked = drives INTR)
-  Wire.beginTransmission(0x60);
-  Wire.write(INTMASK_REG);
-  Wire.write(0x00);
-  Wire.endTransmission();
+  // Unmask all interrupt sources so INTR pin reflects every sticky flag.
+  clockgen.setInterruptMask(0x00);
 
   uint8_t pass = 0;
 
   // Phase 1: CLKIN floating, no stimulus
   pinMode(CLKIN_PIN, INPUT);
-  Wire.beginTransmission(0x60);
-  Wire.write(STICKY_REG);
-  Wire.write(0x00); // clear all sticky
-  Wire.endTransmission();
+  clockgen.clearStickyStatus();
   delay(100);
   if (phase(F("Phase1 (no CLKIN)"), /*wantLosSticky=*/true,
             /*wantIntrAsserted=*/true)) {
@@ -97,10 +77,7 @@ void setup() {
   ledcWrite(CLKIN_PIN, 4);                 // ~50% duty
   delay(50);
   // Clear sticky AFTER clock is running so LOS_CLKIN can stay clear
-  Wire.beginTransmission(0x60);
-  Wire.write(STICKY_REG);
-  Wire.write(0x00);
-  Wire.endTransmission();
+  clockgen.clearStickyStatus();
   delay(200);
   Serial.print(F("ledcAttach="));
   Serial.print(ledcOk ? F("OK") : F("FAIL"));
