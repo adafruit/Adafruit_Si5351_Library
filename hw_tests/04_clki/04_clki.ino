@@ -1,148 +1,222 @@
-// 04_clki — Verify setupPLLSource() routes CLKIN to PLL_A
+// 04_clki — Si5351 CLKIN-as-PLL-source lock test (ESP32 V2 port).
 //
-// BENCH WIRING (note the D9 -> D11 move from earlier sketches):
-//   Metro/Uno D11 (OC2A) -> Si5351 CLKIN     (reference, Timer2-generated)
-//   Si5351   CLK0        -> Metro/Uno D5 (T1) (measurement, Timer1 counter)
-//   Si5351   XTAL pads    : 25 MHz crystal (still populated, unused this test)
+// Board: Adafruit Feather ESP32 V2 (FQBN esp32:esp32:adafruit_feather_esp32_v2)
 //
-// Timer1 generates nothing here -- it is the T1 counter on D5.
-// Timer2 generates CLKIN on D11 in CTC mode (OC2A toggle).
-// Timer0 stays free for millis()/delay().
+// This is the test the whole ESP32 pivot was supposed to enable. It proves
+// setupPLLSource() actually re-routes PLL_A from the 25 MHz on-board XTAL to
+// an external CLKIN reference, and that the PLL re-locks at the new ratio.
 //
-// Plan: drive CLKIN at 8 MHz (Timer2 OC2A max with prescaler=1),
-// lock PLL_A at 800 MHz off CLKIN (multiplier 100), set
-// CLK0 = PLL_A / 800 = 1.000 MHz, count CLK0 edges on T1 over a
-// 100 ms gate, assert within +/- 1%.
-// Then drop CLKIN to 4 MHz -- PLL_A reprograms to mult 200 (still
-// 800 MHz), CLK0 stays 1 MHz. If both phases hit ~1 MHz CLKIN
-// selection is real. If phase 1 passes and phase 2 fails, the
-// chip's CLKIN lock floor sits between 4 and 8 MHz (datasheet
-// says 10 MHz min, we're probing margin).
+// Three phases:
+//   Phase 1 — XTAL baseline. PLL_A sourced from XTAL (default), CLK0 = 1 MHz.
+//             Validates the bench end-to-end before touching CLKIN.
+//   Phase 2 — CLKIN @ 14 MHz, mult=50 -> VCO=700 MHz, MS=700 -> CLK0 = 1.000
+//   MHz. Phase 3 — CLKIN @ 16 MHz, *same* mult/MS -> CLK0 = 16/14 * 1 MHz
+//   = 1.1429 MHz.
+//             This is the rigorous check: only CLKIN changes, so if CLK0
+//             tracks the ratio we know we're really running off CLKIN and
+//             not off XTAL by accident.
+//
+// LEDC generates CLKIN on GPIO14. Both 14 MHz and 16 MHz are well above the
+// 10 MHz Si5351 CLKIN floor (per AN619). VCOs (700 MHz, 800 MHz) sit
+// comfortably mid-range (600-900 MHz spec).
+//
+// Wiring:
+//   Si5351 SDA   -> SDA   (GPIO22)
+//   Si5351 SCL   -> SCL   (GPIO20)
+//   Si5351 CLK0  -> GPIO27 (PCNT unit 0 edge input)
+//   Si5351 CLKIN -> GPIO14 (LEDC ch0)
+//   Si5351 VIN   -> 3V3, GND -> GND
 
 #include <Adafruit_SI5351.h>
+#include <Wire.h>
+
+#include "driver/pulse_cnt.h"
+
+#define CLK0_PIN 27
+#define CLKIN_LEDC_PIN 14
+#define LEDC_CHAN 0
+#define LEDC_RES_BITS 2  // 4 duty steps; we use 2/4 = 50%
+
+static pcnt_unit_handle_t pcnt_unit = NULL;
+static pcnt_channel_handle_t pcnt_chan = NULL;
 
 Adafruit_SI5351 clockgen;
 
-// --- Timer2 CTC on OC2A (D11) ---------------------------------------------
-// f_out = F_CPU / (2 * N * (OCR2A + 1)), N = prescaler (1 here)
-static void clkin_start(uint8_t ocr2a) {
-  pinMode(11, OUTPUT);
-  TCCR2A = 0;
-  TCCR2B = 0;
-  TCNT2 = 0;
-  OCR2A = ocr2a;
-  // CTC mode (WGM21=1), toggle OC2A on compare match (COM2A0=1)
-  TCCR2A = _BV(WGM21) | _BV(COM2A0);
-  TCCR2B = _BV(CS20);  // prescaler = 1
+// Declared early so arduino-cli's auto forward-declarations of functions
+// using `const Phase&` don't trip the preprocessor.
+struct Phase {
+  const char* name;
+  bool use_clkin;
+  uint32_t clkin_hz;
+  uint32_t target_hz;
+  uint32_t pll_mult;  // for setupPLL
+  uint32_t ms_div;    // for setupMultisynth
+};
+
+static bool pcntInit() {
+  pcnt_unit_config_t unit_cfg = {};
+  unit_cfg.low_limit = -10000;
+  unit_cfg.high_limit = 10000;
+  unit_cfg.flags.accum_count = 1;
+  if (pcnt_new_unit(&unit_cfg, &pcnt_unit) != ESP_OK) {
+    return false;
+  }
+
+  pcnt_chan_config_t chan_cfg = {};
+  chan_cfg.edge_gpio_num = CLK0_PIN;
+  chan_cfg.level_gpio_num = -1;
+  if (pcnt_new_channel(pcnt_unit, &chan_cfg, &pcnt_chan) != ESP_OK) {
+    return false;
+  }
+
+  if (pcnt_channel_set_edge_action(pcnt_chan, PCNT_CHANNEL_EDGE_ACTION_INCREASE,
+                                   PCNT_CHANNEL_EDGE_ACTION_HOLD) != ESP_OK) {
+    return false;
+  }
+  if (pcnt_channel_set_level_action(pcnt_chan, PCNT_CHANNEL_LEVEL_ACTION_KEEP,
+                                    PCNT_CHANNEL_LEVEL_ACTION_KEEP) != ESP_OK) {
+    return false;
+  }
+  if (pcnt_unit_add_watch_point(pcnt_unit, unit_cfg.high_limit) != ESP_OK) {
+    return false;
+  }
+  if (pcnt_unit_add_watch_point(pcnt_unit, unit_cfg.low_limit) != ESP_OK) {
+    return false;
+  }
+  if (pcnt_unit_enable(pcnt_unit) != ESP_OK) {
+    return false;
+  }
+  if (pcnt_unit_clear_count(pcnt_unit) != ESP_OK) {
+    return false;
+  }
+  return true;
 }
 
-// --- Timer1 as external counter on T1 (D5) --------------------------------
-static void counter_reset(void) {
-  TCCR1A = 0;
-  TCCR1B = 0;
-  TCNT1 = 0;
-}
-static void counter_start_t1_rising(void) {
-  // CS1[2:0] = 111 -> external clock on T1, rising edge
-  TCCR1B = _BV(CS12) | _BV(CS11) | _BV(CS10);
-}
-static uint16_t counter_stop(void) {
-  TCCR1B = 0;
-  return TCNT1;
-}
-
-// Sample CLK0 frequency over `gate_ms` using Timer1/T1.
-// Returns measured Hz. 16-bit counter limits us to ~65 kHz at 1 s gate,
-// so use a short gate at high freqs.
-static uint32_t measure_clk0_hz(uint16_t gate_ms) {
-  counter_reset();
-  // Align to a fresh millis() tick to reduce gate jitter.
+static uint32_t measureFrequencyHz1s() {
+  pcnt_unit_clear_count(pcnt_unit);
+  pcnt_unit_start(pcnt_unit);
   uint32_t t0 = millis();
-  while (millis() == t0) { /* spin */
+  while ((millis() - t0) < 1000) {
   }
-  t0 = millis();
-  counter_start_t1_rising();
-  while ((uint32_t)(millis() - t0) < gate_ms) { /* spin */
+  pcnt_unit_stop(pcnt_unit);
+
+  int count = 0;
+  pcnt_unit_get_count(pcnt_unit, &count);
+  if (count < 0) {
+    count = 0;
   }
-  uint16_t ticks = counter_stop();
-  // Hz = ticks * (1000 / gate_ms)
-  return (uint32_t)ticks * 1000UL / gate_ms;
+  return (uint32_t)count;
 }
 
-static bool within_pct(uint32_t got, uint32_t want, uint8_t pct) {
-  uint32_t tol = (uint64_t)want * pct / 100ULL;
-  return (got + tol >= want) && (got <= want + tol);
+// Start LEDC at requested frequency on CLKIN_LEDC_PIN. Detach first to allow
+// frequency changes mid-test.
+static bool startClkin(uint32_t freq_hz) {
+  ledcDetach(CLKIN_LEDC_PIN);
+  if (!ledcAttach(CLKIN_LEDC_PIN, freq_hz, LEDC_RES_BITS)) {
+    return false;
+  }
+  ledcWrite(CLKIN_LEDC_PIN, 1 << (LEDC_RES_BITS - 1));  // 50% duty
+  return true;
 }
 
-void setup(void) {
+static bool runPhase(const Phase& p) {
+  Serial.println();
+  Serial.print("--- ");
+  Serial.print(p.name);
+  Serial.println(" ---");
+
+  if (p.use_clkin) {
+    if (!startClkin(p.clkin_hz)) {
+      Serial.println("FAIL: ledcAttach");
+      return false;
+    }
+    Serial.print("LEDC freq actual: ");
+    Serial.print(ledcReadFreq(CLKIN_LEDC_PIN));
+    Serial.println(" Hz");
+    delay(20);
+    if (clockgen.setupPLLSource(SI5351_PLL_A, SI5351_PLL_SOURCE_CLKIN,
+                                SI5351_CLKIN_DIV_1) != ERROR_NONE) {
+      Serial.println("FAIL: setupPLLSource(CLKIN)");
+      return false;
+    }
+  } else {
+    // Make sure we're sourced from XTAL.
+    if (clockgen.setupPLLSource(SI5351_PLL_A, SI5351_PLL_SOURCE_XTAL,
+                                SI5351_CLKIN_DIV_1) != ERROR_NONE) {
+      Serial.println("FAIL: setupPLLSource(XTAL)");
+      return false;
+    }
+    ledcDetach(CLKIN_LEDC_PIN);
+  }
+
+  clockgen.setupPLL(SI5351_PLL_A, p.pll_mult, 0, 1);
+  clockgen.setupMultisynth(0, SI5351_PLL_A, p.ms_div, 0, 1);
+  clockgen.enableOutputs(true);
+
+  delay(50);  // settle / lock time
+
+  uint32_t measured = measureFrequencyHz1s();
+
+  Serial.print("Target:   ");
+  Serial.print(p.target_hz);
+  Serial.println(" Hz");
+  Serial.print("Measured: ");
+  Serial.print(measured);
+  Serial.println(" Hz");
+
+  // +/- 2% tolerance — generous for PLL/CLKIN noise but tight enough that
+  // a 14 vs 16 ratio (~14% delta) can't be mistaken for a pass.
+  uint32_t low = (uint32_t)((double)p.target_hz * 0.98);
+  uint32_t high = (uint32_t)((double)p.target_hz * 1.02);
+  bool pass = (measured >= low) && (measured <= high);
+  Serial.println(pass ? "PHASE: PASS" : "PHASE: FAIL");
+  return pass;
+}
+
+void setup() {
   Serial.begin(115200);
-  while (!Serial) { /* wait USB */
-  }
-  Serial.println(F("04_clki: PLL source = CLKIN test"));
+  delay(2000);
+
+  Serial.println("Si5351 04_clki test (ESP32 V2)");
+
+  pinMode(NEOPIXEL_I2C_POWER, OUTPUT);
+  digitalWrite(NEOPIXEL_I2C_POWER, HIGH);
+  delay(10);
 
   if (clockgen.begin() != ERROR_NONE) {
-    Serial.println(F("FAIL: clockgen.begin()"));
-    while (1) { /* halt */
+    Serial.println("FAIL: begin() error");
+    Serial.println("RESULTS: 0/3");
+    while (1) {
+      delay(10);
     }
   }
-  Serial.println(F("Si5351 init OK"));
+  if (!pcntInit()) {
+    Serial.println("FAIL: PCNT init");
+    Serial.println("RESULTS: 0/3");
+    while (1) {
+      delay(10);
+    }
+  }
 
-  // CLK0 driven by MS0 driven by PLL_A. PLL_A source = CLKIN.
-  // Enable CLK0 output enable (handled by setupMultisynth).
+  Phase phases[] = {
+      {"P1 XTAL baseline", false, 0, 1000000UL, 36, 900},
+      {"P2 CLKIN 14 MHz", true, 14000000UL, 1000000UL, 50, 700},
+      // P3: same mult/MS as P2, only CLKIN changes 14->16 MHz.
+      // VCO = 16 * 50 = 800 MHz; CLK0 = 800/700 = 1142857 Hz.
+      {"P3 CLKIN 16 MHz", true, 16000000UL, 1142857UL, 50, 700},
+  };
+
+  int passed = 0;
+  for (auto& p : phases) {
+    if (runPhase(p)) {
+      passed++;
+    }
+  }
+
+  Serial.println();
+  Serial.print("RESULTS: ");
+  Serial.print(passed);
+  Serial.println("/3");
 }
 
-void loop(void) {
-  // ---- Phase 1: CLKIN = 8 MHz, target CLK0 = 1 MHz ----
-  Serial.println(F("\n-- Phase 1: CLKIN=8MHz, mult=100, CLK0=1MHz --"));
-  clkin_start(0);  // 8.000 MHz on D11 (F_CPU/2)
-  delay(5);
-
-  if (clockgen.setupPLLSource(SI5351_PLL_A, SI5351_PLL_SOURCE_CLKIN,
-                              SI5351_CLKIN_DIV_1) != ERROR_NONE) {
-    Serial.println(F("FAIL: setupPLLSource phase 1"));
-    while (1) {
-    }
-  }
-  // PLL_A = CLKIN * 100 = 800 MHz
-  clockgen.setupPLL(SI5351_PLL_A, 100, 0, 1);
-  // MS0 divider = 800 -> CLK0 = 1.000 MHz
-  clockgen.setupMultisynth(0, SI5351_PLL_A, 800, 0, 1);
-  clockgen.enableOutputs(true);
-
-  delay(50);                            // let PLL lock + outputs settle
-  uint32_t hz1 = measure_clk0_hz(100);  // 100 ms gate -> ~100k counts
-  Serial.print(F("CLK0 measured: "));
-  Serial.print(hz1);
-  Serial.println(F(" Hz (want 1000000)"));
-  bool ok1 = within_pct(hz1, 1000000UL, 1);
-  Serial.println(ok1 ? F("PHASE 1 PASS") : F("PHASE 1 FAIL"));
-
-  // ---- Phase 2: CLKIN = 4 MHz, target CLK0 = 1 MHz (mult=200) ----
-  Serial.println(F("\n-- Phase 2: CLKIN=4MHz, mult=200, CLK0=1MHz --"));
-  clockgen.enableOutputs(false);
-  clkin_start(1);  // 4.000 MHz on D11
-  delay(5);
-
-  if (clockgen.setupPLLSource(SI5351_PLL_A, SI5351_PLL_SOURCE_CLKIN,
-                              SI5351_CLKIN_DIV_1) != ERROR_NONE) {
-    Serial.println(F("FAIL: setupPLLSource phase 2"));
-    while (1) {
-    }
-  }
-  clockgen.setupPLL(SI5351_PLL_A, 200, 0, 1);  // 4 MHz * 200 = 800 MHz
-  clockgen.setupMultisynth(0, SI5351_PLL_A, 800, 0, 1);
-  clockgen.enableOutputs(true);
-
-  delay(50);
-  uint32_t hz2 = measure_clk0_hz(100);
-  Serial.print(F("CLK0 measured: "));
-  Serial.print(hz2);
-  Serial.println(F(" Hz (want 1000000)"));
-  bool ok2 = within_pct(hz2, 1000000UL, 1);
-  Serial.println(ok2 ? F("PHASE 2 PASS") : F("PHASE 2 FAIL"));
-
-  Serial.println((ok1 && ok2) ? F("\n== 04_clki PASS ==")
-                              : F("\n== 04_clki FAIL =="));
-  while (1) { /* halt */
-  }
-}
+void loop() {}
