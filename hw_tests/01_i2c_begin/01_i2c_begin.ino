@@ -6,10 +6,6 @@
 //   Si5351 SDA -> Feather SDA (GPIO22)
 //   Si5351 SCL -> Feather SCL (GPIO20)
 //   Si5351 VIN -> Feather 3V3, GND -> GND
-//
-// Feather V2 quirk: GPIO2 (NEOPIXEL_I2C_POWER) gates the on-board STEMMA QT
-// I2C power rail. We drive it HIGH before Wire.begin() so the bus is powered
-// whether the user wired via QT or to the side header.
 
 #include <Adafruit_SI5351.h>
 #include <Wire.h>
@@ -34,11 +30,6 @@ void setup() {
   delay(2000);
 
   Serial.println("Si5351 01_i2c_begin test (ESP32 V2)");
-
-  // Enable I2C power rail (Feather V2 STEMMA QT power gate).
-  pinMode(NEOPIXEL_I2C_POWER, OUTPUT);
-  digitalWrite(NEOPIXEL_I2C_POWER, HIGH);
-  delay(10);
 
   Wire.begin();
   for (uint8_t addr = 1; addr < 127; addr++) {
@@ -74,6 +65,4 @@ void setup() {
   Serial.println("/2 tests passed");
 }
 
-void loop() {
-  delay(1000);
-}
+void loop() { delay(1000); }
