@@ -88,6 +88,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a01d74945bd98aedbb05e9545ec4f148c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#a01d74945bd98aedbb05e9545ec4f148c">setupPLLInt</a> (si5351PLL_t pll, uint8_t mult)</td></tr>
 <tr class="memdesc:a01d74945bd98aedbb05e9545ec4f148c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the multiplier for the specified PLL using integer values.  <a href="#a01d74945bd98aedbb05e9545ec4f148c">More...</a><br /></td></tr>
 <tr class="separator:a01d74945bd98aedbb05e9545ec4f148c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e8ad3985b0939709ef783608d522334"><td class="memItemLeft" align="right" valign="top"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#a0e8ad3985b0939709ef783608d522334">setupPLLSource</a> (si5351PLL_t pll, si5351PLLSource_t source, si5351ClkinDiv_t clkinDiv=SI5351_CLKIN_DIV_1)</td></tr>
+<tr class="memdesc:a0e8ad3985b0939709ef783608d522334"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the reference source (XTAL or CLKIN) for the specified PLL, and optionally sets the CLKIN pre-divider.  <a href="#a0e8ad3985b0939709ef783608d522334">More...</a><br /></td></tr>
+<tr class="separator:a0e8ad3985b0939709ef783608d522334"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a38f8de810f72408156ba68ee3c04c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#a7a38f8de810f72408156ba68ee3c04c4">setupMultisynth</a> (uint8_t output, si5351PLL_t pllSource, uint32_t div, uint32_t num, uint32_t denom)</td></tr>
 <tr class="memdesc:a7a38f8de810f72408156ba68ee3c04c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the Multisynth divider, which determines the output clock frequency based on the specified PLL input.  <a href="#a7a38f8de810f72408156ba68ee3c04c4">More...</a><br /></td></tr>
 <tr class="separator:a7a38f8de810f72408156ba68ee3c04c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -295,6 +298,71 @@ Configuration</h1>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a0e8ad3985b0939709ef783608d522334"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e8ad3985b0939709ef783608d522334">&#9670;&nbsp;</a></span>setupPLLSource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a> Adafruit_SI5351::setupPLLSource </td>
+          <td>(</td>
+          <td class="paramtype">si5351PLL_t&#160;</td>
+          <td class="paramname"><em>pll</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">si5351PLLSource_t&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">si5351ClkinDiv_t&#160;</td>
+          <td class="paramname"><em>clkinDiv</em> = <code>SI5351_CLKIN_DIV_1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Selects the reference source (XTAL or CLKIN) for the specified PLL, and optionally sets the CLKIN pre-divider. </p>
+<dl class="section return"><dt>Returns</dt><dd>ERROR_NONE</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pll</td><td>The PLL whose reference source is being configured:<ul>
+<li>SI5351_PLL_A</li>
+<li>SI5351_PLL_B </li>
+</ul>
+</td></tr>
+    <tr><td class="paramname">source</td><td>Reference source for this PLL:<ul>
+<li>SI5351_PLL_SOURCE_XTAL (use the on-board crystal)</li>
+<li>SI5351_PLL_SOURCE_CLKIN (use the external CLKIN pin) </li>
+</ul>
+</td></tr>
+    <tr><td class="paramname">clkinDiv</td><td>CLKIN pre-divider (reg 15, bits [7:6]). The CLKIN input to the PLLs must be in the 10..40 MHz range; pick a divider that brings your CLKIN signal into that window. Only written when <code>source</code> == SI5351_PLL_SOURCE_CLKIN, so that switching one PLL back to XTAL does not clobber the divider used by the other PLL.<ul>
+<li>SI5351_CLKIN_DIV_1 (default)</li>
+<li>SI5351_CLKIN_DIV_2</li>
+<li>SI5351_CLKIN_DIV_4</li>
+<li>SI5351_CLKIN_DIV_8</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<h1><a class="anchor" id="Register"></a>
+Map (AN619)</h1>
+<p>Register 15 &ndash; PLL Input Source</p>
+<p>Bit | Field ---&mdash;+--------------------------------&mdash; 7:6 | CLKIN_DIV[1:0] 5:4 | (reserved) 3 | PLLB_SRC (0 = XTAL, 1 = CLKIN) 2 | PLLA_SRC (0 = XTAL, 1 = CLKIN) 1:0 | (reserved)</p>
+<p>Both PLLA_SRC and PLLB_SRC are single-bit fields, so we use Adafruit_BusIO_RegisterBits to read-modify-write only the affected bit and leave the other PLL's source (and the reserved bits) intact.</p>
+<dl class="section return"><dt>Returns</dt><dd>ERROR_NONE on success, or ERROR_I2C_TRANSACTION on a bus failure. </dd></dl>
 
 </div>
 </div>

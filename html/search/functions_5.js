@@ -7,5 +7,6 @@ var searchData=
   ['setupmultisynthint',['setupMultisynthInt',['../class_adafruit___s_i5351.html#a5c92087c9ade21fad1ac7b85cf67e4fb',1,'Adafruit_SI5351']]],
   ['setuppll',['setupPLL',['../class_adafruit___s_i5351.html#a41a4de34f331294d79fdcc8cc7090916',1,'Adafruit_SI5351']]],
   ['setuppllint',['setupPLLInt',['../class_adafruit___s_i5351.html#a01d74945bd98aedbb05e9545ec4f148c',1,'Adafruit_SI5351']]],
+  ['setuppllsource',['setupPLLSource',['../class_adafruit___s_i5351.html#a0e8ad3985b0939709ef783608d522334',1,'Adafruit_SI5351']]],
   ['setuprdiv',['setupRdiv',['../class_adafruit___s_i5351.html#a63b092fb3d8f71d1c0f59716d4948a07',1,'Adafruit_SI5351']]]
 ];
