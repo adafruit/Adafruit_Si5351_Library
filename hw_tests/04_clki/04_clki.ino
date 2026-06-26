@@ -35,7 +35,7 @@
 #define CLK0_PIN 27
 #define CLKIN_LEDC_PIN 14
 #define LEDC_CHAN 0
-#define LEDC_RES_BITS 2  // 4 duty steps; we use 2/4 = 50%
+#define LEDC_RES_BITS 2 // 4 duty steps; we use 2/4 = 50%
 
 static pcnt_unit_handle_t pcnt_unit = NULL;
 static pcnt_channel_handle_t pcnt_chan = NULL;
@@ -49,8 +49,8 @@ struct Phase {
   bool use_clkin;
   uint32_t clkin_hz;
   uint32_t target_hz;
-  uint32_t pll_mult;  // for setupPLL
-  uint32_t ms_div;    // for setupMultisynth
+  uint32_t pll_mult; // for setupPLL
+  uint32_t ms_div;   // for setupMultisynth
 };
 
 static bool pcntInit() {
@@ -115,7 +115,7 @@ static bool startClkin(uint32_t freq_hz) {
   if (!ledcAttach(CLKIN_LEDC_PIN, freq_hz, LEDC_RES_BITS)) {
     return false;
   }
-  ledcWrite(CLKIN_LEDC_PIN, 1 << (LEDC_RES_BITS - 1));  // 50% duty
+  ledcWrite(CLKIN_LEDC_PIN, 1 << (LEDC_RES_BITS - 1)); // 50% duty
   return true;
 }
 
@@ -153,7 +153,7 @@ static bool runPhase(const Phase& p) {
   clockgen.setupMultisynth(0, SI5351_PLL_A, p.ms_div, 0, 1);
   clockgen.enableOutputs(true);
 
-  delay(50);  // settle / lock time
+  delay(50); // settle / lock time
 
   uint32_t measured = measureFrequencyHz1s();
 
@@ -175,13 +175,8 @@ static bool runPhase(const Phase& p) {
 
 void setup() {
   Serial.begin(115200);
-  delay(2000);
 
   Serial.println("Si5351 04_clki test (ESP32 V2)");
-
-  pinMode(NEOPIXEL_I2C_POWER, OUTPUT);
-  digitalWrite(NEOPIXEL_I2C_POWER, HIGH);
-  delay(10);
 
   if (clockgen.begin() != ERROR_NONE) {
     Serial.println("FAIL: begin() error");
