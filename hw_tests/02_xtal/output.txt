@@ -1,4 +1,5 @@
+Si5351 02_xtal test (ESP32 V2)
 Target: 1000000 Hz
-Measured: 999348 Hz
+Measured: 979012 Hz
 PASS: within tolerance
 RESULTS: 1/1

@@ -1,0 +1,20 @@
+Si5351 04_clki test (ESP32 V2)
+
+--- P1 XTAL baseline ---
+Target:   1000000 Hz
+Measured: 1001709 Hz
+PHASE: PASS
+
+--- P2 CLKIN 14 MHz ---
+LEDC freq actual: 13989071 Hz
+Target:   1000000 Hz
+Measured: 998712 Hz
+PHASE: PASS
+
+--- P3 CLKIN 16 MHz ---
+LEDC freq actual: 16000000 Hz
+Target:   1142857 Hz
+Measured: 1142278 Hz
+PHASE: PASS
+
+RESULTS: 3/3
