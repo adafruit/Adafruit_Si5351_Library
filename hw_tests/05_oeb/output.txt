@@ -1,0 +1,31 @@
+Si5351 05_oeb test (ESP32 V2)
+
+--- P1 OEB=LOW  baseline ---
+OEB pin: LOW (asserted)
+reg9 mask: 0x0
+Target:   1000000 Hz
+Measured: 1002332 Hz
+PHASE: PASS
+
+--- P2 OEB=HIGH outputs silent ---
+OEB pin: HIGH (de-asserted)
+reg9 mask: 0x0
+Target:   0 Hz
+Measured: 0 Hz
+PHASE: PASS
+
+--- P3 OEB=LOW  restored ---
+OEB pin: LOW (asserted)
+reg9 mask: 0x0
+Target:   1000000 Hz
+Measured: 989748 Hz
+PHASE: PASS
+
+--- P4 OEB=HIGH mask=0x01 CLK0 immune ---
+OEB pin: HIGH (de-asserted)
+reg9 mask: 0x1
+Target:   1000000 Hz
+Measured: 995004 Hz
+PHASE: PASS
+
+RESULTS: 4/4
