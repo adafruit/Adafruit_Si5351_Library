@@ -1,0 +1,1915 @@
+Bench run: 2026-09-16
+Board: Adafruit Feather ESP32 V2, ESP32 core 3.3.11, COM20
+Sequential single-counter measurement, 2% frequency tolerance.
+ESP-IDF missing-pull-up messages are retained below.
+
+Adafruit Si5351C eight-output frequency sweep
+PASS: begin()
+CLK0 input on GPIO 27
+CLK1 input on GPIO 33
+CLK2 input on GPIO 32
+CLK3 input on GPIO 15
+CLK4 input on GPIO 34
+CLK5 input on GPIO 39
+CLK6 input on GPIO 36
+CLK7 input on GPIO 4
+PASS: hardware counter initialized
+
+Testing PLL A
+CLK0 PLL A expected 2500000.0 Hz, measured 2516183.7 Hz
+PASS: output frequency
+E (1620) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (1720) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (1820) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (2431) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (2531) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (2632) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL A expected 3333333.2 Hz, measured 3334946.0 Hz
+PASS: output frequency
+E (4167) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (4268) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (4368) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (4979) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (5079) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (5179) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL A expected 5000000.0 Hz, measured 4999996.0 Hz
+PASS: output frequency
+E (6715) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (6816) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (6916) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (7527) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (7627) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (7727) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL A expected 10000000.0 Hz, measured 9999997.0 Hz
+PASS: output frequency
+E (9263) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (9364) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (9464) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (10075) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (10175) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (10276) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL A expected 2000000.0 Hz, measured 2007181.9 Hz
+PASS: output frequency
+E (11811) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (11912) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (12012) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (12623) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (12723) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (12824) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL A expected 1000000.0 Hz, measured 1004413.9 Hz
+PASS: output frequency
+E (14359) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (14460) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (14560) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (15171) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (15271) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (15372) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL A expected 500000.0 Hz, measured 502297.0 Hz
+PASS: output frequency
+E (16907) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (17008) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (17108) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (17719) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (17819) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (17920) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL A expected 250000.0 Hz, measured 250188.0 Hz
+PASS: output frequency
+E (19455) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (19556) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (19656) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (20267) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (20367) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (20468) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL A expected 125000.0 Hz, measured 125282.5 Hz
+PASS: output frequency
+E (22003) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (22104) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (22204) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (22815) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (22915) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (23016) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL A expected 62500.0 Hz, measured 62776.2 Hz
+PASS: output frequency
+E (24551) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (24652) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (24752) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (25363) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (25463) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (25564) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL A expected 31250.0 Hz, measured 31386.6 Hz
+PASS: output frequency
+E (27099) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (27200) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (27300) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (27911) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (28011) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (28112) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL A expected 15625.0 Hz, measured 15681.8 Hz
+PASS: output frequency
+E (29647) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (29748) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (29848) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (30459) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (30559) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (30660) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL A expected 4979253.0 Hz, measured 4979251.0 Hz
+PASS: output frequency
+E (32195) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (32296) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (32396) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (33007) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (33107) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (33208) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL A expected 2500000.0 Hz, measured 2504991.0 Hz
+PASS: output frequency
+E (34743) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (34844) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (34944) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (35555) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (35655) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (35756) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL A expected 3333333.2 Hz, measured 3333331.0 Hz
+PASS: output frequency
+E (37291) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (37392) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (37492) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (38103) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (38203) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (38304) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL A expected 5000000.0 Hz, measured 4999994.0 Hz
+PASS: output frequency
+E (39839) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (39940) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (40040) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (40651) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (40751) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (40852) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL A expected 10000000.0 Hz, measured 9999996.0 Hz
+PASS: output frequency
+E (42387) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (42488) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (42588) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (43199) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (43299) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (43400) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL A expected 2000000.0 Hz, measured 2007829.9 Hz
+PASS: output frequency
+E (44935) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (45036) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (45136) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (45747) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (45847) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (45948) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL A expected 1000000.0 Hz, measured 1000000.0 Hz
+PASS: output frequency
+E (47483) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (47584) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (47684) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (48295) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (48395) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (48496) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL A expected 500000.0 Hz, measured 501822.0 Hz
+PASS: output frequency
+E (50031) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (50132) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (50232) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (50843) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (50943) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (51044) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL A expected 250000.0 Hz, measured 250245.0 Hz
+PASS: output frequency
+E (52579) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (52680) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (52780) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (53391) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (53491) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (53592) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL A expected 125000.0 Hz, measured 125063.5 Hz
+PASS: output frequency
+E (55127) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (55228) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (55328) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (55939) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (56039) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (56140) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL A expected 62500.0 Hz, measured 62500.3 Hz
+PASS: output frequency
+E (57675) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (57776) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (57876) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (58487) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (58587) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (58688) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL A expected 31250.0 Hz, measured 31255.6 Hz
+PASS: output frequency
+E (60223) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (60324) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (60424) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (61035) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (61135) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (61236) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL A expected 15625.0 Hz, measured 15625.8 Hz
+PASS: output frequency
+E (62771) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (62872) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (62972) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (63583) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (63683) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (63784) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL A expected 4979253.0 Hz, measured 4979250.0 Hz
+PASS: output frequency
+E (65319) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (65420) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (65520) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (66131) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (66231) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (66332) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL A expected 2500000.0 Hz, measured 2499997.5 Hz
+PASS: output frequency
+E (67867) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (67968) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (68068) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (68679) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (68779) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (68880) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL A expected 3333333.2 Hz, measured 3333331.0 Hz
+PASS: output frequency
+E (70415) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (70516) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (70616) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (71227) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (71327) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (71428) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL A expected 5000000.0 Hz, measured 4999997.0 Hz
+PASS: output frequency
+E (72963) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (73064) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (73164) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (73775) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (73875) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (73976) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL A expected 10000000.0 Hz, measured 9999996.0 Hz
+PASS: output frequency
+E (75511) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (75612) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (75712) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (76323) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (76423) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (76524) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL A expected 2000000.0 Hz, measured 1999998.0 Hz
+PASS: output frequency
+E (78059) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (78160) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (78260) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (78871) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (78971) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (79072) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL A expected 1000000.0 Hz, measured 1004264.9 Hz
+PASS: output frequency
+E (80607) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (80708) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (80808) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (81419) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (81519) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (81620) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL A expected 500000.0 Hz, measured 501244.0 Hz
+PASS: output frequency
+E (83155) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (83256) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (83356) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (83967) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (84067) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (84168) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL A expected 250000.0 Hz, measured 250596.0 Hz
+PASS: output frequency
+E (85703) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (85804) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (85904) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (86515) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (86615) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (86716) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL A expected 125000.0 Hz, measured 125301.5 Hz
+PASS: output frequency
+E (88251) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (88352) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (88452) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (89063) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (89163) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (89264) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL A expected 62500.0 Hz, measured 62647.3 Hz
+PASS: output frequency
+E (90799) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (90900) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (91000) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (91611) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (91711) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (91812) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL A expected 31250.0 Hz, measured 31327.6 Hz
+PASS: output frequency
+E (93347) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (93448) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (93548) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (94159) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (94259) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (94360) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL A expected 15625.0 Hz, measured 15663.8 Hz
+PASS: output frequency
+E (95895) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (95996) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (96096) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (96707) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (96807) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (96908) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL A expected 4979253.0 Hz, measured 4979250.0 Hz
+PASS: output frequency
+E (98443) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (98544) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (98644) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (99255) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (99355) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (99456) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL A expected 2500000.0 Hz, measured 2499998.5 Hz
+PASS: output frequency
+E (100991) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (101092) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (101192) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (101803) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (101903) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (102004) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL A expected 3333333.2 Hz, measured 3333330.0 Hz
+PASS: output frequency
+E (103539) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (103640) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (103740) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (104351) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (104451) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (104552) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL A expected 5000000.0 Hz, measured 4999998.0 Hz
+PASS: output frequency
+E (106087) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (106188) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (106288) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (106899) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (106999) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (107100) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL A expected 10000000.0 Hz, measured 9999993.0 Hz
+PASS: output frequency
+E (108635) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (108736) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (108836) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (109447) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (109547) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (109648) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL A expected 2000000.0 Hz, measured 1999999.0 Hz
+PASS: output frequency
+E (111183) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (111284) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (111384) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (111995) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (112095) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (112196) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL A expected 1000000.0 Hz, measured 1002512.0 Hz
+PASS: output frequency
+E (113731) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (113832) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (113932) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (114543) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (114643) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (114744) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL A expected 500000.0 Hz, measured 502025.0 Hz
+PASS: output frequency
+E (116279) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (116380) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (116480) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (117091) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (117191) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (117292) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL A expected 250000.0 Hz, measured 251156.0 Hz
+PASS: output frequency
+E (118827) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (118928) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (119028) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (119639) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (119739) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (119840) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL A expected 125000.0 Hz, measured 125464.5 Hz
+PASS: output frequency
+E (121375) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (121476) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (121576) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (122187) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (122287) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (122388) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL A expected 62500.0 Hz, measured 62727.2 Hz
+PASS: output frequency
+E (123923) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (124024) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (124124) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (124735) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (124835) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (124936) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL A expected 31250.0 Hz, measured 31391.6 Hz
+PASS: output frequency
+E (126471) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (126572) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (126672) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (127283) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (127383) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (127484) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL A expected 15625.0 Hz, measured 15667.8 Hz
+PASS: output frequency
+E (129019) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (129120) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (129220) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (129831) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (129931) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (130032) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL A expected 4979253.0 Hz, measured 4979251.0 Hz
+PASS: output frequency
+E (131567) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (131668) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (131768) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (132379) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (132479) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (132580) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (132815) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL A expected 2500000.0 Hz, measured 2507194.0 Hz
+PASS: output frequency
+E (134216) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (134316) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (134927) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (135027) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (135128) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (135363) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL A expected 3333333.2 Hz, measured 3348075.7 Hz
+PASS: output frequency
+E (136764) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (136864) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (137475) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (137575) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (137676) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (137911) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL A expected 5000000.0 Hz, measured 4999996.0 Hz
+PASS: output frequency
+E (139312) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (139412) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (140023) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (140123) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (140224) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (140459) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL A expected 10000000.0 Hz, measured 9999983.0 Hz
+PASS: output frequency
+E (141860) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (141960) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (142571) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (142671) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (142772) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (143007) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL A expected 2000000.0 Hz, measured 1996016.0 Hz
+PASS: output frequency
+E (144408) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (144508) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (145119) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (145219) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (145320) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (145555) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL A expected 1000000.0 Hz, measured 1001734.0 Hz
+PASS: output frequency
+E (146956) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (147056) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (147667) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (147767) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (147868) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (148103) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL A expected 500000.0 Hz, measured 502419.0 Hz
+PASS: output frequency
+E (149504) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (149604) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (150215) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (150315) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (150416) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (150651) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL A expected 250000.0 Hz, measured 251215.0 Hz
+PASS: output frequency
+E (152052) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (152152) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (152763) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (152863) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (152964) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (153199) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL A expected 125000.0 Hz, measured 125400.5 Hz
+PASS: output frequency
+E (154600) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (154700) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (155311) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (155411) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (155512) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (155747) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL A expected 62500.0 Hz, measured 62649.3 Hz
+PASS: output frequency
+E (157148) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (157248) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (157859) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (157959) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (158060) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (158295) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL A expected 31250.0 Hz, measured 31387.6 Hz
+PASS: output frequency
+E (159696) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (159796) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (160407) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (160507) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (160608) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (160843) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL A expected 15625.0 Hz, measured 15692.8 Hz
+PASS: output frequency
+E (162244) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (162344) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (162955) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (163055) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (163156) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (163391) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL A expected 4979253.0 Hz, measured 4979247.0 Hz
+PASS: output frequency
+E (164792) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (164892) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (165503) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (165603) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (165704) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (165939) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL A expected 2500000.0 Hz, measured 2503414.0 Hz
+PASS: output frequency
+E (167340) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (167440) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (168051) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (168151) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (168252) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (168487) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL A expected 3333333.2 Hz, measured 3350344.7 Hz
+PASS: output frequency
+E (169888) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (169988) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (170599) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (170699) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (170800) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (171035) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL A expected 5000000.0 Hz, measured 4999996.0 Hz
+PASS: output frequency
+E (172436) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (172536) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (173147) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (173247) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (173348) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (173583) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL A expected 10000000.0 Hz, measured 9999990.0 Hz
+PASS: output frequency
+E (174984) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (175084) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (175695) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (175795) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (175896) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (176131) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL A expected 2000000.0 Hz, measured 2001739.0 Hz
+PASS: output frequency
+E (177532) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (177632) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (178243) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (178343) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (178444) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (178679) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL A expected 1000000.0 Hz, measured 999423.0 Hz
+PASS: output frequency
+E (180080) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (180180) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (180791) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (180891) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (180992) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (181227) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL A expected 500000.0 Hz, measured 500865.0 Hz
+PASS: output frequency
+E (182628) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (182728) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (183339) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (183439) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (183540) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (183775) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL A expected 250000.0 Hz, measured 249999.7 Hz
+PASS: output frequency
+E (185176) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (185276) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (185887) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (185987) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (186088) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (186323) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL A expected 125000.0 Hz, measured 124999.5 Hz
+PASS: output frequency
+E (187724) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (187824) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (188435) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (188535) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (188636) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (188871) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL A expected 62500.0 Hz, measured 62779.2 Hz
+PASS: output frequency
+E (190272) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (190372) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (190983) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (191083) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (191184) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (191419) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL A expected 31250.0 Hz, measured 31385.6 Hz
+PASS: output frequency
+E (192820) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (192920) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (193531) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (193631) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (193732) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (193967) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL A expected 15625.0 Hz, measured 15624.8 Hz
+PASS: output frequency
+E (195368) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (195468) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (196079) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (196179) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (196280) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (196515) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL A expected 4979253.0 Hz, measured 4979248.0 Hz
+PASS: output frequency
+E (197916) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (198016) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (198627) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (198727) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (198828) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (199062) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK6 PLL A expected 2500000.0 Hz, measured 2511256.7 Hz
+PASS: output frequency
+E (200463) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (200563) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (201174) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (201274) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (201375) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (201609) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK6 PLL A expected 3333333.2 Hz, measured 3333329.0 Hz
+PASS: output frequency
+E (203010) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (203110) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (203721) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (203821) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (203922) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (204156) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK6 PLL A expected 5000000.0 Hz, measured 4999994.0 Hz
+PASS: output frequency
+E (205557) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (205657) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (206268) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (206368) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (206469) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (206703) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK6 PLL A expected 10000000.0 Hz, measured 9999985.0 Hz
+PASS: output frequency
+E (208104) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (208204) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (208815) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (208915) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (209016) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK7 PLL A expected 2500000.0 Hz, measured 2499998.5 Hz
+PASS: output frequency
+E (210650) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (210751) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (210851) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (211362) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (211462) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (211563) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK7 PLL A expected 3333333.2 Hz, measured 3333332.0 Hz
+PASS: output frequency
+E (213197) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (213298) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (213398) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (213909) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (214009) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (214110) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK7 PLL A expected 5000000.0 Hz, measured 4999998.0 Hz
+PASS: output frequency
+E (215744) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (215845) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (215945) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (216456) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (216556) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (216657) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK7 PLL A expected 10000000.0 Hz, measured 10036021.0 Hz
+PASS: output frequency
+E (218291) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (218392) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (218492) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (219003) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (219103) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (219204) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+
+Testing PLL B
+CLK0 PLL B expected 3125000.0 Hz, measured 3181843.7 Hz
+PASS: output frequency
+E (220740) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (220841) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (220941) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (221552) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (221652) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (221753) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL B expected 4166666.7 Hz, measured 4175592.0 Hz
+PASS: output frequency
+E (223288) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (223389) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (223489) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (224100) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (224200) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (224301) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL B expected 6250000.0 Hz, measured 6249992.5 Hz
+PASS: output frequency
+E (225836) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (225937) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (226037) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (226648) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (226748) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (226849) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL B expected 12500000.0 Hz, measured 12499986.0 Hz
+PASS: output frequency
+E (228384) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (228485) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (228585) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (229196) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (229296) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (229397) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL B expected 2000000.0 Hz, measured 2008819.9 Hz
+PASS: output frequency
+E (230932) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (231033) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (231133) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (231744) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (231844) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (231945) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL B expected 1000000.0 Hz, measured 1002949.9 Hz
+PASS: output frequency
+E (233480) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (233581) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (233681) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (234292) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (234392) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (234493) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL B expected 500000.0 Hz, measured 500625.0 Hz
+PASS: output frequency
+E (236028) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (236129) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (236229) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (236840) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (236940) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (237041) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL B expected 250000.0 Hz, measured 250897.0 Hz
+PASS: output frequency
+E (238576) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (238677) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (238777) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (239388) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (239488) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (239589) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL B expected 125000.0 Hz, measured 125527.5 Hz
+PASS: output frequency
+E (241124) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (241225) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (241325) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (241936) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (242036) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (242137) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL B expected 62500.0 Hz, measured 62784.2 Hz
+PASS: output frequency
+E (243672) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (243773) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (243873) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (244484) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (244584) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (244685) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL B expected 31250.0 Hz, measured 31389.6 Hz
+PASS: output frequency
+E (246220) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (246321) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (246421) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (247032) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (247132) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (247233) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL B expected 15625.0 Hz, measured 15694.8 Hz
+PASS: output frequency
+E (248768) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (248869) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (248969) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (249580) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (249680) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (249781) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK0 PLL B expected 6224066.5 Hz, measured 6224060.5 Hz
+PASS: output frequency
+E (251316) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (251417) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (251517) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (252128) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (252228) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (252329) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL B expected 3125000.0 Hz, measured 3124996.5 Hz
+PASS: output frequency
+E (253864) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (253965) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (254065) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (254676) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (254776) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (254877) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL B expected 4166666.7 Hz, measured 4166664.0 Hz
+PASS: output frequency
+E (256412) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (256513) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (256613) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (257224) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (257324) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (257425) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL B expected 6250000.0 Hz, measured 6249992.5 Hz
+PASS: output frequency
+E (258960) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (259061) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (259161) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (259772) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (259872) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (259973) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL B expected 12500000.0 Hz, measured 12499992.0 Hz
+PASS: output frequency
+E (261508) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (261609) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (261709) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (262320) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (262420) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (262521) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL B expected 2000000.0 Hz, measured 2008676.9 Hz
+PASS: output frequency
+E (264056) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (264157) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (264257) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (264868) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (264968) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (265069) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL B expected 1000000.0 Hz, measured 999529.0 Hz
+PASS: output frequency
+E (266604) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (266705) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (266805) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (267416) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (267516) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (267617) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL B expected 500000.0 Hz, measured 499720.0 Hz
+PASS: output frequency
+E (269152) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (269253) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (269353) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (269964) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (270064) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (270165) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL B expected 250000.0 Hz, measured 250021.0 Hz
+PASS: output frequency
+E (271700) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (271801) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (271901) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (272512) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (272612) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (272713) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL B expected 125000.0 Hz, measured 124952.5 Hz
+PASS: output frequency
+E (274248) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (274349) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (274449) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (275060) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (275160) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (275261) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL B expected 62500.0 Hz, measured 62645.3 Hz
+PASS: output frequency
+E (276796) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (276897) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (276997) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (277608) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (277708) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (277809) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL B expected 31250.0 Hz, measured 31388.6 Hz
+PASS: output frequency
+E (279344) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (279445) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (279545) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (280156) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (280256) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (280357) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL B expected 15625.0 Hz, measured 15625.8 Hz
+PASS: output frequency
+E (281892) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (281993) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (282093) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (282704) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (282804) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (282905) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK1 PLL B expected 6224066.5 Hz, measured 6224062.5 Hz
+PASS: output frequency
+E (284440) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (284541) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (284641) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (285252) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (285352) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (285453) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL B expected 3125000.0 Hz, measured 3124997.5 Hz
+PASS: output frequency
+E (286988) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (287089) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (287189) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (287800) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (287900) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (288001) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL B expected 4166666.7 Hz, measured 4166664.0 Hz
+PASS: output frequency
+E (289536) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (289637) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (289737) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (290348) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (290448) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (290549) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL B expected 6250000.0 Hz, measured 6249992.5 Hz
+PASS: output frequency
+E (292084) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (292185) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (292285) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (292896) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (292996) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (293097) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL B expected 12500000.0 Hz, measured 12499992.0 Hz
+PASS: output frequency
+E (294632) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (294733) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (294833) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (295444) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (295544) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (295645) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL B expected 2000000.0 Hz, measured 1999999.0 Hz
+PASS: output frequency
+E (297180) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (297281) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (297381) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (297992) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (298092) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (298193) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL B expected 1000000.0 Hz, measured 1004414.9 Hz
+PASS: output frequency
+E (299728) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (299829) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (299929) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (300540) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (300640) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (300741) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL B expected 500000.0 Hz, measured 501674.0 Hz
+PASS: output frequency
+E (302276) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (302377) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (302477) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (303088) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (303188) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (303289) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL B expected 250000.0 Hz, measured 250642.0 Hz
+PASS: output frequency
+E (304824) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (304925) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (305025) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (305636) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (305736) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (305837) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL B expected 125000.0 Hz, measured 125312.5 Hz
+PASS: output frequency
+E (307372) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (307473) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (307573) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (308184) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (308284) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (308385) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL B expected 62500.0 Hz, measured 62634.3 Hz
+PASS: output frequency
+E (309920) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (310021) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (310121) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (310732) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (310832) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (310933) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL B expected 31250.0 Hz, measured 31317.6 Hz
+PASS: output frequency
+E (312468) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (312569) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (312669) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (313280) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (313380) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (313481) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL B expected 15625.0 Hz, measured 15658.8 Hz
+PASS: output frequency
+E (315016) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (315117) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (315217) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (315828) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (315928) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (316029) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK2 PLL B expected 6224066.5 Hz, measured 6224062.5 Hz
+PASS: output frequency
+E (317564) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (317665) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (317765) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (318376) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (318476) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (318577) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL B expected 3125000.0 Hz, measured 3136274.2 Hz
+PASS: output frequency
+E (320112) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (320213) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (320313) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (320924) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (321024) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (321125) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL B expected 4166666.7 Hz, measured 4166664.0 Hz
+PASS: output frequency
+E (322660) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (322761) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (322861) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (323472) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (323572) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (323673) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL B expected 6250000.0 Hz, measured 6249994.5 Hz
+PASS: output frequency
+E (325208) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (325309) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (325409) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (326020) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (326120) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (326221) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL B expected 12500000.0 Hz, measured 12499991.0 Hz
+PASS: output frequency
+E (327756) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (327857) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (327957) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (328568) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (328668) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (328769) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL B expected 2000000.0 Hz, measured 1999998.0 Hz
+PASS: output frequency
+E (330304) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (330405) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (330505) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (331116) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (331216) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (331317) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL B expected 1000000.0 Hz, measured 1004976.9 Hz
+PASS: output frequency
+E (332852) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (332953) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (333053) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (333664) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (333764) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (333865) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL B expected 500000.0 Hz, measured 500803.0 Hz
+PASS: output frequency
+E (335400) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (335501) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (335601) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (336212) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (336312) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (336413) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL B expected 250000.0 Hz, measured 250774.0 Hz
+PASS: output frequency
+E (337948) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (338049) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (338149) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (338760) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (338860) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (338961) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL B expected 125000.0 Hz, measured 125525.5 Hz
+PASS: output frequency
+E (340496) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (340597) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (340697) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (341308) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (341408) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (341509) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL B expected 62500.0 Hz, measured 62758.2 Hz
+PASS: output frequency
+E (343044) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (343145) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (343245) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (343856) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (343956) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (344057) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL B expected 31250.0 Hz, measured 31379.6 Hz
+PASS: output frequency
+E (345592) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (345693) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (345793) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (346404) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (346504) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (346605) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL B expected 15625.0 Hz, measured 15691.8 Hz
+PASS: output frequency
+E (348140) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (348241) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (348341) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (348952) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (349052) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (349153) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK3 PLL B expected 6224066.5 Hz, measured 6224061.5 Hz
+PASS: output frequency
+E (350688) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (350789) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (350889) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (351500) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (351600) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (351701) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (351936) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL B expected 3125000.0 Hz, measured 3185922.7 Hz
+PASS: output frequency
+E (353337) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (353437) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (354048) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (354148) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (354249) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (354484) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL B expected 4166666.7 Hz, measured 4180089.7 Hz
+PASS: output frequency
+E (355885) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (355985) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (356596) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (356696) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (356797) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (357032) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL B expected 6250000.0 Hz, measured 6249991.0 Hz
+PASS: output frequency
+E (358433) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (358533) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (359144) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (359244) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (359345) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (359580) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL B expected 12500000.0 Hz, measured 12499982.0 Hz
+PASS: output frequency
+E (360981) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (361081) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (361692) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (361792) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (361893) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (362128) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL B expected 2000000.0 Hz, measured 1993362.1 Hz
+PASS: output frequency
+E (363529) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (363629) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (364240) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (364340) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (364441) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (364676) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL B expected 1000000.0 Hz, measured 995826.1 Hz
+PASS: output frequency
+E (366077) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (366177) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (366788) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (366888) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (366989) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (367224) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL B expected 500000.0 Hz, measured 501546.0 Hz
+PASS: output frequency
+E (368625) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (368725) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (369336) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (369436) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (369537) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (369772) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL B expected 250000.0 Hz, measured 251269.0 Hz
+PASS: output frequency
+E (371173) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (371273) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (371884) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (371984) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (372085) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (372320) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL B expected 125000.0 Hz, measured 125580.5 Hz
+PASS: output frequency
+E (373721) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (373821) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (374432) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (374532) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (374633) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (374868) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL B expected 62500.0 Hz, measured 62779.2 Hz
+PASS: output frequency
+E (376269) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (376369) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (376980) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (377080) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (377181) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (377416) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL B expected 31250.0 Hz, measured 31384.6 Hz
+PASS: output frequency
+E (378817) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (378917) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (379528) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (379628) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (379729) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (379964) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL B expected 15625.0 Hz, measured 15691.8 Hz
+PASS: output frequency
+E (381365) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (381465) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (382076) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (382176) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (382277) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (382512) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK4 PLL B expected 6224066.5 Hz, measured 6224059.5 Hz
+PASS: output frequency
+E (383913) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (384013) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (384624) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (384724) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (384825) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (385060) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL B expected 3125000.0 Hz, measured 3139830.2 Hz
+PASS: output frequency
+E (386461) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (386561) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (387172) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (387272) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (387373) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (387608) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL B expected 4166666.7 Hz, measured 4166662.0 Hz
+PASS: output frequency
+E (389009) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (389109) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (389720) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (389820) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (389921) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (390156) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL B expected 6250000.0 Hz, measured 6249992.5 Hz
+PASS: output frequency
+E (391557) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (391657) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (392268) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (392368) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (392469) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (392704) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL B expected 12500000.0 Hz, measured 12499989.0 Hz
+PASS: output frequency
+E (394105) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (394205) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (394816) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (394916) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (395017) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (395252) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL B expected 2000000.0 Hz, measured 2001784.0 Hz
+PASS: output frequency
+E (396653) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (396753) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (397364) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (397464) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (397565) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (397800) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL B expected 1000000.0 Hz, measured 1003793.9 Hz
+PASS: output frequency
+E (399201) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (399301) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (399912) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (400012) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (400113) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (400348) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL B expected 500000.0 Hz, measured 502231.0 Hz
+PASS: output frequency
+E (401749) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (401849) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (402460) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (402560) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (402661) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (402896) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL B expected 250000.0 Hz, measured 251237.0 Hz
+PASS: output frequency
+E (404297) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (404397) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (405008) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (405108) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (405209) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (405444) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL B expected 125000.0 Hz, measured 124999.5 Hz
+PASS: output frequency
+E (406845) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (406945) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (407556) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (407656) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (407757) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (407992) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL B expected 62500.0 Hz, measured 62500.3 Hz
+PASS: output frequency
+E (409393) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (409493) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (410104) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (410204) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (410305) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (410540) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL B expected 31250.0 Hz, measured 31249.6 Hz
+PASS: output frequency
+E (411941) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (412041) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (412652) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (412752) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (412853) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (413088) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL B expected 15625.0 Hz, measured 15624.8 Hz
+PASS: output frequency
+E (414489) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (414589) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (415200) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (415300) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (415401) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (415636) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK5 PLL B expected 6224066.5 Hz, measured 6224058.5 Hz
+PASS: output frequency
+E (417037) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (417137) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (417748) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (417848) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (417949) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (418183) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK6 PLL B expected 3125000.0 Hz, measured 3124996.5 Hz
+PASS: output frequency
+E (419584) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (419684) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (420295) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (420395) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (420496) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (420730) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK6 PLL B expected 4166666.7 Hz, measured 4166662.0 Hz
+PASS: output frequency
+E (422131) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (422231) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (422842) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (422942) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (423043) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (423277) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK6 PLL B expected 6250000.0 Hz, measured 6249989.0 Hz
+PASS: output frequency
+E (424678) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (424778) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (425389) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (425489) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (425590) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+E (425824) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+CLK6 PLL B expected 12500000.0 Hz, measured 12499987.0 Hz
+PASS: output frequency
+E (427225) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (427325) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (427936) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (428036) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (428137) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK7 PLL B expected 3125000.0 Hz, measured 3124997.5 Hz
+PASS: output frequency
+E (429771) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (429872) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (429972) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (430483) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (430583) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (430684) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK7 PLL B expected 4166666.7 Hz, measured 4166664.0 Hz
+PASS: output frequency
+E (432318) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (432419) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (432519) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (433030) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (433130) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (433231) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK7 PLL B expected 6250000.0 Hz, measured 6249995.5 Hz
+PASS: output frequency
+E (434865) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (434966) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (435066) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (435577) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (435677) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (435778) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+CLK7 PLL B expected 12500000.0 Hz, measured 12499987.0 Hz
+PASS: output frequency
+E (437412) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (437513) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (437613) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: other seven outputs silent
+E (438124) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (438224) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+E (438325) gpio: gpio_pullup_en(85): GPIO number error (input-only pad has no internal PU)
+PASS: all eight outputs silent after disable
+
+
+RESULTS: 172/172 points passed
+All clock outputs disabled; OEB HIGH.
