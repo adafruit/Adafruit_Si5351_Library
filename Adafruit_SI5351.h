@@ -25,8 +25,9 @@
  * Channel 0: 120.00 MHz
  * Channel 1: 12.00  MHz
  * Channel 2: 13.56  MHz
+ * PROGMEM keeps the optional table out of SRAM on AVR.
  */
-static const uint8_t m_si5351_regs_15to92_149to170[100][2] = {
+static const uint8_t m_si5351_regs_15to92_149to170[100][2] PROGMEM = {
     {15, 0x00}, /* Input source = crystal for PLLA and PLLB */
     {16, 0x4F}, /* CLK0 Control: 8mA drive, Multisynth 0 as CLK0 source, Clock
                    not inverted, Source = PLLA, Multisynth 0 in integer mode,
