@@ -59,6 +59,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="class_adafruit___s_i5351-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -97,6 +98,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5c92087c9ade21fad1ac7b85cf67e4fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#a5c92087c9ade21fad1ac7b85cf67e4fb">setupMultisynthInt</a> (uint8_t output, si5351PLL_t pllSource, uint8_t div)</td></tr>
 <tr class="memdesc:a5c92087c9ade21fad1ac7b85cf67e4fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures a Multisynth divider in integer mode.  <a href="#a5c92087c9ade21fad1ac7b85cf67e4fb">More...</a><br /></td></tr>
 <tr class="separator:a5c92087c9ade21fad1ac7b85cf67e4fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c37b8d5e2e91de9e09d38711ece7eb8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#a5c37b8d5e2e91de9e09d38711ece7eb8">setPhaseOffset</a> (uint8_t output, uint8_t offset)</td></tr>
+<tr class="memdesc:a5c37b8d5e2e91de9e09d38711ece7eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the initial phase offset for CLK0 through CLK5.  <a href="#a5c37b8d5e2e91de9e09d38711ece7eb8">More...</a><br /></td></tr>
+<tr class="separator:a5c37b8d5e2e91de9e09d38711ece7eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18c9551f8cd31976e08a873d3052de96"><td class="memItemLeft" align="right" valign="top"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#a18c9551f8cd31976e08a873d3052de96">resetPLL</a> (si5351PLL_t pll)</td></tr>
+<tr class="memdesc:a18c9551f8cd31976e08a873d3052de96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets one PLL after configuring its outputs and phase offsets.  <a href="#a18c9551f8cd31976e08a873d3052de96">More...</a><br /></td></tr>
+<tr class="separator:a18c9551f8cd31976e08a873d3052de96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a814f8b3e363f9cd6d1c9348157c1f5d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#a814f8b3e363f9cd6d1c9348157c1f5d6">enableSpreadSpectrum</a> (bool enabled)</td></tr>
 <tr class="memdesc:a814f8b3e363f9cd6d1c9348157c1f5d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables spread spectrum.  <a href="#a814f8b3e363f9cd6d1c9348157c1f5d6">More...</a><br /></td></tr>
 <tr class="separator:a814f8b3e363f9cd6d1c9348157c1f5d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -496,6 +503,75 @@ For frequencies below 500kHz (down to 8kHz) Rx_DIV must be used, but this isn't 
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>ERROR_NONE on success, otherwise an appropriate error code. </dd></dl>
+
+</div>
+</div>
+<a id="a5c37b8d5e2e91de9e09d38711ece7eb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c37b8d5e2e91de9e09d38711ece7eb8">&#9670;&nbsp;</a></span>setPhaseOffset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a> Adafruit_SI5351::setPhaseOffset </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the initial phase offset for CLK0 through CLK5. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">output</td><td>Clock output (0..5). CLK6 and CLK7 do not support phase offset. </td></tr>
+    <tr><td class="paramname">offset</td><td>Delay in quarter-VCO-period steps (0..127), not degrees. One step is 1 / (4 * PLL frequency) seconds. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ERROR_NONE on success, or an initialization, parameter, or I2C error.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Configure the PLL and MultiSynth first, with a divider greater than 8 (AN619 section 6). This method selects fractional mode even for offset 0; it does not change the divider or reset the PLL. Call it for every output in a phase-related group, including the reference output with offset 0, then call <a class="el" href="class_adafruit___s_i5351.html#a18c9551f8cd31976e08a873d3052de96" title="Resets one PLL after configuring its outputs and phase offsets. ">resetPLL()</a> once for their shared PLL. Keep outputs disabled until configuration is complete.</dd>
+<dd>
+Reapply phase offsets after <a class="el" href="class_adafruit___s_i5351.html#a7a38f8de810f72408156ba68ee3c04c4" title="Configures the Multisynth divider, which determines the output clock frequency based on the specified...">setupMultisynth()</a>, <a class="el" href="class_adafruit___s_i5351.html#a5c92087c9ade21fad1ac7b85cf67e4fb" title="Configures a Multisynth divider in integer mode. ">setupMultisynthInt()</a>, or <a class="el" href="class_adafruit___s_i5351.html#a43eaf5845fa56034b4958a0339230a6c" title="Automatically computes and applies the PLL multiplier, Multisynth divider and R divider needed to gen...">setFrequency()</a>, which can restore integer mode. The caller is responsible for choosing a supported divider and common PLL. </dd></dl>
+
+</div>
+</div>
+<a id="a18c9551f8cd31976e08a873d3052de96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18c9551f8cd31976e08a873d3052de96">&#9670;&nbsp;</a></span>resetPLL()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a> Adafruit_SI5351::resetPLL </td>
+          <td>(</td>
+          <td class="paramtype">si5351PLL_t&#160;</td>
+          <td class="paramname"><em>pll</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resets one PLL after configuring its outputs and phase offsets. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pll</td><td>PLL to reset: SI5351_PLL_A or SI5351_PLL_B. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ERROR_NONE on success, or an initialization or I2C error.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>All outputs using this PLL are interrupted. Call once after setting all their phase offsets, before enabling the outputs. The reset bit clears automatically; this method does not wait for PLL lock. Existing <a class="el" href="class_adafruit___s_i5351.html#a41a4de34f331294d79fdcc8cc7090916" title="Sets the multiplier for the specified PLL. ">setupPLL()</a> calls still reset both PLLs as before. </dd></dl>
 
 </div>
 </div>
