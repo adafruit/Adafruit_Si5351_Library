@@ -714,6 +714,91 @@ err_t Adafruit_SI5351::setupMultisynth(uint8_t output, si5351PLL_t pllSource,
 
 /**************************************************************************/
 /*!
+ * @brief Sets the initial phase offset for CLK0 through CLK5.
+ * @param output Clock output (0..5). CLK6 and CLK7 do not support phase offset.
+ * @param offset Delay in quarter-VCO-period steps (0..127), not degrees.
+ *               One step is 1 / (4 * PLL frequency) seconds.
+ * @return ERROR_NONE on success, or an initialization, parameter, or I2C error.
+ *
+ * @note Configure the PLL and MultiSynth first, with a divider greater than
+ *       8 (AN619 section 6). This method selects fractional mode even for
+ *       offset 0; it does not change the divider or reset the PLL. Call it
+ *       for every output in a phase-related group, including the reference
+ *       output with offset 0, then call resetPLL() once for their shared PLL.
+ *       Keep outputs disabled until configuration is complete.
+ *
+ * @note Reapply phase offsets after setupMultisynth(), setupMultisynthInt(),
+ *       or setFrequency(), which can restore integer mode. The caller is
+ *       responsible for choosing a supported divider and common PLL.
+ */
+/**************************************************************************/
+err_t Adafruit_SI5351::setPhaseOffset(uint8_t output, uint8_t offset) {
+  ASSERT(m_si5351Config.initialised, ERROR_DEVICENOTINITIALISED);
+  ASSERT(output < 6, ERROR_INVALIDPARAMETER);
+  ASSERT(offset <= 127, ERROR_INVALIDPARAMETER);
+
+  // AN619 section 6 requires MSx_INT = 0, including the zero-phase reference.
+  Adafruit_BusIO_Register clkControl(i2c_dev,
+                                     SI5351_REGISTER_16_CLK0_CONTROL + output);
+  // Use a checked snapshot: a failed read must not alter the other controls.
+  ClockControl control;
+  static_assert(sizeof(control) == 1, "Clock control must be one byte");
+  if (!clkControl.read((uint8_t*)&control, 1)) {
+    return ERROR_I2C_TRANSACTION;
+  }
+  control.integerMode = 0;
+  if (!clkControl.write((uint8_t*)&control, 1)) {
+    return ERROR_I2C_TRANSACTION;
+  }
+
+  // Write the whole byte because AN619 requires reserved bit 7 to be zero.
+  Adafruit_BusIO_Register phaseOffset(
+      i2c_dev, SI5351_REGISTER_165_CLK0_INITIAL_PHASE_OFFSET + output);
+  if (!phaseOffset.write(offset)) {
+    return ERROR_I2C_TRANSACTION;
+  }
+  return ERROR_NONE;
+}
+
+/**************************************************************************/
+/*!
+ * @brief Resets one PLL after configuring its outputs and phase offsets.
+ * @param pll PLL to reset: SI5351_PLL_A or SI5351_PLL_B.
+ * @return ERROR_NONE on success, or an initialization or I2C error.
+ *
+ * @note All outputs using this PLL are interrupted. Call once after setting
+ *       all their phase offsets, before enabling the outputs. The reset bit
+ *       clears automatically; this method does not wait for PLL lock.
+ *       Existing setupPLL() calls still reset both PLLs as before.
+ */
+/**************************************************************************/
+err_t Adafruit_SI5351::resetPLL(si5351PLL_t pll) {
+  ASSERT(m_si5351Config.initialised, ERROR_DEVICENOTINITIALISED);
+
+  // AN619 register 177: preserve reserved bits and set the selected reset bit.
+  Adafruit_BusIO_Register pllReset(i2c_dev, SI5351_REGISTER_177_PLL_RESET);
+  // Read failures must not overwrite reserved bits or reset the wrong PLL.
+  PLLReset command;
+  static_assert(sizeof(command) == 1, "PLL reset must be one byte");
+  if (!pllReset.read((uint8_t*)&command, 1)) {
+    return ERROR_I2C_TRANSACTION;
+  }
+  // Set both command bits together so an in-progress reset is not retriggered.
+  command.resetA = 0;
+  command.resetB = 0;
+  if (pll == SI5351_PLL_B) {
+    command.resetB = 1;
+  } else {
+    command.resetA = 1;
+  }
+  if (!pllReset.write((uint8_t*)&command, 1)) {
+    return ERROR_I2C_TRANSACTION;
+  }
+  return ERROR_NONE;
+}
+
+/**************************************************************************/
+/*!
     @brief  Enables or disables all clock outputs
     @param  enabled Whether output is enabled
     @return ERROR_NONE
