@@ -1,0 +1,5 @@
+03_intr: INTR + LOS_CLKIN sticky test (ESP32 V2)
+Phase1 (no CLKIN)  status=0x11  sticky=0x10  LOS_CLKIN_sticky=1  INTR_asserted=1  -> PASS
+ledcAttach=OK  ledcReadFreq=8000000
+Phase2 (8 MHz CLKIN)  status=0x1  sticky=0x0  LOS_CLKIN_sticky=0  INTR_asserted=0  -> PASS
+RESULT: 2/2

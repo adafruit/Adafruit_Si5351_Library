@@ -311,6 +311,8 @@ class Adafruit_SI5351 {
   err_t clearStickyStatus(void);           //!< Clear register 1 sticky flags
   err_t setInterruptMask(
       uint8_t mask); //!< Write register 2 interrupt mask byte
+  err_t setOEBPinMask(
+      uint8_t mask); //!< Write register 9 OEB pin-enable mask byte
   /*!
    * @param output Enables or disables output
    * @param div Set of output divider values (2^n, n=1..7)

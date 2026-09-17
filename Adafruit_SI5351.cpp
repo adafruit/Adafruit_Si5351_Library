@@ -784,6 +784,23 @@ err_t Adafruit_SI5351::setInterruptMask(uint8_t mask) {
 
 /**************************************************************************/
 /*!
+    @brief  Sets the OEB pin-enable mask (register 9).
+
+    Per AN619: a 0 in bit N means the OEB pin DOES control CLK[N]'s output
+    enable; a 1 in bit N means CLK[N] ignores the OEB pin (masked off).
+    Default after begin() is 0x00 — OEB controls every output.
+
+    @param  mask Register 9 bitmask. bit N == 1 masks OEB control for CLK[N].
+    @return ERROR_NONE on success, or ERROR_I2C_TRANSACTION on failure.
+*/
+/**************************************************************************/
+err_t Adafruit_SI5351::setOEBPinMask(uint8_t mask) {
+  ASSERT_STATUS(write8(SI5351_REGISTER_9_OEB_PIN_ENABLE_CONTROL, mask));
+  return ERROR_NONE;
+}
+
+/**************************************************************************/
+/*!
     @brief  Enables or disables spread spectrum
     @param  enabled Whether spread spectrum output is enabled
     @return ERROR_NONE
