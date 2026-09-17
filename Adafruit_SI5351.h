@@ -304,6 +304,9 @@ class Adafruit_SI5351 {
   err_t setupMultisynthInt(uint8_t output, si5351PLL_t pllSource,
                            uint8_t div); //!< @return ERROR_NONE
 
+  err_t setPhaseOffset(uint8_t output, uint8_t offset);
+  err_t resetPLL(si5351PLL_t pll);
+
   err_t enableSpreadSpectrum(bool enabled);
   err_t enableOutputs(bool enabled);
   err_t readDeviceStatus(
@@ -324,6 +327,24 @@ class Adafruit_SI5351 {
                      uint32_t freq); //!< @return ERROR_NONE
 
  private:
+  /*! @brief Clock control byte for a checked read/modify/write. */
+  struct ClockControl {
+    uint8_t driveStrength : 2; //!< Output drive strength
+    uint8_t clockSource : 2;   //!< Output clock source
+    uint8_t inverted : 1;      //!< Output inversion
+    uint8_t pllSource : 1;     //!< PLL selection
+    uint8_t integerMode : 1;   //!< MultiSynth integer mode
+    uint8_t powerDown : 1;     //!< Output driver power down
+  };
+
+  /*! @brief PLL reset byte with independently controlled command bits. */
+  struct PLLReset {
+    uint8_t reservedLow : 5;  //!< Preserve reserved bits 4:0
+    uint8_t resetA : 1;       //!< PLLA reset command
+    uint8_t reservedHigh : 1; //!< Preserve reserved bit 6
+    uint8_t resetB : 1;       //!< PLLB reset command
+  };
+
   si5351Config_t m_si5351Config;
 
   Adafruit_I2CDevice* i2c_dev = NULL; ///< Pointer to I2C bus interface
