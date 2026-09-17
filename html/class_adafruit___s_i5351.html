@@ -115,6 +115,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ada779eca4e458786cdc01a90bb1cbb2e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#ada779eca4e458786cdc01a90bb1cbb2e">setInterruptMask</a> (uint8_t mask)</td></tr>
 <tr class="memdesc:ada779eca4e458786cdc01a90bb1cbb2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write register 2 interrupt mask byte.  <a href="#ada779eca4e458786cdc01a90bb1cbb2e">More...</a><br /></td></tr>
 <tr class="separator:ada779eca4e458786cdc01a90bb1cbb2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a417a6f44e7ba5ec8d9d66798607574a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#a417a6f44e7ba5ec8d9d66798607574a8">setOEBPinMask</a> (uint8_t mask)</td></tr>
+<tr class="memdesc:a417a6f44e7ba5ec8d9d66798607574a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write register 9 OEB pin-enable mask byte.  <a href="#a417a6f44e7ba5ec8d9d66798607574a8">More...</a><br /></td></tr>
+<tr class="separator:a417a6f44e7ba5ec8d9d66798607574a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63b092fb3d8f71d1c0f59716d4948a07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___s_i5351.html#a63b092fb3d8f71d1c0f59716d4948a07">setupRdiv</a> (uint8_t output, si5351RDiv_t div)</td></tr>
 <tr class="memdesc:a63b092fb3d8f71d1c0f59716d4948a07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the R divider for a given output channel.  <a href="#a63b092fb3d8f71d1c0f59716d4948a07">More...</a><br /></td></tr>
 <tr class="separator:a63b092fb3d8f71d1c0f59716d4948a07"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -649,6 +652,35 @@ For frequencies below 500kHz (down to 8kHz) Rx_DIV must be used, but this isn't 
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">mask</td><td>Register 2 bitmask where 1 masks (disables) an interrupt source. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ERROR_NONE on success, or ERROR_I2C_TRANSACTION on failure. </dd></dl>
+
+</div>
+</div>
+<a id="a417a6f44e7ba5ec8d9d66798607574a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a417a6f44e7ba5ec8d9d66798607574a8">&#9670;&nbsp;</a></span>setOEBPinMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="errors_8h.html#a5edd7aad54ac059bf561cf2f92017698">err_t</a> Adafruit_SI5351::setOEBPinMask </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>mask</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write register 9 OEB pin-enable mask byte. </p>
+<p>Sets the OEB pin-enable mask (register 9).</p>
+<p>Per AN619: a 0 in bit N means the OEB pin DOES control CLK[N]'s output enable; a 1 in bit N means CLK[N] ignores the OEB pin (masked off). Default after <a class="el" href="class_adafruit___s_i5351.html#a18ca48ba2e05fbf77250d7b108798d76" title="Initializes I2C and configures the breakout (call this function before doing anything else) ...">begin()</a> is 0x00 — OEB controls every output.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mask</td><td>Register 9 bitmask. bit N == 1 masks OEB control for CLK[N]. </td></tr>
   </table>
   </dd>
 </dl>
